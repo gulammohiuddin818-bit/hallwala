@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HallWala - Book Banquet Halls</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: #f4f6f8; color: #333; }
+
+        #languageOverlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #2c3e50; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 9999;
+        }
+        .lang-box {
+            background: white; padding: 30px; border-radius: 12px;
+            text-align: center; width: 90%; max-width: 400px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .lang-box h2 { margin-bottom: 20px; color: #2c3e50; font-size: 20px; }
+        .lang-btn {
+            display: block; width: 100%; padding: 14px; margin-bottom: 12px;
+            border: 2px solid #e74c3c; background: white; color: #e74c3c;
+            border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer;
+            transition: 0.3s;
+        }
+        .lang-btn:hover { background: #e74c3c; color: white; }
+
+        #mainApp { display: none; }
+        
+        .header {
+            background: #ffffff; padding: 16px 20px; display: flex;
+            justify-content: space-between; align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100;
+        }
+        .brand { font-size: 24px; font-weight: 900; color: #e74c3c; letter-spacing: -0.5px; }
+        .brand span { color: #2c3e50; }
+        .user-icon { background: #f1f2f6; padding: 8px 12px; border-radius: 20px; font-size: 14px; font-weight: 600; cursor: pointer; }
+
+        .search-section { background: #2c3e50; padding: 25px 20px; color: white; }
+        .search-section h2 { font-size: 18px; margin-bottom: 15px; font-weight: 600; }
+        .search-box { display: flex; background: white; border-radius: 8px; overflow: hidden; }
+        .search-box input { flex: 1; padding: 14px; border: none; outline: none; font-size: 15px; }
+        .search-box button { background: #e74c3c; color: white; border: none; padding: 0 20px; font-weight: bold; cursor: pointer; }
+
+        .listings { padding: 20px; }
+        .section-title { font-size: 16px; margin-bottom: 15px; color: #7f8c8d; font-weight: 600; }
+        
+        .hall-card {
+            background: white; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06); margin-bottom: 20px;
+        }
+        .hall-image { height: 180px; background-size: cover; background-position: center; position: relative; }
+        .badge {
+            position: absolute; top: 12px; left: 12px; background: #27ae60;
+            color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold;
+        }
+        .hall-info { padding: 16px; }
+        .hall-title { font-size: 18px; font-weight: 700; margin-bottom: 5px; }
+        .hall-location { color: #7f8c8d; font-size: 13px; margin-bottom: 12px; }
+        .features { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
+        .feature-tag { background: #f1f2f6; padding: 4px 8px; border-radius: 4px; font-size: 11px; color: #2c3e50; font-weight: 600; }
+        
+        .price-row { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 12px; }
+        .price-box p { font-size: 11px; color: #7f8c8d; }
+        .price-box h3 { color: #e74c3c; font-size: 18px; }
+        .btn-offer {
+            background: #e74c3c; color: white; border: none; padding: 10px 18px;
+            border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Language Selector Overlay -->
+    <div id="languageOverlay">
+        <h1 style="color:white; margin-bottom: 30px; font-size: 32px;">Hall<span style="color:#e74c3c;">Wala</span></h1>
+        <div class="lang-box">
+            <h2>Choose Your Language<br><span style="font-size: 16px; color: #7f8c8d;">अपनी भाषा चुनें</span></h2>
+            <button class="lang-btn" onclick="startApp('hi')">हिन्दी (Hindi)</button>
+            <button class="lang-btn" onclick="startApp('en')">English</button>
+        </div>
+    </div>
+
+    <!-- Main App UI -->
+    <div id="mainApp">
+        <div class="header">
+            <div class="brand">Hall<span>Wala</span></div>
+            <div class="user-icon" id="txt_login">👤 Login</div>
+        </div>
+
+        <div class="search-section">
+            <h2 id="txt_search_title">Find the Best Banquet Hall</h2>
+            <div class="search-box">
+                <input type="text" id="txt_search_placeholder" placeholder="Enter City (e.g., Bokaro)">
+                <button id="txt_search_btn">Search</button>
+            </div>
+        </div>
+
+        <div class="listings">
+            <div class="section-title" id="txt_section_title">📍 Top Marriage Halls</div>
+
+            <!-- Hall 1 -->
+            <div class="hall-card">
+                <div class="hall-image" style="background-image: url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80');">
+                    <div class="badge" id="txt_sponsored">Sponsored</div>
+                </div>
+                <div class="hall-info">
+                    <div class="hall-title">Grand Palace Banquet Hall</div>
+                    <div class="hall-location">📍 Sector 4, Bokaro Steel City</div>
+                    <div class="features">
+                        <span class="feature-tag">❄️ AC Hall</span>
+                        <span class="feature-tag">🚗 50+ Parking</span>
+                        <span class="feature-tag">👥 500 Capacity</span>
+                    </div>
+                    <div class="price-row">
+                        <div class="price-box">
+                            <p id="txt_base_price1">Base Price (1 Day)</p>
+                            <h3>₹65,000</h3>
+                        </div>
+                        <button class="btn-offer make-offer-btn">Make Offer</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hall 2 -->
+            <div class="hall-card">
+                <div class="hall-image" style="background-image: url('https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="hall-info">
+                    <div class="hall-title">Royal Garden Marriage Lawn</div>
+                    <div class="hall-location">📍 Islampur, Bokaro</div>
+                    <div class="features">
+                        <span class="feature-tag">🌿 Open Lawn</span>
+                        <span class="feature-tag">🛏️ 2 AC Rooms</span>
+                    </div>
+                    <div class="price-row">
+                        <div class="price-box">
+                            <p id="txt_base_price2">Base Price (1 Day)</p>
+                            <h3>₹45,000</h3>
+                        </div>
+                        <button class="btn-offer make-offer-btn">Make Offer</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Application Logic -->
+    <script>
+        const translations = {
+            'en': {
+                'login': '👤 Login',
+                'search_title': 'Find the Best Banquet Hall',
+                'search_placeholder': 'Enter City or Area (e.g., Bokaro)',
+                'search_btn': 'Search',
+                'section_title': '📍 Top Marriage Halls',
+                'sponsored': 'Sponsored',
+                'base_price': 'Base Price (1 Day)',
+                'make_offer': 'Make Offer'
+            },
+            'hi': {
+                'login': '👤 लॉगिन',
+                'search_title': 'अपनी शादी के लिए बेस्ट हॉल खोजें',
+                'search_placeholder': 'शहर या एरिया का नाम डालें (उदा: Bokaro)',
+                'search_btn': 'खोजें',
+                'section_title': '📍 टॉप मैरिज हॉल',
+                'sponsored': 'प्रायोजित',
+                'base_price': 'बेस प्राइस (1 दिन)',
+                'make_offer': 'ऑफर दें'
+            }
+        };
+
+        function startApp(lang) {
+            document.getElementById('languageOverlay').style.display = 'none';
+            document.getElementById('mainApp').style.display = 'block';
+            
+            document.getElementById('txt_login').innerText = translations[lang]['login'];
+            document.getElementById('txt_search_title').innerText = translations[lang]['search_title'];
+            document.getElementById('txt_search_placeholder').placeholder = translations[lang]['search_placeholder'];
+            document.getElementById('txt_search_btn').innerText = translations[lang]['search_btn'];
+            document.getElementById('txt_section_title').innerText = translations[lang]['section_title'];
+            document.getElementById('txt_sponsored').innerText = translations[lang]['sponsored'];
+            document.getElementById('txt_base_price1').innerText = translations[lang]['base_price'];
+            document.getElementById('txt_base_price2').innerText = translations[lang]['base_price'];
+            
+            let offerBtns = document.querySelectorAll('.make-offer-btn');
+            offerBtns.forEach(btn => {
+                btn.innerText = translations[lang]['make_offer'];
+                btn.onclick = function() {
+                    alert(lang === 'hi' ? "ऑफर विंडो खुलेगी और ग्राहक ₹99 का टोकन देगा!" : "Offer window will open and customer will pay ₹99 token!");
+                };
+            });
+        }
+    </script>
+</body>
+</html>
