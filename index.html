@@ -351,47 +351,163 @@
             <button onclick="document.getElementById('loginModal').style.display='none'" style="width:100%; padding:12px; background:#95a5a6; color:white; border:none; border-radius:5px; font-size:16px;">Cancel</button>
         </div>
     </div>
+<!-- ADMIN DASHBOARD UI START -->
+<div id="adminDashboard" style="display:none; padding:15px; margin:15px 0; background:#ffffff; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
+  <h2 style="color:#1a73e8; text-align:center; margin-bottom:15px;">Admin Dashboard</h2>
+  
+  <div style="display:flex; gap:10px; margin-bottom:15px;">
+    <div style="flex:1; background:#e3f2fd; padding:12px; border-radius:8px; text-align:center;">
+      <span style="font-size:12px; color:#555;">Total Bookings</span>
+      <h3 id="totalBookings" style="margin-top:5px; color:#1a73e8;">0</h3>
+    </div>
+    <div style="flex:1; background:#fff3e0; padding:12px; border-radius:8px; text-align:center;">
+      <span style="font-size:12px; color:#555;">Pending</span>
+      <h3 id="pendingBookings" style="margin-top:5px; color:#e65100;">0</h3>
+    </div>
+  </div>
 
-    <script>
-    function showLogin() {
-        document.getElementById('loginModal').style.display = 'flex';
+  <h4 style="margin-bottom:10px;">All Requests</h4>
+  <div style="overflow-x:auto;">
+    <table border="1" style="width:100%; border-collapse:collapse; text-align:left; font-size:13px;">
+      <thead>
+        <tr style="background:#f5f5f5;">
+          <th style="padding:8px;">ID</th>
+          <th style="padding:8px;">Customer</th>
+          <th style="padding:8px;">Phone</th>
+          <th style="padding:8px;">Hall</th>
+          <th style="padding:8px;">Date</th>
+          <th style="padding:8px;">Status</th>
+          <th style="padding:8px;">Action</th>
+        </tr>
+      </thead>
+      <tbody id="bookingsTableBody">
+        <tr><td colspan="7" style="text-align:center; padding:10px;">Login karein data dekhne ke liye.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- ADMIN DASHBOARD UI END -->
+
+<script>
+function showLogin() {
+    let modal = document.getElementById('loginModal');
+    if(modal) modal.style.display = 'block';
+}
+
+function checkLogin() {
+    let phone = document.getElementById('loginPhone');
+    let pass = document.getElementById('loginPassword');
+    let btn = document.getElementById('loginBtn');
+
+    if(!phone || !pass || !phone.value || !pass.value) {
+        alert("Kripya mobile number aur password dono bharein!");
+        return;
     }
 
-    function checkLogin() {
-        let phone = document.getElementById('loginPhone').value;
-        let pass = document.getElementById('loginPassword').value;
-        let btn = document.getElementById('loginBtn');
+    btn.innerText = "Checking...";
 
-        if(!phone || !pass) {
-            alert("कृपया अपना मोबाइल नंबर और पासवर्ड डालें!");
-            return;
+    // ⚠️ YAHA APNA REAL APPS SCRIPT WEB APP URL PASTE KAREIN
+    let scriptUrl = "https://script.google.com/macros/s/AKfycbxdy3mYO8r3ba7-OTAR0TLZ_ULKw5N9VHjLLYi7HZ0Uny6k2qNrShQogPF1dax4dpcl/exec"; 
+    
+    let finalUrl = scriptUrl + "?action=login&phone=" + encodeURIComponent(phone.value) + "&password=" + encodeURIComponent(pass.value);
+
+    fetch(finalUrl)
+    .then(res => res.json())
+    .then(data => {
+        btn.innerText = "Login";
+        if (data.status === "success") {
+            alert("Welcome " + data.name + "!");
+            
+            let modal = document.getElementById('loginModal');
+            if(modal) modal.style.display = 'none';
+            
+            document.getElementById('adminDashboard').style.display = 'block';
+            loadBookings(scriptUrl);
+        } else {
+            alert("❌ " + data.message);
         }
+    }).catch(err => {
+        btn.innerText = "Login";
+        alert("❌ Server Error: Please try again.");
+        console.log(err);
+    });
+}
 
-        btn.innerText = "Checking...";
+function loadBookings(scriptUrl) {
+  const tbody = document.getElementById("bookingsTableBody");
+  tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:10px;">Data load ho raha hai...</td></tr>`;
 
-        let scriptUrl = "https://script.google.com/macros/s/AKfycbxdy3mYO8r3ba7-OTAR0TLZ_ULKw5N9VHjLLYi7HZ0Uny6k2qNrShQogPF1dax4dpcl/exec";
-        let finalUrl = scriptUrl + "?action=login&phone=" + phone + "&password=" + pass;
+  fetch(scriptUrl + "?action=getBookings")
+    .then(res => res.json())
+    .then(res => {
+      if (res.status === "success") {
+        renderBookingsTable(res.data, scriptUrl);
+      } else {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red; padding:10px;">${res.message}</td></tr>`;
+      }
+    })
+    .catch(err => {
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red; padding:10px;">Data load karne me error aaya!</td></tr>`;
+    });
+}
 
-        fetch(finalUrl)
-        .then(res => res.json())
-        .then(data => {
-            btn.innerText = "Login";
-            if(data.status === "success") {
-                alert("Welcome " + data.name + "! You are logged in as: " + data.role);
-                document.getElementById('loginModal').style.display = 'none';
-            } else {
-                alert("❌ " + data.message);
-            }
-        }).catch(err => {
-            btn.innerText = "Login";
-            alert("❌ Server Error: Please try again.");
-            console.log(err);
-        });
+function renderBookingsTable(bookings, scriptUrl) {
+  const tbody = document.getElementById("bookingsTableBody");
+  tbody.innerHTML = "";
+
+  if (!bookings || bookings.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:10px;">Koi booking nahi mili.</td></tr>`;
+    return;
+  }
+
+  let pendingCount = 0;
+
+  bookings.forEach(b => {
+    if (b.status === "Pending") pendingCount++;
+
+    tbody.innerHTML += `
+      <tr>
+        <td style="padding:6px;"><b>${b.id}</b></td>
+        <td style="padding:6px;">${b.name}</td>
+        <td style="padding:6px;">${b.phone}</td>
+        <td style="padding:6px;">${b.hall}</td>
+        <td style="padding:6px;">${b.date}</td>
+        <td style="padding:6px;"><b>${b.status}</b></td>
+        <td style="padding:6px;">
+          <button onclick="updateStatus('${b.id}', 'Confirmed', '${scriptUrl}')" style="background:#28a745; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">Confirm</button>
+          <button onclick="updateStatus('${b.id}', 'Cancelled', '${scriptUrl}')" style="background:#dc3545; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">Cancel</button>
+        </td>
+      </tr>
+    `;
+  });
+
+  document.getElementById("totalBookings").innerText = bookings.length;
+  document.getElementById("pendingBookings").innerText = pendingCount;
+}
+
+function updateStatus(bookingId, newStatus, scriptUrl) {
+  if (!confirm(`Kya aap booking ${bookingId} ko ${newStatus} karna chahte hain?`)) return;
+
+  fetch(scriptUrl, {
+    method: "POST",
+    body: JSON.stringify({
+      action: "updateStatus",
+      bookingId: bookingId,
+      newStatus: newStatus
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.status === "success") {
+      alert("Status update ho gaya: " + newStatus);
+      loadBookings(scriptUrl);
+    } else {
+      alert("Error: " + data.message);
     }
-    </script>
-    <!-- LOGIN SYSTEM END -->
-    
-    
-    
+  })
+  .catch(err => alert("Server error!"));
+}
+</script>
+
 </body>
 </html>
