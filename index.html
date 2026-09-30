@@ -3,132 +3,126 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HallWala - Book Banquet Halls</title>
+  <title>HallWala - Welcome</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: #f4f6f8; color: #333; }
+    body { background-color: #f4f6f8; display: flex; justify-content: center; align-items: center; height: 100vh; }
     
-    header { background: #1e293b; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
-    header h1 { font-size: 22px; }
-    .login-btn { background: #2563eb; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    .container { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
     
-    .container { padding: 20px; max-width: 1200px; margin: auto; }
-    h2 { margin-bottom: 15px; color: #1e293b; }
-    
-    .hall-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
-    .hall-card img { width: 100%; height: 200px; object-fit: cover; }
-    .hall-info { padding: 15px; }
-    .hall-info h3 { margin-bottom: 5px; color: #1e293b; }
-    .hall-info p { color: #64748b; font-size: 14px; margin-bottom: 10px; }
-    .price { font-weight: bold; color: #dc2626; margin-bottom: 10px; }
-    .make-offer-btn { background: #ef4444; color: white; border: none; padding: 10px; width: 100%; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    h1 { color: #1e293b; margin-bottom: 10px; font-size: 28px; }
+    p { color: #64748b; margin-bottom: 30px; }
 
-    /* Modal Styles */
-    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000; }
-    .modal-content { background: white; padding: 25px; border-radius: 8px; width: 90%; max-width: 400px; position: relative; }
-    .modal-content h3 { margin-bottom: 15px; }
-    .modal-content input { width: 100%; padding: 10px; margin-bottom: 12px; border: 1px solid #cbd5e1; border-radius: 4px; }
-    .modal-content button { width: 100%; padding: 10px; background: #2563eb; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; }
-    .close-btn { background: #64748b !important; margin-top: 8px; }
+    /* Role Selection Screen */
+    #roleSelection { display: flex; gap: 20px; justify-content: center; }
+    .role-card { flex: 1; background: #f8fafc; border: 2px solid #e2e8f0; padding: 20px; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+    .role-card:hover { border-color: #2563eb; background: #eff6ff; }
+    .role-card h3 { color: #1e293b; margin-top: 10px; }
+    .role-icon { font-size: 40px; }
 
-    /* Admin Dashboard */
-    #adminDashboard { display: none; margin-top: 30px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    .stats-box { display: flex; gap: 15px; margin-bottom: 20px; }
-    .stat-card { flex: 1; background: #f8fafc; padding: 15px; border-radius: 6px; border: 1px solid #e2e8f0; text-align: center; }
-    .stat-card h4 { color: #64748b; font-size: 14px; }
-    .stat-card p { font-size: 20px; font-weight: bold; color: #1e293b; }
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-    th, td { border: 1px solid #cbd5e1; padding: 10px; text-align: center; font-size: 14px; }
-    th { background: #f1f5f9; }
+    /* Login / OTP Screen */
+    #loginScreen { display: none; }
+    input { width: 100%; padding: 12px; margin: 15px 0; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 16px; text-align: center; }
+    button { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+    button:hover { background: #1d4ed8; }
+    .back-btn { background: #94a3b8; margin-top: 10px; }
+    
+    #otpSection { display: none; }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>HallWala</h1>
-    <button class="login-btn" onclick="openLoginModal()">Login</button>
-  </header>
-
   <div class="container">
-    <h2>Available Halls & Marriage Lawns</h2>
-    <div id="hallsList">
-      <div class="hall-card">
-        <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" alt="Hall">
-        <div class="hall-info">
-          <h3>Royal Garden Marriage Lawn</h3>
-          <p>📍 Islampur, Bokaro</p>
-          <div class="price">₹45,000 / Day</div>
-          <button class="make-offer-btn" onclick="alert('Booking feature active hai!')">Make Offer</button>
-        </div>
+    <h1>Welcome to HallWala</h1>
+    <p id="sub-title">Please choose your role to continue</p>
+
+    <!-- STEP 1: Role Selection -->
+    <div id="roleSelection">
+      <div class="role-card" onclick="selectRole('Customer')">
+        <div class="role-icon">🤵</div>
+        <h3>Customer</h3>
+      </div>
+      <div class="role-card" onclick="selectRole('Hall Owner')">
+        <div class="role-icon">🏢</div>
+        <h3>Hall Owner</h3>
       </div>
     </div>
 
-    <!-- Admin Dashboard Section -->
-    <div id="adminDashboard">
-      <h2 style="color: #2563eb; margin-bottom: 15px;">Admin Dashboard</h2>
-      <div class="stats-box">
-        <div class="stat-card">
-          <h4>Total Bookings</h4>
-          <p>0</p>
-        </div>
-        <div class="stat-card">
-          <h4>Pending</h4>
-          <p>0</p>
-        </div>
+    <!-- STEP 2: Mobile Number & OTP Login -->
+    <div id="loginScreen">
+      <h2 id="selectedRoleText" style="color: #2563eb; margin-bottom: 20px;"></h2>
+      
+      <div id="phoneSection">
+        <input type="number" id="mobileNumber" placeholder="Enter 10-digit Mobile Number">
+        <button onclick="sendOTP()">Get OTP</button>
       </div>
-      <h3>All Requests</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Customer</th>
-            <th>Phone</th>
-            <th>Hall</th>
-            <th>Date</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="bookingTableBody">
-          <tr>
-            <td colspan="7" style="color: #64748b;">Koi booking nahi mili.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
 
-  <!-- Login Modal -->
-  <div id="loginModal" class="modal">
-    <div class="modal-content">
-      <h3>Secure Login</h3>
-      <input type="text" id="loginPhone" placeholder="Mobile Number">
-      <input type="password" id="loginPassword" placeholder="Password">
-      <button onclick="handleLogin()">Login</button>
-      <button class="close-btn" onclick="closeLoginModal()">Cancel</button>
+      <div id="otpSection">
+        <p style="color: #22c55e; font-weight: bold;">OTP sent successfully! (Demo: 1234)</p>
+        <input type="number" id="otpInput" placeholder="Enter 4-digit OTP">
+        <button onclick="verifyOTP()">Verify & Login</button>
+      </div>
+
+      <button class="back-btn" onclick="goBack()">🔙 Go Back</button>
     </div>
   </div>
 
   <script>
-    function openLoginModal() {
-      document.getElementById('loginModal').style.display = 'flex';
+    let currentRole = "";
+    let userLocation = "Unknown Location";
+
+    // Jab user website kholta hai, hum uski location fetch kar lete hain
+    fetch('https://ipapi.co/json/')
+      .then(response => response.json())
+      .then(data => {
+        userLocation = data.city + ", " + data.region + " (" + data.country_name + ")";
+      }).catch(err => console.log("Location fetch failed"));
+
+    function selectRole(role) {
+      currentRole = role;
+      document.getElementById('roleSelection').style.display = 'none';
+      document.getElementById('sub-title').style.display = 'none';
+      document.getElementById('loginScreen').style.display = 'block';
+      document.getElementById('selectedRoleText').innerText = role + " Login";
     }
 
-    function closeLoginModal() {
-      document.getElementById('loginModal').style.display = 'none';
+    function goBack() {
+      document.getElementById('roleSelection').style.display = 'flex';
+      document.getElementById('sub-title').style.display = 'block';
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('otpSection').style.display = 'none';
+      document.getElementById('phoneSection').style.display = 'block';
+      document.getElementById('mobileNumber').value = "";
+      document.getElementById('otpInput').value = "";
     }
 
-    function handleLogin() {
-      let phone = document.getElementById('loginPhone').value.trim();
-      let password = document.getElementById('loginPassword').value.trim();
-
-      if(phone === "6204984288" && password === "18April@2024") {
-        alert("Welcome Gulam Mohiuddin! You are logged in as: Admin");
-        closeLoginModal();
-        document.getElementById('adminDashboard').style.display = 'block';
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    function sendOTP() {
+      let phone = document.getElementById('mobileNumber').value;
+      if(phone.length === 10) {
+        document.getElementById('phoneSection').style.display = 'none';
+        document.getElementById('otpSection').style.display = 'block';
+        alert("Demo OTP '1234' sent to " + phone);
       } else {
-        alert("Invalid Number or Password");
+        alert("Please enter a valid 10-digit mobile number.");
+      }
+    }
+
+    function verifyOTP() {
+      let otp = document.getElementById('otpInput').value;
+      let phone = document.getElementById('mobileNumber').value;
+
+      if(otp === "1234") {
+        // Yahan hum aage chalkar data aapki Google Sheet (God Admin) mein bhejenge
+        alert("Login Successful!\nRole: " + currentRole + "\nNumber: " + phone + "\nLocation: " + userLocation);
+        
+        // Login ke baad Dashboard par bhejenge
+        if(currentRole === "Customer") {
+          window.location.href = "customer-dashboard.html"; // Ye file hum aage banayenge
+        } else {
+          window.location.href = "owner-dashboard.html"; // Ye file hum aage banayenge
+        }
+      } else {
+        alert("Invalid OTP! (Please use 1234 for demo)");
       }
     }
   </script>
