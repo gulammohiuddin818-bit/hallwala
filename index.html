@@ -335,7 +335,62 @@
         });
     }
     </script>
+
+
+        <!-- LOGIN SYSTEM START -->
+    <!-- एक फ्लोटिंग बटन (लॉगिन के लिए) -->
+    <button onclick="showLogin()" style="position:fixed; bottom:20px; right:20px; background:#2c3e50; color:white; padding:15px 20px; border-radius:30px; border:none; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:9998; font-weight:bold;">🛡️ Login</button>
+
+    <!-- लॉगिन का पॉपअप बॉक्स -->
+    <div id="loginModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center;">
+        <div style="background:white; padding:25px; border-radius:10px; width:90%; max-width:350px; text-align:center;">
+            <h2 style="margin-bottom:20px; color:#2c3e50;">Secure Login</h2>
+            <input type="number" id="loginPhone" placeholder="Mobile Number" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ccc; border-radius:5px; font-size:16px;">
+            <input type="password" id="loginPassword" placeholder="Password" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ccc; border-radius:5px; font-size:16px;">
+            <button onclick="checkLogin()" id="loginBtn" style="width:100%; padding:12px; background:#e74c3c; color:white; border:none; border-radius:5px; font-size:16px; margin-bottom:10px; font-weight:bold;">Login</button>
+            <button onclick="document.getElementById('loginModal').style.display='none'" style="width:100%; padding:12px; background:#95a5a6; color:white; border:none; border-radius:5px; font-size:16px;">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+    function showLogin() {
+        document.getElementById('loginModal').style.display = 'flex';
+    }
+
+    function checkLogin() {
+        let phone = document.getElementById('loginPhone').value;
+        let pass = document.getElementById('loginPassword').value;
+        let btn = document.getElementById('loginBtn');
+
+        if(!phone || !pass) {
+            alert("कृपया अपना मोबाइल नंबर और पासवर्ड डालें!");
+            return;
+        }
+
+        btn.innerText = "Checking...";
+
+        let scriptUrl = "https://script.google.com/macros/s/AKfycbxdy3mYO8r3ba7-OTAR0TLZ_ULKw5N9VHjLLYi7HZ0Uny6k2qNrShQogPF1dax4dpcl/exec";
+        let finalUrl = scriptUrl + "?action=login&phone=" + phone + "&password=" + pass;
+
+        fetch(finalUrl)
+        .then(res => res.json())
+        .then(data => {
+            btn.innerText = "Login";
+            if(data.status === "success") {
+                alert("Welcome " + data.name + "! You are logged in as: " + data.role);
+                document.getElementById('loginModal').style.display = 'none';
+            } else {
+                alert("❌ " + data.message);
+            }
+        }).catch(err => {
+            btn.innerText = "Login";
+            alert("❌ Server Error: Please try again.");
+            console.log(err);
+        });
+    }
+    </script>
     <!-- LOGIN SYSTEM END -->
+    
     
     
 </body>
