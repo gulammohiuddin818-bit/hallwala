@@ -189,9 +189,38 @@
             let offerBtns = document.querySelectorAll('.make-offer-btn');
             offerBtns.forEach(btn => {
                 btn.innerText = translations[lang]['make_offer'];
-                btn.onclick = function() {
-                    alert(lang === 'hi' ? "ऑफर विंडो खुलेगी और ग्राहक ₹99 का टोकन देगा!" : "Offer window will open and customer will pay ₹99 token!");
-                };
+                            btn.onclick = function() {
+                let name = prompt(lang === 'hi' ? "अपना नाम दर्ज करें:" : "Enter your name:");
+                if (!name) return; 
+                
+                let phone = prompt(lang === 'hi' ? "अपना मोबाइल नंबर दर्ज करें:" : "Enter your mobile number:");
+                if (!phone) return;
+                
+                let date = prompt(lang === 'hi' ? "शादी/पार्टी की तारीख (DD/MM/YYYY):" : "Event Date (DD/MM/YYYY):");
+                let offer = prompt(lang === 'hi' ? "आप कितने का ऑफर देना चाहते हैं? (₹):" : "Your Offer Amount (₹):");
+                
+                let originalText = btn.innerText;
+                btn.innerText = (lang === 'hi' ? "भेजा जा रहा है..." : "Sending...");
+                
+                let formData = new FormData();
+                formData.append("name", name);
+                formData.append("phone", phone);
+                formData.append("date", date);
+                formData.append("offer", offer);
+                
+                fetch("https://script.google.com/macros/s/AKfycbxdy3mYO8r3ba7-OTAR0TLZ_ULKw5N9VHjLLYi7HZ0Uny6k2qNrShQogPF1dax4dpcl/exec", {
+                    method: "POST",
+                    mode: "no-cors",
+                    body: formData
+                }).then(() => {
+                    alert(lang === 'hi' ? "✅ धन्यवाद! आपका ऑफर हमारे पास आ गया है। हम जल्द ही आपसे संपर्क करेंगे।" : "✅ Thank You! Your offer has been received.");
+                    btn.innerText = originalText;
+                }).catch(() => {
+                    alert("Error!");
+                    btn.innerText = originalText;
+                });
+            };
+                
             });
         }
     </script>
