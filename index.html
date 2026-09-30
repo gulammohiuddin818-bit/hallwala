@@ -1,513 +1,551 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HallWala - Book Banquet Halls</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HallWala.in - Multi-Vendor Booking</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-        body { background-color: #f4f6f8; color: #333; }
-
-        #languageOverlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #2c3e50; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 9999;
-        }
-        .lang-box {
-            background: white; padding: 30px; border-radius: 12px;
-            text-align: center; width: 90%; max-width: 400px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-        .lang-box h2 { margin-bottom: 20px; color: #2c3e50; font-size: 20px; }
-        .lang-btn {
-            display: block; width: 100%; padding: 14px; margin-bottom: 12px;
-            border: 2px solid #e74c3c; background: white; color: #e74c3c;
-            border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer;
-            transition: 0.3s;
-        }
-        .lang-btn:hover { background: #e74c3c; color: white; }
-
-        #mainApp { display: none; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+        body { background-color: #f4f6f9; color: #333; }
+        header { background: #1e293b; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+        header h1 { font-size: 22px; color: #38bdf8; }
+        .nav-btns button { padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-left: 8px; }
+        .btn-login { background: #38bdf8; color: #0f172a; }
+        .btn-logout { background: #ef4444; color: white; display: none; }
         
-        .header {
-            background: #ffffff; padding: 16px 20px; display: flex;
-            justify-content: space-between; align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100;
-        }
-        .brand { font-size: 24px; font-weight: 900; color: #e74c3c; letter-spacing: -0.5px; }
-        .brand span { color: #2c3e50; }
-        .user-icon { background: #f1f2f6; padding: 8px 12px; border-radius: 20px; font-size: 14px; font-weight: 600; cursor: pointer; }
-
-        .search-section { background: #2c3e50; padding: 25px 20px; color: white; }
-        .search-section h2 { font-size: 18px; margin-bottom: 15px; font-weight: 600; }
-        .search-box { display: flex; background: white; border-radius: 8px; overflow: hidden; }
-        .search-box input { flex: 1; padding: 14px; border: none; outline: none; font-size: 15px; }
-        .search-box button { background: #e74c3c; color: white; border: none; padding: 0 20px; font-weight: bold; cursor: pointer; }
-
-        .listings { padding: 20px; }
-        .section-title { font-size: 16px; margin-bottom: 15px; color: #7f8c8d; font-weight: 600; }
+        .container { max-width: 1100px; margin: 20px auto; padding: 0 15px; }
+        .user-welcome { background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: none; }
         
-        .hall-card {
-            background: white; border-radius: 12px; overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.06); margin-bottom: 20px;
-        }
-        .hall-image { height: 180px; background-size: cover; background-position: center; position: relative; }
-        .badge {
-            position: absolute; top: 12px; left: 12px; background: #27ae60;
-            color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold;
-        }
-        .hall-info { padding: 16px; }
-        .hall-title { font-size: 18px; font-weight: 700; margin-bottom: 5px; }
-        .hall-location { color: #7f8c8d; font-size: 13px; margin-bottom: 12px; }
-        .features { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
-        .feature-tag { background: #f1f2f6; padding: 4px 8px; border-radius: 4px; font-size: 11px; color: #2c3e50; font-weight: 600; }
+        /* Modal / Popup */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: white; padding: 25px; border-radius: 10px; width: 90%; max-width: 400px; }
+        .modal-content h3 { margin-bottom: 15px; text-align: center; color: #1e293b; }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; margin-bottom: 5px; font-size: 14px; font-weight: bold; }
+        .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        .btn-submit { width: 100%; padding: 10px; background: #2563eb; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; margin-top: 10px; }
+        .btn-close { width: 100%; padding: 8px; background: #64748b; color: white; border: none; border-radius: 5px; margin-top: 8px; cursor: pointer; }
+
+        /* Dashboard Views */
+        .dashboard-section { display: none; background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .dashboard-section h2 { border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 15px; color: #0f172a; }
         
-        .price-row { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 12px; }
-        .price-box p { font-size: 11px; color: #7f8c8d; }
-        .price-box h3 { color: #e74c3c; font-size: 18px; }
-        .btn-offer {
-            background: #e74c3c; color: white; border: none; padding: 10px 18px;
-            border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer;
-            box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
-        }
+        /* Halls List Grid */
+        .halls-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+        .hall-card { background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .hall-card h3 { color: #1e293b; margin-bottom: 5px; }
+        .hall-card p { font-size: 14px; color: #64748b; margin-bottom: 5px; }
+        .hall-card .price { font-size: 18px; font-weight: bold; color: #16a34a; margin: 10px 0; }
+        .btn-offer { width: 100%; padding: 8px; background: #16a34a; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+
+        /* Table Design */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 10px; border: 1px solid #e2e8f0; text-align: left; font-size: 14px; }
+        th { background: #f8fafc; }
+        .status-Pending { color: #d97706; font-weight: bold; }
+        .status-Approved { color: #16a34a; font-weight: bold; }
+        .status-Rejected { color: #dc2626; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <!-- Language Selector Overlay -->
-    <div id="languageOverlay">
-        <h1 style="color:white; margin-bottom: 30px; font-size: 32px;">Hall<span style="color:#e74c3c;">Wala</span></h1>
-        <div class="lang-box">
-            <h2>Choose Your Language<br><span style="font-size: 16px; color: #7f8c8d;">अपनी भाषा चुनें</span></h2>
-            <button class="lang-btn" onclick="startApp('hi')">हिन्दी (Hindi)</button>
-            <button class="lang-btn" onclick="startApp('en')">English</button>
+    <header>
+        <h1>HallWala.in</h1>
+        <div class="nav-btns">
+            <button id="loginBtnNav" class="btn-login" onclick="openLoginModal()">Login</button>
+            <button id="logoutBtnNav" class="btn-logout" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Welcome Bar -->
+        <div id="userWelcome" class="user-welcome">
+            <h3 id="welcomeMsg">Welcome!</h3>
+        </div>
+
+        <!-- OWNER DASHBOARD -->
+        <div id="ownerDashboard" class="dashboard-section">
+            <h2>🏢 Hall Owner Dashboard</h2>
+            <button class="btn-submit" style="width: auto; padding: 8px 15px; margin-bottom: 15px;" onclick="openAddHallModal()">+ Add New Hall</button>
+            
+            <h3>Booking Requests For Your Halls</h3>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Customer Name</th>
+                            <th>Customer Phone</th>
+                            <th>Hall Name</th>
+                            <th>Date</th>
+                            <th>Offer Amount</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ownerBookingsTable">
+                        <tr><td colspan="8" style="text-align:center;">Loading...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- CUSTOMER DASHBOARD -->
+        <div id="customerDashboard" class="dashboard-section">
+            <h2>📋 Your Booking Requests</h2>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Hall Name</th>
+                            <th>Event Date</th>
+                            <th>Your Offer</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customerBookingsTable">
+                        <tr><td colspan="5" style="text-align:center;">Loading...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SUPERADMIN DASHBOARD -->
+        <div id="adminDashboard" class="dashboard-section">
+            <h2>👑 Super Admin Control Panel</h2>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Customer</th>
+                            <th>Phone</th>
+                            <th>Hall</th>
+                            <th>Date</th>
+                            <th>Offer</th>
+                            <th>Status</th>
+                            <th>Owner Phone</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminBookingsTable">
+                        <tr><td colspan="8" style="text-align:center;">Loading...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- PUBLIC HALLS LISTING -->
+        <h2 style="margin-top: 20px;">Available Halls & Marriage Lawns</h2>
+        <div id="hallsContainer" class="halls-grid">
+            <p>Halls load ho rahe hain...</p>
         </div>
     </div>
 
-    <!-- Main App UI -->
-    <div id="mainApp">
-        <div class="header">
-            <div class="brand">Hall<span>Wala</span></div>
-            <div class="user-icon" id="txt_login">👤 Login</div>
-        </div>
-
-        <div class="search-section">
-            <h2 id="txt_search_title">Find the Best Banquet Hall</h2>
-            <div class="search-box">
-                <input type="text" id="txt_search_placeholder" placeholder="Enter City (e.g., Bokaro)">
-                <button id="txt_search_btn">Search</button>
+    <!-- LOGIN MODAL -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h3>Login to HallWala</h3>
+            <div class="form-group">
+                <label>Mobile Number</label>
+                <input type="number" id="loginPhone" placeholder="Enter mobile number">
             </div>
-        </div>
-
-        <div class="listings">
-            <div class="section-title" id="txt_section_title">📍 Top Marriage Halls</div>
-
-            <!-- Hall 1 -->
-            <div class="hall-card">
-                <div class="hall-image" style="background-image: url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80');">
-                    <div class="badge" id="txt_sponsored">Sponsored</div>
-                </div>
-                <div class="hall-info">
-                    <div class="hall-title">Grand Palace Banquet Hall</div>
-                    <div class="hall-location">📍 Sector 4, Bokaro Steel City</div>
-                    <div class="features">
-                        <span class="feature-tag">❄️ AC Hall</span>
-                        <span class="feature-tag">🚗 50+ Parking</span>
-                        <span class="feature-tag">👥 500 Capacity</span>
-                    </div>
-                    <div class="price-row">
-                        <div class="price-box">
-                            <p id="txt_base_price1">Base Price (1 Day)</p>
-                            <h3>₹65,000</h3>
-                        </div>
-                        <button class="btn-offer make-offer-btn">Make Offer</button>
-                    </div>
-                </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="loginPassword" placeholder="Enter password">
             </div>
-
-            <!-- Hall 2 -->
-            <div class="hall-card">
-                <div class="hall-image" style="background-image: url('https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?auto=format&fit=crop&w=800&q=80');"></div>
-                <div class="hall-info">
-                    <div class="hall-title">Royal Garden Marriage Lawn</div>
-                    <div class="hall-location">📍 Islampur, Bokaro</div>
-                    <div class="features">
-                        <span class="feature-tag">🌿 Open Lawn</span>
-                        <span class="feature-tag">🛏️ 2 AC Rooms</span>
-                    </div>
-                    <div class="price-row">
-                        <div class="price-box">
-                            <p id="txt_base_price2">Base Price (1 Day)</p>
-                            <h3>₹45,000</h3>
-                        </div>
-                        <button class="btn-offer make-offer-btn">Make Offer</button>
-                    </div>
-                </div>
-            </div>
-
+            <button class="btn-submit" id="btnLoginSubmit" onclick="checkLogin()">Login</button>
+            <button class="btn-close" onclick="closeLoginModal()">Cancel</button>
         </div>
     </div>
 
-    <!-- Application Logic -->
+    <!-- ADD HALL MODAL (For Owners) -->
+    <div id="addHallModal" class="modal">
+        <div class="modal-content">
+            <h3>Add Your Hall Details</h3>
+            <div class="form-group">
+                <label>Hall Name</label>
+                <input type="text" id="hallName" placeholder="e.g. Royal Marriage Lawn">
+            </div>
+            <div class="form-group">
+                <label>Location</label>
+                <input type="text" id="hallLocation" placeholder="e.g. Islampur, Bokaro">
+            </div>
+            <div class="form-group">
+                <label>Base Price per day (₹)</label>
+                <input type="number" id="hallPrice" placeholder="e.g. 45000">
+            </div>
+            <div class="form-group">
+                <label>Facilities</label>
+                <input type="text" id="hallFacilities" placeholder="e.g. AC, Parking, Open Lawn">
+            </div>
+            <button class="btn-submit" id="btnAddHallSubmit" onclick="submitNewHall()">Save Hall</button>
+            <button class="btn-close" onclick="closeAddHallModal()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- MAKE OFFER MODAL (For Customers) -->
+    <div id="offerModal" class="modal">
+        <div class="modal-content">
+            <h3 id="offerModalTitle">Send Offer</h3>
+            <input type="hidden" id="selectedHallName">
+            <input type="hidden" id="selectedOwnerPhone">
+            
+            <div class="form-group">
+                <label>Your Name</label>
+                <input type="text" id="custName" placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+                <label>Event Date</label>
+                <input type="date" id="eventDate">
+            </div>
+            <div class="form-group">
+                <label>Your Offer Price (₹)</label>
+                <input type="number" id="offerAmount" placeholder="Enter offer amount">
+            </div>
+            <button class="btn-submit" id="btnOfferSubmit" onclick="submitOffer()">Send Offer Request</button>
+            <button class="btn-close" onclick="closeOfferModal()">Cancel</button>
+        </div>
+    </div>
+
     <script>
-        const translations = {
-            'en': {
-                'login': '👤 Login',
-                'search_title': 'Find the Best Banquet Hall',
-                'search_placeholder': 'Enter City or Area (e.g., Bokaro)',
-                'search_btn': 'Search',
-                'section_title': '📍 Top Marriage Halls',
-                'sponsored': 'Sponsored',
-                'base_price': 'Base Price (1 Day)',
-                'make_offer': 'Make Offer'
-            },
-            'hi': {
-                'login': '👤 लॉगिन',
-                'search_title': 'अपनी शादी के लिए बेस्ट हॉल खोजें',
-                'search_placeholder': 'शहर या एरिया का नाम डालें (उदा: Bokaro)',
-                'search_btn': 'खोजें',
-                'section_title': '📍 टॉप मैरिज हॉल',
-                'sponsored': 'प्रायोजित',
-                'base_price': 'बेस प्राइस (1 दिन)',
-                'make_offer': 'ऑफर दें'
-            }
+        let SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdy3mYO8r3ba7-OTAR0TLZ_ULKw5N9Vp30uC3214i-kAn4Wp-j5eJ0X92G-z29Y2d2/exec"; // APNA GOOGLE SCRIPT URL PASTE KAREIN
+
+        let currentUser = null;
+
+        window.onload = function() {
+            loadHalls();
+            checkSavedUser();
         };
 
-        function startApp(lang) {
-            document.getElementById('languageOverlay').style.display = 'none';
-            document.getElementById('mainApp').style.display = 'block';
+        function openLoginModal() { document.getElementById('loginModal').style.display = 'flex'; }
+        function closeLoginModal() { document.getElementById('loginModal').style.display = 'none'; }
+        
+        function openAddHallModal() { document.getElementById('addHallModal').style.display = 'flex'; }
+        function closeAddHallModal() { document.getElementById('addHallModal').style.display = 'none'; }
+
+        function openOfferModal(hallName, ownerPhone) {
+            if(!currentUser) {
+                alert("Pehle Customer Login karein!");
+                openLoginModal();
+                return;
+            }
+            document.getElementById('selectedHallName').value = hallName;
+            document.getElementById('selectedOwnerPhone').value = ownerPhone;
+            document.getElementById('offerModalTitle').innerText = "Send Offer for " + hallName;
+            document.getElementById('offerModal').style.display = 'flex';
+        }
+        function closeOfferModal() { document.getElementById('offerModal').style.display = 'none'; }
+
+        function checkLogin() {
+            let phone = document.getElementById('loginPhone').value.trim();
+            let pass = document.getElementById('loginPassword').value.trim();
+            let btn = document.getElementById('btnLoginSubmit');
+
+            if(!phone || !pass) {
+                alert("Kripya Phone aur Password dono bharein!");
+                return;
+            }
+
+            btn.innerText = "Logging in...";
             
-            document.getElementById('txt_login').innerText = translations[lang]['login'];
-            document.getElementById('txt_search_title').innerText = translations[lang]['search_title'];
-            document.getElementById('txt_search_placeholder').placeholder = translations[lang]['search_placeholder'];
-            document.getElementById('txt_search_btn').innerText = translations[lang]['search_btn'];
-            document.getElementById('txt_section_title').innerText = translations[lang]['section_title'];
-            document.getElementById('txt_sponsored').innerText = translations[lang]['sponsored'];
-            document.getElementById('txt_base_price1').innerText = translations[lang]['base_price'];
-            document.getElementById('txt_base_price2').innerText = translations[lang]['base_price'];
+            fetch(`${SCRIPT_URL}?action=login&phone=${encodeURIComponent(phone)}&password=${encodeURIComponent(pass)}`)
+            .then(res => res.json())
+            .then(data => {
+                btn.innerText = "Login";
+                if(data.status === "success") {
+                    currentUser = data.user;
+                    localStorage.setItem('hallwala_user', JSON.stringify(currentUser));
+                    closeLoginModal();
+                    setupUserUI();
+                    alert("Welcome " + currentUser.name + " (" + currentUser.role + ")");
+                } else {
+                    alert("❌ " + data.message);
+                }
+            })
+            .catch(err => {
+                btn.innerText = "Login";
+                alert("Error connecting to server!");
+            });
+        }
+
+        function checkSavedUser() {
+            let saved = localStorage.getItem('hallwala_user');
+            if(saved) {
+                currentUser = JSON.parse(saved);
+                setupUserUI();
+            }
+        }
+
+        function setupUserUI() {
+            if(!currentUser) return;
+
+            document.getElementById('loginBtnNav').style.display = 'none';
+            document.getElementById('logoutBtnNav').style.display = 'inline-block';
             
-            let offerBtns = document.querySelectorAll('.make-offer-btn');
-            offerBtns.forEach(btn => {
-                btn.innerText = translations[lang]['make_offer'];
-                            btn.onclick = function() {
-                let name = prompt(lang === 'hi' ? "अपना नाम दर्ज करें:" : "Enter your name:");
-                if (!name) return; 
-                
-                let phone = prompt(lang === 'hi' ? "अपना मोबाइल नंबर दर्ज करें:" : "Enter your mobile number:");
-                if (!phone) return;
-                
-                let date = prompt(lang === 'hi' ? "शादी/पार्टी की तारीख (DD/MM/YYYY):" : "Event Date (DD/MM/YYYY):");
-                let offer = prompt(lang === 'hi' ? "आप कितने का ऑफर देना चाहते हैं? (₹):" : "Your Offer Amount (₹):");
-                
-                let originalText = btn.innerText;
-                btn.innerText = (lang === 'hi' ? "भेजा जा रहा है..." : "Sending...");
-                
-                let formData = new FormData();
-                formData.append("name", name);
-                formData.append("phone", phone);
-                formData.append("date", date);
-                formData.append("offer", offer);
-                
-                fetch("https://script.google.com/macros/s/AKfycbxdy3mYO8r3ba7-OTAR0TLZ_ULKw5N9VHjLLYi7HZ0Uny6k2qNrShQogPF1dax4dpcl/exec", {
-                    method: "POST",
-                    mode: "no-cors",
-                    body: formData
-                }).then(() => {
-                    alert(lang === 'hi' ? "✅ धन्यवाद! आपका ऑफर हमारे पास आ गया है। हम जल्द ही आपसे संपर्क करेंगे।" : "✅ Thank You! Your offer has been received.");
-                    btn.innerText = originalText;
-                }).catch(() => {
-                    alert("Error!");
-                    btn.innerText = originalText;
-                });
+            document.getElementById('userWelcome').style.display = 'block';
+            document.getElementById('welcomeMsg').innerText = `Welcome, ${currentUser.name} (${currentUser.role})`;
+
+            // Hide all dashboards first
+            document.getElementById('ownerDashboard').style.display = 'none';
+            document.getElementById('customerDashboard').style.display = 'none';
+            document.getElementById('adminDashboard').style.display = 'none';
+
+            // Role wise display
+            if(currentUser.role === 'Owner') {
+                document.getElementById('ownerDashboard').style.display = 'block';
+                loadBookings();
+            } else if(currentUser.role === 'Customer') {
+                document.getElementById('customerDashboard').style.display = 'block';
+                loadBookings();
+            } else if(currentUser.role === 'SuperAdmin') {
+                document.getElementById('adminDashboard').style.display = 'block';
+                loadBookings();
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('hallwala_user');
+            currentUser = null;
+            location.reload();
+        }
+
+        function loadHalls() {
+            fetch(`${SCRIPT_URL}?action=getHalls`)
+            .then(res => res.json())
+            .then(data => {
+                let container = document.getElementById('hallsContainer');
+                if(data.status === 'success' && data.halls.length > 0) {
+                    let html = '';
+                    data.halls.forEach(hall => {
+                        html += `
+                            <div class="hall-card">
+                                <h3>${hall.hallName}</h3>
+                                <p>📍 ${hall.location}</p>
+                                <p>✨ Facilities: ${hall.facilities}</p>
+                                <p>👤 Owner: ${hall.ownerName}</p>
+                                <div class="price">Base Price: ₹${hall.price}</div>
+                                <button class="btn-offer" onclick="openOfferModal('${hall.hallName}', '${hall.ownerPhone}')">Make Offer</button>
+                            </div>
+                        `;
+                    });
+                    container.innerHTML = html;
+                } else {
+                    container.innerHTML = '<p>Abhi koi hall list nahi hua hai.</p>';
+                }
+            });
+        }
+
+        function submitNewHall() {
+            if(!currentUser || currentUser.role !== 'Owner') return;
+
+            let hallName = document.getElementById('hallName').value.trim();
+            let location = document.getElementById('hallLocation').value.trim();
+            let price = document.getElementById('hallPrice').value.trim();
+            let facilities = document.getElementById('hallFacilities').value.trim();
+
+            if(!hallName || !location || !price) {
+                alert("Kripya sabhi zaroori jankari bharein!");
+                return;
+            }
+
+            let btn = document.getElementById('btnAddHallSubmit');
+            btn.innerText = "Saving...";
+
+            let payload = {
+                action: "addHall",
+                ownerName: currentUser.name,
+                ownerPhone: currentUser.phone,
+                hallName: hallName,
+                location: location,
+                price: price,
+                facilities: facilities
             };
-                
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                btn.innerText = "Save Hall";
+                if(data.status === 'success') {
+                    alert(data.message);
+                    closeAddHallModal();
+                    loadHalls();
+                } else {
+                    alert("Error: " + data.message);
+                }
+            });
+        }
+
+        function submitOffer() {
+            let hallName = document.getElementById('selectedHallName').value;
+            let ownerPhone = document.getElementById('selectedOwnerPhone').value;
+            let custName = document.getElementById('custName').value.trim();
+            let eventDate = document.getElementById('eventDate').value;
+            let offerAmount = document.getElementById('offerAmount').value;
+
+            if(!custName || !eventDate || !offerAmount) {
+                alert("Kripya sabhi details bharein!");
+                return;
+            }
+
+            let btn = document.getElementById('btnOfferSubmit');
+            btn.innerText = "Sending...";
+
+            let payload = {
+                action: "addBooking",
+                customerName: custName,
+                customerPhone: currentUser.phone,
+                hallName: hallName,
+                date: eventDate,
+                offerAmount: offerAmount,
+                ownerPhone: ownerPhone
+            };
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                btn.innerText = "Send Offer Request";
+                if(data.status === 'success') {
+                    alert(data.message);
+                    closeOfferModal();
+                    loadBookings();
+                } else {
+                    alert("Error: " + data.message);
+                }
+            });
+        }
+
+        function loadBookings() {
+            if(!currentUser) return;
+
+            fetch(`${SCRIPT_URL}?action=getBookings&phone=${encodeURIComponent(currentUser.phone)}&role=${encodeURIComponent(currentUser.role)}`)
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === 'success') {
+                    if(currentUser.role === 'Owner') {
+                        renderOwnerBookings(data.bookings);
+                    } else if(currentUser.role === 'Customer') {
+                        renderCustomerBookings(data.bookings);
+                    } else if(currentUser.role === 'SuperAdmin') {
+                        renderAdminBookings(data.bookings);
+                    }
+                }
+            });
+        }
+
+        function renderOwnerBookings(bookings) {
+            let tbody = document.getElementById('ownerBookingsTable');
+            if(bookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">Abhi koi booking request nahi aayi hai.</td></tr>';
+                return;
+            }
+            let html = '';
+            bookings.forEach(b => {
+                html += `
+                    <tr>
+                        <td>${b.id}</td>
+                        <td>${b.customerName}</td>
+                        <td
+                                function renderOwnerBookings(bookings) {
+            let tbody = document.getElementById('ownerBookingsTable');
+            if(bookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">Abhi koi booking request nahi aayi hai.</td></tr>';
+                return;
+            }
+            let html = '';
+            bookings.forEach(b => {
+                html += `
+                    <tr>
+                        <td>${b.id}</td>
+                        <td>${b.customerName}</td>
+                        <td>${b.customerPhone}</td>
+                        <td>${b.hallName}</td>
+                        <td>${b.date}</td>
+                        <td>₹${b.offerAmount}</td>
+                        <td class="status-${b.status}">${b.status}</td>
+                        <td>
+                            ${b.status === 'Pending' ? `
+                                <button onclick="updateStatus('${b.id}', 'Approved')" style="background:#16a34a; color:white; border:none; padding:4px 8px; border-radius:3px; cursor:pointer;">Accept</button>
+                                <button onclick="updateStatus('${b.id}', 'Rejected')" style="background:#dc2626; color:white; border:none; padding:4px 8px; border-radius:3px; cursor:pointer;">Reject</button>
+                            ` : 'No Action'}
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+ function renderCustomerBookings(bookings) {
+            let tbody = document.getElementById('customerBookingsTable');
+            if(bookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Aapne abhi tak koi request nahi bheji hai.</td></tr>';
+                return;
+            }
+            let html = '';
+            bookings.forEach(b => {
+                html += `
+                    <tr>
+                        <td>${b.id}</td>
+                        <td>${b.hallName}</td>
+                        <td>${b.date}</td>
+                        <td>₹${b.offerAmount}</td>
+                        <td class="status-${b.status}">${b.status}</td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function renderAdminBookings(bookings) {
+            let tbody = document.getElementById('adminBookingsTable');
+            if(bookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">System me koi booking nahi hai.</td></tr>';
+                return;
+            }
+            let html = '';
+            bookings.forEach(b => {
+                html += `
+                    <tr>
+                        <td>${b.id}</td>
+                        <td>${b.customerName}</td>
+                        <td>${b.customerPhone}</td>
+                        <td>${b.hallName}</td>
+                        <td>${b.date}</td>
+                        <td>₹${b.offerAmount}</td>
+                        <td class="status-${b.status}">${b.status}</td>
+                        <td>${b.ownerPhone}</td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function updateStatus(bookingId, newStatus) {
+            let payload = {
+                action: "updateStatus",
+                bookingId: bookingId,
+                newStatus: newStatus
+            };
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === 'success') {
+                    alert(data.message);
+                    loadBookings();
+                } else {
+                    alert("Error: " + data.message);
+                }
             });
         }
     </script>
-        <!-- LOGIN SYSTEM START -->
-    <!-- एक फ्लोटिंग बटन (लॉगिन के लिए) -->
-    <button onclick="showLogin()" style="position:fixed; bottom:20px; right:20px; background:#2c3e50; color:white; padding:15px 20px; border-radius:30px; border:none; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:9998; font-weight:bold;">🛡️ Login</button>
-
-    <!-- लॉगिन का पॉपअप बॉक्स -->
-    <div id="loginModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center;">
-        <div style="background:white; padding:25px; border-radius:10px; width:90%; max-width:350px; text-align:center;">
-            <h2 style="margin-bottom:20px; color:#2c3e50;">Secure Login</h2>
-            <input type="number" id="loginPhone" placeholder="Mobile Number" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ccc; border-radius:5px; font-size:16px;">
-            <input type="password" id="loginPassword" placeholder="Password" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ccc; border-radius:5px; font-size:16px;">
-            <button onclick="checkLogin()" id="loginBtn" style="width:100%; padding:12px; background:#e74c3c; color:white; border:none; border-radius:5px; font-size:16px; margin-bottom:10px; font-weight:bold;">Login</button>
-            <button onclick="document.getElementById('loginModal').style.display='none'" style="width:100%; padding:12px; background:#95a5a6; color:white; border:none; border-radius:5px; font-size:16px;">Cancel</button>
-        </div>
-    </div>
-
-    <script>
-    function showLogin() {
-        document.getElementById('loginModal').style.display = 'flex';
-    }
-
-    function checkLogin() {
-        let phone = document.getElementById('loginPhone').value;
-        let pass = document.getElementById('loginPassword').value;
-        let btn = document.getElementById('loginBtn');
-
-        if(!phone || !pass) {
-            alert("कृपया अपना मोबाइल नंबर और पासवर्ड डालें!");
-            return;
-        }
-
-        btn.innerText = "Checking...";
-
-        let url = "https://script.google.com/macros/s/AKfycbxdy3mYO8r3ba7-OTAR0TLZ_ULKw5N9VHjLLYi7HZ0Uny6k2qNrShQogPF1dax4dpcl/exec";
-        
-        let formData = new FormData();
-        formData.append("action", "login");
-        formData.append("phone", phone);
-        formData.append("password", pass);
-
-        fetch(url, {
-            method: "POST",
-            body: formData
-        }).then(res => res.json())
-        .then(data => {
-            btn.innerText = "Login";
-            if(data.status === "success") {
-                alert("Welcome " + data.name + "! You are logged in as: " + data.role);
-                document.getElementById('loginModal').style.display = 'none';
-                // यहाँ हम अगले स्टेप में आपका God App खोलेंगे!
-            } else {
-                alert("❌ " + data.message);
-            }
-        }).catch(err => {
-            btn.innerText = "Login";
-            alert("✅ Successfully connected to Admin backend (Check permissions)");
-        });
-    }
-    </script>
-
-        <!-- LOGIN SYSTEM START -->
-    <!-- एक फ्लोटिंग बटन (लॉगिन के लिए) -->
-    <button onclick="showLogin()" style="position:fixed; bottom:20px; right:20px; background:#2c3e50; color:white; padding:15px 20px; border-radius:30px; border:none; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:9998; font-weight:bold;">🛡️ Login</button>
-
-    <!-- लॉगिन का पॉपअप बॉक्स -->
-    <div id="loginModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center;">
-        <div style="background:white; padding:25px; border-radius:10px; width:90%; max-width:350px; text-align:center;">
-            <h2 style="margin-bottom:20px; color:#2c3e50;">Secure Login</h2>
-            <input type="number" id="loginPhone" placeholder="Mobile Number" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ccc; border-radius:5px; font-size:16px;">
-            <input type="password" id="loginPassword" placeholder="Password" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ccc; border-radius:5px; font-size:16px;">
-            <button onclick="checkLogin()" id="loginBtn" style="width:100%; padding:12px; background:#e74c3c; color:white; border:none; border-radius:5px; font-size:16px; margin-bottom:10px; font-weight:bold;">Login</button>
-            <button onclick="document.getElementById('loginModal').style.display='none'" style="width:100%; padding:12px; background:#95a5a6; color:white; border:none; border-radius:5px; font-size:16px;">Cancel</button>
-        </div>
-    </div>
-
-    <script>
-    function showLogin() {
-        document.getElementById('loginModal').style.display = 'flex';
-    }
-
-    function checkLogin() {
-        let phone = document.getElementById('loginPhone').value;
-        let pass = document.getElementById('loginPassword').value;
-        let btn = document.getElementById('loginBtn');
-
-        if(!phone || !pass) {
-            alert("कृपया अपना मोबाइल नंबर और पासवर्ड डालें!");
-            return;
-        }
-
-        btn.innerText = "Checking...";
-
-        let scriptUrl = "https://script.google.com/macros/s/AKfycbxdy3mYO8r3ba7-OTAR0TLZ_ULKw5N9VHjLLYi7HZ0Uny6k2qNrShQogPF1dax4dpcl/exec";
-        let finalUrl = scriptUrl + "?action=login&phone=" + phone + "&password=" + pass;
-
-        fetch(finalUrl)
-        .then(res => res.json())
-        .then(data => {
-            btn.innerText = "Login";
-            if(data.status === "success") {
-                alert("Welcome " + data.name + "! You are logged in as: " + data.role);
-                document.getElementById('loginModal').style.display = 'none';
-            } else {
-                alert("❌ " + data.message);
-            }
-        }).catch(err => {
-            btn.innerText = "Login";
-            alert("❌ Server Error: Please try again.");
-            console.log(err);
-        });
-    }
-    </script>
-
-
-        <!-- LOGIN SYSTEM START -->
-    <!-- एक फ्लोटिंग बटन (लॉगिन के लिए) -->
-    <button onclick="showLogin()" style="position:fixed; bottom:20px; right:20px; background:#2c3e50; color:white; padding:15px 20px; border-radius:30px; border:none; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:9998; font-weight:bold;">🛡️ Login</button>
-
-    <!-- लॉगिन का पॉपअप बॉक्स -->
-    <div id="loginModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center;">
-        <div style="background:white; padding:25px; border-radius:10px; width:90%; max-width:350px; text-align:center;">
-            <h2 style="margin-bottom:20px; color:#2c3e50;">Secure Login</h2>
-            <input type="number" id="loginPhone" placeholder="Mobile Number" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ccc; border-radius:5px; font-size:16px;">
-            <input type="password" id="loginPassword" placeholder="Password" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ccc; border-radius:5px; font-size:16px;">
-            <button onclick="checkLogin()" id="loginBtn" style="width:100%; padding:12px; background:#e74c3c; color:white; border:none; border-radius:5px; font-size:16px; margin-bottom:10px; font-weight:bold;">Login</button>
-            <button onclick="document.getElementById('loginModal').style.display='none'" style="width:100%; padding:12px; background:#95a5a6; color:white; border:none; border-radius:5px; font-size:16px;">Cancel</button>
-        </div>
-    </div>
-<!-- ADMIN DASHBOARD UI START -->
-<div id="adminDashboard" style="display:none; padding:15px; margin:15px 0; background:#ffffff; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
-  <h2 style="color:#1a73e8; text-align:center; margin-bottom:15px;">Admin Dashboard</h2>
-  
-  <div style="display:flex; gap:10px; margin-bottom:15px;">
-    <div style="flex:1; background:#e3f2fd; padding:12px; border-radius:8px; text-align:center;">
-      <span style="font-size:12px; color:#555;">Total Bookings</span>
-      <h3 id="totalBookings" style="margin-top:5px; color:#1a73e8;">0</h3>
-    </div>
-    <div style="flex:1; background:#fff3e0; padding:12px; border-radius:8px; text-align:center;">
-      <span style="font-size:12px; color:#555;">Pending</span>
-      <h3 id="pendingBookings" style="margin-top:5px; color:#e65100;">0</h3>
-    </div>
-  </div>
-
-  <h4 style="margin-bottom:10px;">All Requests</h4>
-  <div style="overflow-x:auto;">
-    <table border="1" style="width:100%; border-collapse:collapse; text-align:left; font-size:13px;">
-      <thead>
-        <tr style="background:#f5f5f5;">
-          <th style="padding:8px;">ID</th>
-          <th style="padding:8px;">Customer</th>
-          <th style="padding:8px;">Phone</th>
-          <th style="padding:8px;">Hall</th>
-          <th style="padding:8px;">Date</th>
-          <th style="padding:8px;">Status</th>
-          <th style="padding:8px;">Action</th>
-        </tr>
-      </thead>
-      <tbody id="bookingsTableBody">
-        <tr><td colspan="7" style="text-align:center; padding:10px;">Login karein data dekhne ke liye.</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-<!-- ADMIN DASHBOARD UI END -->
-
-<script>
-function showLogin() {
-    let modal = document.getElementById('loginModal');
-    if(modal) modal.style.display = 'block';
-}
-
-function checkLogin() {
-    let phone = document.getElementById('loginPhone');
-    let pass = document.getElementById('loginPassword');
-    let btn = document.getElementById('loginBtn');
-
-    if(!phone || !pass || !phone.value || !pass.value) {
-        alert("Kripya mobile number aur password dono bharein!");
-        return;
-    }
-
-    btn.innerText = "Checking...";
-
-    // ⚠️ YAHA APNA REAL APPS SCRIPT WEB APP URL PASTE KAREIN
-    let scriptUrl = "https://script.google.com/macros/s/AKfycbxdy3mYO8r3ba7-OTAR0TLZ_ULKw5N9VHjLLYi7HZ0Uny6k2qNrShQogPF1dax4dpcl/exec"; 
-    
-    let finalUrl = scriptUrl + "?action=login&phone=" + encodeURIComponent(phone.value) + "&password=" + encodeURIComponent(pass.value);
-
-    fetch(finalUrl)
-    .then(res => res.json())
-    .then(data => {
-        btn.innerText = "Login";
-        if (data.status === "success") {
-            alert("Welcome " + data.name + "!");
-            
-            let modal = document.getElementById('loginModal');
-            if(modal) modal.style.display = 'none';
-            
-            document.getElementById('adminDashboard').style.display = 'block';
-            loadBookings(scriptUrl);
-        } else {
-            alert("❌ " + data.message);
-        }
-    }).catch(err => {
-        btn.innerText = "Login";
-        alert("❌ Server Error: Please try again.");
-        console.log(err);
-    });
-}
-
-function loadBookings(scriptUrl) {
-  const tbody = document.getElementById("bookingsTableBody");
-  tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:10px;">Data load ho raha hai...</td></tr>`;
-
-  fetch(scriptUrl + "?action=getBookings")
-    .then(res => res.json())
-    .then(res => {
-      if (res.status === "success") {
-        renderBookingsTable(res.data, scriptUrl);
-      } else {
-        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red; padding:10px;">${res.message}</td></tr>`;
-      }
-    })
-    .catch(err => {
-      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red; padding:10px;">Data load karne me error aaya!</td></tr>`;
-    });
-}
-
-function renderBookingsTable(bookings, scriptUrl) {
-  const tbody = document.getElementById("bookingsTableBody");
-  tbody.innerHTML = "";
-
-  if (!bookings || bookings.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:10px;">Koi booking nahi mili.</td></tr>`;
-    return;
-  }
-
-  let pendingCount = 0;
-
-  bookings.forEach(b => {
-    if (b.status === "Pending") pendingCount++;
-
-    tbody.innerHTML += `
-      <tr>
-        <td style="padding:6px;"><b>${b.id}</b></td>
-        <td style="padding:6px;">${b.name}</td>
-        <td style="padding:6px;">${b.phone}</td>
-        <td style="padding:6px;">${b.hall}</td>
-        <td style="padding:6px;">${b.date}</td>
-        <td style="padding:6px;"><b>${b.status}</b></td>
-        <td style="padding:6px;">
-          <button onclick="updateStatus('${b.id}', 'Confirmed', '${scriptUrl}')" style="background:#28a745; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">Confirm</button>
-          <button onclick="updateStatus('${b.id}', 'Cancelled', '${scriptUrl}')" style="background:#dc3545; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">Cancel</button>
-        </td>
-      </tr>
-    `;
-  });
-
-  document.getElementById("totalBookings").innerText = bookings.length;
-  document.getElementById("pendingBookings").innerText = pendingCount;
-}
-
-function updateStatus(bookingId, newStatus, scriptUrl) {
-  if (!confirm(`Kya aap booking ${bookingId} ko ${newStatus} karna chahte hain?`)) return;
-
-  fetch(scriptUrl, {
-    method: "POST",
-    body: JSON.stringify({
-      action: "updateStatus",
-      bookingId: bookingId,
-      newStatus: newStatus
-    })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.status === "success") {
-      alert("Status update ho gaya: " + newStatus);
-      loadBookings(scriptUrl);
-    } else {
-      alert("Error: " + data.message);
-    }
-  })
-  .catch(err => alert("Server error!"));
-}
-</script>
-
 </body>
 </html>
