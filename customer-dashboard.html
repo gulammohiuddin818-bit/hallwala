@@ -19,7 +19,7 @@
       --success: #16a34a;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body { background-color: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 50px; }
+    body { background-color: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 60px; }
 
     header {
       background: var(--card);
@@ -63,71 +63,104 @@
       cursor: pointer;
     }
 
-    .hero-banner {
+    /* Filter & Location Header */
+    .filter-section {
       background: linear-gradient(135deg, #1e1b4b, #312e81);
       color: white;
-      padding: 36px 20px;
-      text-align: center;
+      padding: 28px 20px;
     }
-    .hero-banner h2 { font-size: 24px; margin-bottom: 8px; font-weight: 800; }
-    .hero-banner p { font-size: 14px; color: #c7d2fe; margin-bottom: 20px; }
-
-    .search-bar {
-      max-width: 600px;
+    .filter-section h2 { font-size: 22px; margin-bottom: 16px; text-align: center; font-weight: 800; }
+    
+    .filter-bar {
+      max-width: 900px;
       margin: 0 auto;
-      display: flex;
-      gap: 8px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.5fr;
+      gap: 10px;
       background: white;
-      padding: 6px;
-      border-radius: 12px;
+      padding: 10px;
+      border-radius: 14px;
     }
-    .search-bar input {
-      flex: 1;
-      border: none;
+    @media(max-width: 700px) {
+      .filter-bar { grid-template-columns: 1fr; }
+    }
+    .filter-control {
       padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
       font-size: 14px;
       outline: none;
-    }
-    .search-bar button {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: 700;
-      cursor: pointer;
+      color: var(--text);
+      font-weight: 600;
     }
 
     .main-wrap {
-      max-width: 1100px;
-      margin: 30px auto;
+      max-width: 1150px;
+      margin: 24px auto;
       padding: 0 16px;
     }
+    .results-count {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    /* Hall Cards Grid */
     .hall-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 22px;
     }
     .hall-card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 18px;
       overflow: hidden;
-      cursor: pointer;
-      transition: 0.2s;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
     }
-    .hall-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px -10px rgba(0,0,0,0.15); }
-    .hall-image {
-      height: 180px;
+    
+    .media-thumb {
+      position: relative;
+      height: 190px;
       width: 100%;
+      cursor: pointer;
       background-size: cover;
       background-position: center;
     }
-    .hall-details { padding: 18px; }
-    .hall-title { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+    .media-badge {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(15, 23, 42, 0.85);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .tap-hint {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(79, 70, 229, 0.9);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .hall-details { padding: 18px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+    .hall-title { font-size: 17px; font-weight: 800; margin-bottom: 4px; }
     .hall-loc { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
     
-    .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+    .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
     .tag {
       background: #f1f5f9;
       color: #475569;
@@ -136,6 +169,7 @@
       font-size: 11px;
       font-weight: 600;
     }
+
     .action-row {
       display: flex;
       justify-content: space-between;
@@ -143,25 +177,26 @@
       border-top: 1px solid var(--border);
       padding-top: 14px;
     }
-    .rent-price { font-size: 18px; font-weight: 800; }
-    .btn-view {
-      background: var(--primary);
+    .rent-price { font-size: 18px; font-weight: 800; color: var(--text); }
+    .btn-offer {
+      background: var(--accent);
       color: white;
       border: none;
-      padding: 10px 16px;
+      padding: 10px 14px;
       border-radius: 10px;
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
     }
+    .btn-offer:hover { background: #e11d48; }
 
-    /* POPUP MODAL (Hall Details & Calendar) */
+    /* MODAL OVERLAYS */
     .modal-overlay {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.7);
-      backdrop-filter: blur(6px);
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(5px);
       z-index: 1000;
       overflow-y: auto;
       padding: 20px 10px;
@@ -171,58 +206,70 @@
       background: white;
       margin: 20px auto;
       border-radius: 20px;
-      padding: 24px;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+      padding: 22px;
       position: relative;
     }
     .modal-close {
       position: absolute;
-      top: 16px;
-      right: 16px;
+      top: 14px;
+      right: 14px;
       background: #f1f5f9;
       border: none;
       font-size: 18px;
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       cursor: pointer;
       font-weight: 700;
     }
 
-    /* Facility Comparison */
-    .facility-grid {
+    /* Gallery Photos & Video */
+    .gallery-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
       margin: 16px 0;
-      background: #f8fafc;
-      padding: 14px;
-      border-radius: 12px;
     }
-    .fac-item { font-size: 13px; display: flex; align-items: center; gap: 8px; font-weight: 600; }
-    .yes { color: var(--success); }
-    .no { color: var(--danger); }
+    .gallery-item {
+      height: 140px;
+      border-radius: 10px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    .gallery-label {
+      position: absolute;
+      bottom: 6px;
+      left: 6px;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 2px 6px;
+      font-size: 10px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .video-preview-box {
+      background: #0f172a;
+      color: white;
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 10px;
+    }
 
-    /* Calendar Styling */
+    /* Calendar Slots */
     .calendar-card {
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 14px;
-      margin: 20px 0;
-    }
-    .calendar-head {
-      font-weight: 800;
-      font-size: 15px;
-      margin-bottom: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      margin: 18px 0;
     }
     .dates-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       gap: 6px;
       text-align: center;
+      margin-top: 10px;
     }
     .day-slot {
       padding: 10px 2px;
@@ -233,7 +280,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2px;
     }
     .booked {
       background: #fee2e2;
@@ -246,39 +292,22 @@
       color: var(--success);
       border: 1px solid #a7f3d0;
     }
-    .available:hover { background: #d1fae5; }
     .selected-date {
       background: var(--primary) !important;
       color: white !important;
-      transform: scale(1.05);
       border: none !important;
     }
 
-    /* Offer Section */
-    .offer-box {
-      border-top: 1px dashed var(--border);
-      padding-top: 18px;
-    }
-    .privacy-notice {
-      background: #fffbeb;
-      border-left: 4px solid #f59e0b;
-      padding: 10px 12px;
-      font-size: 12px;
-      color: #92400e;
-      border-radius: 6px;
-      margin-bottom: 14px;
-      font-weight: 600;
-    }
     .input-offer {
       width: 100%;
-      padding: 12px 14px;
+      padding: 12px;
       border: 1.5px solid var(--border);
       border-radius: 10px;
       font-size: 16px;
       font-weight: 700;
-      margin-bottom: 12px;
+      margin: 8px 0 12px 0;
     }
-    .btn-send-offer {
+    .btn-submit-offer {
       width: 100%;
       padding: 14px;
       background: var(--accent);
@@ -301,106 +330,89 @@
     </div>
   </header>
 
-  <div class="hero-banner">
-    <h2>Book Marriage Halls & Lawns at Your Price</h2>
-    <p>Compare facilities, check real-time availability, and make custom offers</p>
-    <div class="search-bar">
-      <input type="text" placeholder="Search area, locality, or hall name...">
-      <button>Search</button>
+  <!-- State & District Filters -->
+  <div class="filter-section">
+    <h2>Dhoondiye Apne Sheher Ke Best Marriage Halls</h2>
+    <div class="filter-bar">
+      <select id="stateSelect" class="filter-control">
+        <option value="Jharkhand" selected>📍 State: Jharkhand</option>
+      </select>
+
+      <select id="districtSelect" class="filter-control" onchange="applyFilters()">
+        <option value="All">Semast District (Sabhi)</option>
+        <option value="Bokaro" selected>Bokaro (5 Halls)</option>
+        <option value="Dhanbad">Dhanbad (3 Halls)</option>
+        <option value="Ranchi">Ranchi (2 Halls)</option>
+      </select>
+
+      <input type="text" id="searchInput" class="filter-control" placeholder="Search locality ya hall ka naam..." onkeyup="applyFilters()">
     </div>
   </div>
 
   <div class="main-wrap">
-    <div class="hall-grid">
-      <!-- Hall 1 -->
-      <div class="hall-card" onclick="openHallDetails('Royal Palace Marriage Hall', 45000, 600, 'Bokaro Steel City')">
-        <div class="hall-image" style="background-image: url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80');"></div>
-        <div class="hall-details">
-          <div class="hall-title">Royal Palace Marriage Hall</div>
-          <div class="hall-loc">📍 Bokaro Steel City</div>
-          <div class="tags">
-            <span class="tag">Capacity: 600</span>
-            <span class="tag">AC Banquets</span>
-            <span class="tag">Parking</span>
-          </div>
-          <div class="action-row">
-            <div>
-              <span style="font-size:11px; color:var(--muted);">Base Rent</span>
-              <div class="rent-price">₹45,000</div>
-            </div>
-            <button class="btn-view">Check Dates & Offer</button>
-          </div>
+    <div class="results-count" id="resultsCount">Showing 5 Halls in Bokaro</div>
+    <div class="hall-grid" id="hallsContainer">
+      <!-- 10 Halls will load dynamically here -->
+    </div>
+  </div>
+
+  <!-- MODAL 1: HALL PHOTOS & VIDEO GALLERY -->
+  <div class="modal-overlay" id="galleryModal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal('galleryModal')">✕</button>
+      <h2 id="galleryTitle" style="font-size:20px; font-weight:800; margin-bottom:4px;">Hall Gallery</h2>
+      <p style="font-size:12px; color:var(--muted); margin-bottom:14px;">Banquet, Deluxe Rooms, Dinning & Lawn Views</p>
+
+      <div class="gallery-grid">
+        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=500&q=80');">
+          <span class="gallery-label">Main Banquet Hall</span>
+        </div>
+        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=500&q=80');">
+          <span class="gallery-label">AC Bridal / Deluxe Bedroom</span>
+        </div>
+        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=500&q=80');">
+          <span class="gallery-label">Buffet & Dining Area</span>
+        </div>
+        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=500&q=80');">
+          <span class="gallery-label">Stage & Open Lawn</span>
         </div>
       </div>
 
-      <!-- Hall 2 -->
-      <div class="hall-card" onclick="openHallDetails('Grand Celebration Lawn', 60000, 1000, 'Chas, Bokaro')">
-        <div class="hall-image" style="background-image: url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=600&q=80');"></div>
-        <div class="hall-details">
-          <div class="hall-title">Grand Celebration Lawn</div>
-          <div class="hall-loc">📍 Chas, Bokaro</div>
-          <div class="tags">
-            <span class="tag">Capacity: 1000</span>
-            <span class="tag">Open Lawn</span>
-            <span class="tag">Parking</span>
-          </div>
-          <div class="action-row">
-            <div>
-              <span style="font-size:11px; color:var(--muted);">Base Rent</span>
-              <div class="rent-price">₹60,000</div>
-            </div>
-            <button class="btn-view">Check Dates & Offer</button>
-          </div>
-        </div>
+      <div class="video-preview-box">
+        <div style="font-size:28px; margin-bottom:4px;">▶️</div>
+        <div style="font-weight:700; font-size:14px;">Hall Video Tour Available</div>
+        <div style="font-size:11px; color:#94a3b8;">High Definition (HD) Drone & Walkthrough Video Clip</div>
       </div>
     </div>
   </div>
 
-  <!-- POPUP DETAILS & CALENDAR -->
-  <div class="modal-overlay" id="hallModal">
+  <!-- MODAL 2: CALENDAR & STRICT OFFER -->
+  <div class="modal-overlay" id="offerModal">
     <div class="modal-box">
-      <button class="modal-close" onclick="closeModal()">✕</button>
-      
-      <h2 id="modalHallName" style="font-size:22px; margin-bottom:4px;">Hall Name</h2>
-      <p id="modalHallLoc" style="color:var(--muted); font-size:13px; margin-bottom:14px;">📍 Bokaro</p>
+      <button class="modal-close" onclick="closeModal('offerModal')">✕</button>
+      <h2 id="offerHallName" style="font-size:20px; font-weight:800; margin-bottom:4px;">Hall Name</h2>
+      <p id="offerHallMeta" style="color:var(--muted); font-size:13px; margin-bottom:14px;">Base Rent: ₹45,000</p>
 
-      <!-- Facilities (Kya hai aur kya nahi hai) -->
-      <div class="facility-grid">
-        <div class="fac-item yes">✅ AC Banquet Hall</div>
-        <div class="fac-item yes">✅ 50+ Car Parking</div>
-        <div class="fac-item yes">✅ 2 Deluxe Bride Rooms</div>
-        <div class="fac-item yes">✅ Full Generator Backup</div>
-        <div class="fac-item no">❌ In-house DJ (Allowed Outside)</div>
-        <div class="fac-item no">❌ Outside Liquor Not Allowed</div>
-      </div>
-
-      <!-- Calendar -->
       <div class="calendar-card">
-        <div class="calendar-head">
-          <span>📅 Dates Availability (November 2026)</span>
+        <div style="font-weight:800; font-size:14px; display:flex; justify-content:space-between;">
+          <span>📅 November 2026 Availability</span>
           <span style="font-size:11px; color:var(--muted);">🟢 Khali | 🔴 ❌ Booked</span>
         </div>
-        <div class="dates-grid" id="calendarSlots">
-          <!-- Calendar Slots generated by JS -->
-        </div>
+        <div class="dates-grid" id="calendarDates"></div>
       </div>
 
-      <!-- Offer Box (Strictly No Phone Sharing) -->
-      <div class="offer-box">
-        <div class="privacy-notice">
-          🔒 <strong>Privacy Policy:</strong> Mobile number ya personal contact share karna sakht mana hai. Baat sirf official offer amount ke jariye hogi.
-        </div>
-
-        <p style="font-size:13px; font-weight:700; margin-bottom:8px;">
-          Chuni hui Tareekh (Date): <span id="displaySelectedDate" style="color:var(--primary);">Pehle Date Chuniye</span>
-        </p>
-
-        <label style="font-size:12px; font-weight:700; color:var(--muted);">APNA OFFER AMOUNT (₹) DALEIN</label>
-        <input type="number" id="offerPriceInput" class="input-offer" placeholder="Jaise: 38000" min="5000">
-
-        <button class="btn-send-offer" onclick="submitOffer()">Make Offer to Owner 🚀</button>
+      <div style="background:#fffbeb; border-left:4px solid #f59e0b; padding:10px; font-size:12px; color:#92400e; border-radius:6px; margin-bottom:12px; font-weight:600;">
+        🔒 Mobile number share karna mana hai. Offer amount official base rent se kam ya barabar hona chahiye.
       </div>
 
+      <p style="font-size:13px; font-weight:700; margin-bottom:6px;">
+        Selected Date: <span id="pickedDateLabel" style="color:var(--primary);">Pehle Tareekh Chuniye</span>
+      </p>
+
+      <label style="font-size:12px; font-weight:700; color:var(--muted);" id="maxOfferHelp">APNA OFFER AMOUNT (₹) DALEIN</label>
+      <input type="number" id="offerPriceBox" class="input-offer" placeholder="Enter amount">
+
+      <button class="btn-submit-offer" onclick="submitValidOffer()">Make Offer to Owner 🚀</button>
     </div>
   </div>
 
@@ -409,33 +421,103 @@
     const userVal = urlParams.get('user') || 'Customer';
     document.getElementById('userNameLabel').innerText = userVal;
 
-    let activeHall = "";
-    let activeBase = 0;
-    let selectedDate = null;
+    // 10 COMPLETE REAL DUMMY HALLS DATA
+    const allHalls = [
+      // 5 BOKARO HALLS
+      { id: 1, name: "Royal Palace Marriage Hall", district: "Bokaro", locality: "Sector 4", capacity: 600, rent: 45000, img: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80", tags: ["AC Banquet", "Parking", "2 Rooms"] },
+      { id: 2, name: "Grand Celebration Lawn", district: "Bokaro", locality: "Chas", capacity: 1000, rent: 60000, img: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=600&q=80", tags: ["Big Lawn", "Catering Space", "Stage"] },
+      { id: 3, name: "Shagun Banquet & Resort", district: "Bokaro", locality: "Co-operative Colony", capacity: 500, rent: 50000, img: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80", tags: ["Resort Style", "AC Rooms", "Full Power"] },
+      { id: 4, name: "Utsav Vivah Bhawan", district: "Bokaro", locality: "Siwandih", capacity: 400, rent: 35000, img: "https://images.unsplash.com/photo-1545232979-fbf6a84f3e39?auto=format&fit=crop&w=600&q=80", tags: ["Budget Friendly", "Parking", "Kitchen"] },
+      { id: 5, name: "Milan Marriage Garden", district: "Bokaro", locality: "Sector 1", capacity: 450, rent: 40000, img: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80", tags: ["Garden Lawn", "Indoor Hall", "Lighting"] },
 
-    // Dummy Calendar Data (Dates marked Booked vs Available)
-    const bookedDates = [5, 12, 18, 22, 28]; // Ye dates Booked ❌ rahengi
+      // 3 DHANBAD HALLS
+      { id: 6, name: "Kohinoor Banquet Hall", district: "Dhanbad", locality: "Bank More", capacity: 700, rent: 55000, img: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=600&q=80", tags: ["Prime Location", "Central AC", "Elevator"] },
+      { id: 7, name: "Rajwada Palace & Resort", district: "Dhanbad", locality: "Saraidhela", capacity: 1200, rent: 65000, img: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=600&q=80", tags: ["Luxury Stage", "Huge Lawn", "Valet Parking"] },
+      { id: 8, name: "Royal Green Lawn", district: "Dhanbad", locality: "Govindpur", capacity: 500, rent: 48000, img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80", tags: ["Open Sky", "Music System", "Catering"] },
 
-    function openHallDetails(name, base, capacity, loc) {
-      activeHall = name;
-      activeBase = base;
-      selectedDate = null;
+      // 2 RANCHI HALLS
+      { id: 9, name: "Capitol Banquet & Conventions", district: "Ranchi", locality: "Lalpur", capacity: 800, rent: 75000, img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=600&q=80", tags: ["Premium Banquets", "AC Rooms", "VIP Lounge"] },
+      { id: 10, name: "Urmila Resort & Wedding Lawn", district: "Ranchi", locality: "Morabadi", capacity: 1100, rent: 70000, img: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80", tags: ["Scenic Garden", "Grand Stage", "Large Parking"] }
+    ];
 
-      document.getElementById('modalHallName').innerText = name;
-      document.getElementById('modalHallLoc').innerText = "📍 " + loc + " | Base Rent: ₹" + base;
-      document.getElementById('displaySelectedDate').innerText = "Pehle Date Chuniye";
-      document.getElementById('offerPriceInput').value = "";
+    let currentHall = null;
+    let chosenDate = null;
+    const bookedDates = [4, 9, 15, 20, 25]; // Booked dates ❌
 
-      renderCalendar();
-      document.getElementById('hallModal').style.display = 'block';
+    function renderHalls(list) {
+      const cont = document.getElementById('hallsContainer');
+      cont.innerHTML = "";
+      document.getElementById('resultsCount').innerText = "Showing " + list.length + " Halls";
+
+      list.forEach(h => {
+        const card = document.createElement('div');
+        card.className = "hall-card";
+        card.innerHTML = `
+          <div class="media-thumb" style="background-image: url('${h.img}')" onclick="openGallery('${h.name}')">
+            <span class="tap-hint">Tap Photo to view Rooms & Video 🎥</span>
+            <span class="media-badge">📸 4 Photos | 🎥 1 Video</span>
+          </div>
+          <div class="hall-details">
+            <div>
+              <div class="hall-title">${h.name}</div>
+              <div class="hall-loc">📍 ${h.locality}, ${h.district} | Capacity: ${h.capacity} Guests</div>
+              <div class="tags">
+                ${h.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+              </div>
+            </div>
+            <div class="action-row">
+              <div>
+                <span style="font-size:11px; color:var(--muted);">Base Rent</span>
+                <div class="rent-price">₹${h.rent.toLocaleString('en-IN')}</div>
+              </div>
+              <button class="btn-offer" onclick="openOfferModal(${h.id})">Check Dates & Offer</button>
+            </div>
+          </div>
+        `;
+        cont.appendChild(card);
+      });
     }
 
-    function closeModal() {
-      document.getElementById('hallModal').style.display = 'none';
+    function applyFilters() {
+      const dist = document.getElementById('districtSelect').value;
+      const search = document.getElementById('searchInput').value.toLowerCase().trim();
+
+      const filtered = allHalls.filter(h => {
+        const matchDist = (dist === "All") || (h.district === dist);
+        const matchSearch = h.name.toLowerCase().includes(search) || h.locality.toLowerCase().includes(search);
+        return matchDist && matchSearch;
+      });
+
+      renderHalls(filtered);
+    }
+
+    // GALLERY POPUP
+    function openGallery(name) {
+      document.getElementById('galleryTitle').innerText = name + " - Photos & Video Tour";
+      document.getElementById('galleryModal').style.display = 'block';
+    }
+
+    // OFFER POPUP WITH STRICT AMOUNT VALIDATION
+    function openOfferModal(hallId) {
+      currentHall = allHalls.find(h => h.id === hallId);
+      chosenDate = null;
+
+      document.getElementById('offerHallName').innerText = currentHall.name;
+      document.getElementById('offerHallMeta').innerText = "📍 " + currentHall.locality + ", " + currentHall.district + " | Official Base Rent: ₹" + currentHall.rent.toLocaleString('en-IN');
+      document.getElementById('maxOfferHelp').innerText = "APNA OFFER AMOUNT (₹) DALEIN (MAX LIMIT: ₹" + currentHall.rent.toLocaleString('en-IN') + ")";
+      
+      const priceBox = document.getElementById('offerPriceBox');
+      priceBox.value = "";
+      priceBox.max = currentHall.rent;
+      priceBox.placeholder = "Kam se kam ₹5,000 se lekar ₹" + currentHall.rent.toLocaleString('en-IN') + " tak";
+
+      document.getElementById('pickedDateLabel').innerText = "Pehle Tareekh Chuniye";
+      renderCalendar();
+      document.getElementById('offerModal').style.display = 'block';
     }
 
     function renderCalendar() {
-      const grid = document.getElementById('calendarSlots');
+      const grid = document.getElementById('calendarDates');
       grid.innerHTML = "";
 
       for (let day = 1; day <= 30; day++) {
@@ -445,48 +527,59 @@
         if (isBooked) {
           slot.className = 'day-slot booked';
           slot.innerHTML = `<span>${day}</span><span style="font-size:10px;">❌</span>`;
-          slot.onclick = () => alert("Yeh date (" + day + " Nov) pehle se booked hai! Kripya doosri date chunein.");
+          slot.onclick = () => alert(day + " November pehle se booked hai! Doosri tareekh chunein.");
         } else {
           slot.className = 'day-slot available';
-          slot.id = "slot-" + day;
+          slot.id = "day-" + day;
           slot.innerHTML = `<span>${day}</span><span style="font-size:9px;">🟢</span>`;
-          slot.onclick = () => selectDay(day);
+          slot.onclick = () => {
+            document.querySelectorAll('.day-slot.available').forEach(el => el.classList.remove('selected-date'));
+            slot.classList.add('selected-date');
+            chosenDate = day + " November 2026";
+            document.getElementById('pickedDateLabel').innerText = chosenDate + " (Available)";
+          };
         }
-        grid.appendChild(slot);
+                grid.appendChild(slot);
       }
     }
 
-    function selectDay(day) {
-      document.querySelectorAll('.day-slot.available').forEach(el => el.classList.remove('selected-date'));
-      const chosen = document.getElementById("slot-" + day);
-      if (chosen) chosen.classList.add('selected-date');
+    // STRICT OFFER SUBMISSION
+    function submitValidOffer() {
+      const enteredPrice = Number(document.getElementById('offerPriceBox').value);
 
-      selectedDate = day + " November 2026";
-      document.getElementById('displaySelectedDate').innerText = selectedDate + " (Available)";
+      if (!chosenDate) {
+        return alert("Kripya calendar se ek Available (Hare rang 🟢 wali) tareekh select karein!");
+      }
+      if (!enteredPrice || enteredPrice <= 0) {
+        return alert("Kripya valid Offer Amount (₹) dalein!");
+      }
+
+      // STRICT RULE 1: Offer cannot exceed the Base Rent!
+      if (enteredPrice > currentHall.rent) {
+        return alert("❌ Invalid Offer!\n\nIs hall ka Base Rent ₹" + currentHall.rent.toLocaleString('en-IN') + " hai. Aap isse zyada (₹" + enteredPrice.toLocaleString('en-IN') + ") ka offer nahi bhej sakte! Kripya base rent ke barabar ya kam offer dalein.");
+      }
+
+      // STRICT RULE 2: Anti-Phone Number Lock
+      if (String(enteredPrice).length >= 10) {
+        return alert("Aap mobile number enter nahi kar sakte! Sirf valid offer amount enter karein.");
+      }
+
+      alert("🎉 Offer Safal Raha!\n\nHall: " + currentHall.name + "\nDate: " + chosenDate + "\nAapka Offer: ₹" + enteredPrice.toLocaleString('en-IN') + "\n\nYeh offer Hall Malik ke dashboard par bhej diya gaya hai!");
+      closeModal('offerModal');
     }
 
-    function submitOffer() {
-      const amount = document.getElementById('offerPriceInput').value.trim();
-
-      if (!selectedDate) {
-        return alert("Kripya pehle calendar se ek Available (Hare rang wali) date select karein!");
-      }
-      if (!amount || amount <= 0) {
-        return alert("Kripya apna Offer Amount (₹) dalein!");
-      }
-
-      // Check anti-phone number spam (10-digit number detection protection)
-      if (amount.length >= 10) {
-        return alert("Aap mobile number enter nahi kar sakte! Sirf genuine rupaye (₹) dalein.");
-      }
-
-      alert("🎉 Offer Safal Raha!\n\nHall: " + activeHall + "\nDate: " + selectedDate + "\nAapka Offer: ₹" + amount + "\n\nYeh offer Hall Malik ke dashboard par bhej diya gaya hai. Malik isko Accept, Reject, ya Counter Offer kar sakta hai.");
-      closeModal();
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
     }
 
     function logout() {
       window.location.href = "index.html";
     }
+
+    // Default Load Bokaro
+    applyFilters();
   </script>
 </body>
 </html>
+
+      
