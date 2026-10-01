@@ -158,12 +158,40 @@
   <!-- SCREEN 2: BOOKINGS -->
   <div id="screen-bookings" class="screen main-wrap">
     <h2 style="margin-bottom: 16px;">My Bookings & Offers</h2>
-    <div style="background: white; padding: 40px 20px; text-align: center; border-radius: 16px; border: 1px solid var(--border);">
-      <div style="font-size: 40px; margin-bottom: 10px;">📅</div>
-      <h3 style="color: var(--text); margin-bottom: 6px;">No active bookings yet.</h3>
-      <p style="font-size: 13px; color: var(--muted);">Make an offer from the home screen to see it here.</p>
+
+    <!-- Approved Offer Card (Ready for Payment) -->
+    <div style="background: white; border: 1.5px solid var(--success); border-radius: 16px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; border-bottom: 1px dashed var(--border); padding-bottom: 12px;">
+        <div>
+          <h3 style="font-size: 18px; font-weight: 800;">Royal Palace Marriage Hall</h3>
+          <p style="font-size: 13px; color: var(--muted);">📍 Sector 4, Bokaro</p>
+        </div>
+        <div style="background: #d1fae5; color: var(--success); padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 800;">
+          Owner Accepted ✅
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <div>
+          <p style="font-size: 12px; color: var(--muted); font-weight: 700;">Booking Date</p>
+          <p style="font-size: 15px; font-weight: 800; color: var(--primary);">20 November 2026</p>
+        </div>
+        <div style="text-align: right;">
+          <p style="font-size: 12px; color: var(--muted); font-weight: 700;">Final Deal Amount</p>
+          <p style="font-size: 16px; font-weight: 800;">₹40,000</p>
+        </div>
+      </div>
+
+      <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 14px; text-align: center;">
+        <p style="font-size: 12px; font-weight: 700; color: var(--primary-dark); margin-bottom: 8px;">Lock this date by paying the 10% Token Amount</p>
+        <!-- Razorpay button -->
+        <button onclick="startRazorpayPayment(4000)" style="width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 800; cursor: pointer;">
+          💳 Pay Token: ₹4,000
+        </button>
+      </div>
     </div>
-  </div>
+    </div>
+  
 
   <!-- SCREEN 3: ACCOUNT -->
   <div id="screen-account" class="screen main-wrap">
@@ -526,5 +554,90 @@
     // Launch App
     initStates();
   </script>
+    <!-- Razorpay Integration Script -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+    function startRazorpayPayment(amount) {
+      // Razorpay options setup
+      var options = {
+          "key": "rzp_test_dummy_key_here", // Baad mein isko aapke asli Razorpay key se badlenge
+          "amount": amount * 100, // Amount paise mein hota hai
+          "currency": "INR",
+          "name": "HallWala Platform",
+          "description": "10% Token Booking Amount",
+          "image": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+          "handler": function (response){
+              alert("🎉 Payment Successful!\nPayment ID: " + response.razorpay_payment_id + "\n\n₹" + amount + " ka Token pay ho gaya hai.\n(₹1000 HallWala ko gaya aur baaki Vendor ko)\n\nPDF Agreement aur Token Receipt aapke Email aur WhatsApp par bhej di gayi hai!");
+          },
+          "prefill": {
+              "name": document.getElementById('accName').value || "Customer",
+              "email": document.getElementById('accEmail').value || "customer@example.com",
+              "contact": document.getElementById('accPhone').value || "9876543210"
+          },
+          "theme": {
+              "color": "#4f46e5"
+          }
+      };
+      var rzp1 = new Razorpay(options);
+      rzp1.open();
+    }
+  </script>
+    <!-- Razorpay Integration Script -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+    function startRazorpayPayment(amount) {
+      // Razorpay options setup
+      var options = {
+          "key": "rzp_test_dummy_key_here", // Baad mein isko aapke asli Razorpay key se badlenge
+          "amount": amount * 100, // Amount paise mein hota hai
+          "currency": "INR",
+          "name": "HallWala Platform",
+          "description": "10% Token Booking Amount",
+          "image": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+          "handler": function (response){
+              alert("🎉 Payment Successful!\nPayment ID: " + response.razorpay_payment_id + "\n\n₹" + amount + " ka Token pay ho gaya hai.\n(₹1000 HallWala ko gaya aur baaki Vendor ko)\n\nPDF Agreement aur Token Receipt aapke Email aur WhatsApp par bhej di gayi hai!");
+          },
+          "prefill": {
+              "name": document.getElementById('accName').value || "Customer",
+              "email": document.getElementById('accEmail').value || "customer@example.com",
+              "contact": document.getElementById('accPhone').value || "9876543210"
+          },
+          "theme": {
+              "color": "#4f46e5"
+          }
+      };
+      var rzp1 = new Razorpay(options);
+      rzp1.open();
+    }
+  </script>
+    <!-- Razorpay Integration Script -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+    function startRazorpayPayment(amount) {
+      // Razorpay options setup
+      var options = {
+          "key": "rzp_test_dummy_key_here", // Baad mein isko aapke asli Razorpay key se badlenge
+          "amount": amount * 100, // Amount paise mein hota hai
+          "currency": "INR",
+          "name": "HallWala Platform",
+          "description": "10% Token Booking Amount",
+          "image": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+          "handler": function (response){
+              alert("🎉 Payment Successful!\nPayment ID: " + response.razorpay_payment_id + "\n\n₹" + amount + " ka Token pay ho gaya hai.\n(₹1000 HallWala ko gaya aur baaki Vendor ko)\n\nPDF Agreement aur Token Receipt aapke Email aur WhatsApp par bhej di gayi hai!");
+          },
+          "prefill": {
+              "name": document.getElementById('accName').value || "Customer",
+              "email": document.getElementById('accEmail').value || "customer@example.com",
+              "contact": document.getElementById('accPhone').value || "9876543210"
+          },
+          "theme": {
+              "color": "#4f46e5"
+          }
+      };
+      var rzp1 = new Razorpay(options);
+      rzp1.open();
+    }
+  </script>
+  
 </body>
 </html>
