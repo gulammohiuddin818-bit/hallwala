@@ -63,7 +63,6 @@
       cursor: pointer;
     }
 
-    /* Filter & Location Header */
     .filter-section {
       background: linear-gradient(135deg, #1e1b4b, #312e81);
       color: white;
@@ -72,26 +71,27 @@
     .filter-section h2 { font-size: 22px; margin-bottom: 16px; text-align: center; font-weight: 800; }
     
     .filter-bar {
-      max-width: 900px;
+      max-width: 950px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1fr 1fr 1.5fr;
+      grid-template-columns: 1.2fr 1.2fr 1.6fr;
       gap: 10px;
       background: white;
       padding: 10px;
       border-radius: 14px;
     }
-    @media(max-width: 700px) {
+    @media(max-width: 768px) {
       .filter-bar { grid-template-columns: 1fr; }
     }
     .filter-control {
-      padding: 10px 14px;
+      padding: 11px 14px;
       border: 1.5px solid var(--border);
       border-radius: 10px;
       font-size: 14px;
       outline: none;
       color: var(--text);
       font-weight: 600;
+      background: white;
     }
 
     .main-wrap {
@@ -106,7 +106,6 @@
       margin-bottom: 16px;
     }
 
-    /* Hall Cards Grid */
     .hall-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -190,7 +189,7 @@
     }
     .btn-offer:hover { background: #e11d48; }
 
-    /* MODAL OVERLAYS */
+    /* Modals */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -223,7 +222,6 @@
       font-weight: 700;
     }
 
-    /* Gallery Photos & Video */
     .gallery-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -252,12 +250,11 @@
       background: #0f172a;
       color: white;
       border-radius: 12px;
-      padding: 24px;
+      padding: 20px;
       text-align: center;
       margin-top: 10px;
     }
 
-    /* Calendar Slots */
     .calendar-card {
       border: 1px solid var(--border);
       border-radius: 14px;
@@ -330,33 +327,23 @@
     </div>
   </header>
 
-  <!-- State & District Filters -->
   <div class="filter-section">
     <h2>Dhoondiye Apne Sheher Ke Best Marriage Halls</h2>
     <div class="filter-bar">
-      <select id="stateSelect" class="filter-control">
-        <option value="Jharkhand" selected>📍 State: Jharkhand</option>
-      </select>
-
+      <select id="stateSelect" class="filter-control" onchange="onStateChange()"></select>
       <select id="districtSelect" class="filter-control" onchange="applyFilters()">
         <option value="All">Semast District (Sabhi)</option>
-        <option value="Bokaro" selected>Bokaro (5 Halls)</option>
-        <option value="Dhanbad">Dhanbad (3 Halls)</option>
-        <option value="Ranchi">Ranchi (2 Halls)</option>
       </select>
-
       <input type="text" id="searchInput" class="filter-control" placeholder="Search locality ya hall ka naam..." onkeyup="applyFilters()">
     </div>
   </div>
 
   <div class="main-wrap">
-    <div class="results-count" id="resultsCount">Showing 5 Halls in Bokaro</div>
-    <div class="hall-grid" id="hallsContainer">
-      <!-- 10 Halls will load dynamically here -->
-    </div>
+    <div class="results-count" id="resultsCount">Loading halls...</div>
+    <div class="hall-grid" id="hallsContainer"></div>
   </div>
 
-  <!-- MODAL 1: HALL PHOTOS & VIDEO GALLERY -->
+  <!-- GALLERY MODAL -->
   <div class="modal-overlay" id="galleryModal">
     <div class="modal-box">
       <button class="modal-close" onclick="closeModal('galleryModal')">✕</button>
@@ -379,14 +366,14 @@
       </div>
 
       <div class="video-preview-box">
-        <div style="font-size:28px; margin-bottom:4px;">▶️</div>
+        <div style="font-size:26px; margin-bottom:4px;">▶️</div>
         <div style="font-weight:700; font-size:14px;">Hall Video Tour Available</div>
-        <div style="font-size:11px; color:#94a3b8;">High Definition (HD) Drone & Walkthrough Video Clip</div>
+        <div style="font-size:11px; color:#94a3b8;">High Definition (HD) Drone & Walkthrough Clip</div>
       </div>
     </div>
   </div>
 
-  <!-- MODAL 2: CALENDAR & STRICT OFFER -->
+  <!-- CALENDAR & STRICT OFFER MODAL -->
   <div class="modal-overlay" id="offerModal">
     <div class="modal-box">
       <button class="modal-close" onclick="closeModal('offerModal')">✕</button>
@@ -402,7 +389,7 @@
       </div>
 
       <div style="background:#fffbeb; border-left:4px solid #f59e0b; padding:10px; font-size:12px; color:#92400e; border-radius:6px; margin-bottom:12px; font-weight:600;">
-        🔒 Mobile number share karna mana hai. Offer amount official base rent se kam ya barabar hona chahiye.
+        🔒 Mobile number share karna mana hai. Offer amount base rent se kam ya barabar hona chahiye.
       </div>
 
       <p style="font-size:13px; font-weight:700; margin-bottom:6px;">
@@ -421,33 +408,108 @@
     const userVal = urlParams.get('user') || 'Customer';
     document.getElementById('userNameLabel').innerText = userVal;
 
-    // 10 COMPLETE REAL DUMMY HALLS DATA
+    // INDIA DATA: ALL 28 STATES & 8 UTs (WITH ALL DISTRICTS)
+    const indiaData = {
+      "Jharkhand": ["Bokaro", "Dhanbad", "Ranchi", "Deoghar", "East Singhbhum", "Giridih", "Hazaribagh", "Ramgarh", "Dumka", "Chatra", "Garhwa", "Godda", "Gumla", "Jamtara", "Khunti", "Koderma", "Latehar", "Lohardaga", "Pakur", "Palamu", "Sahebganj", "Seraikela Kharsawan", "Simdega", "West Singhbhum"],
+      "Bihar": ["Patna", "Gaya", "Muzaffarpur", "Bhagalpur", "Darbhanga", "Purnia", "Bhojpur", "Begusarai", "Katihar", "Munger", "Saran", "Samastipur", "Saharsa", "Rohtas", "Vaishali", "Siwan", "East Champaran", "West Champaran", "Nawada", "Buxar", "Kishanganj", "Sitamarhi", "Jamui", "Jehanabad", "Aurangabad", "Lakhisarai", "Gopalganj", "Madhubani", "Banka", "Kaimur", "Supaul", "Araria", "Sheikhpura", "Madhepura", "Khagaria", "Sheohar", "Arwal"],
+      "West Bengal": ["Kolkata", "Howrah", "North 24 Parganas", "South 24 Parganas", "Hooghly", "Darjeeling", "Malda", "Murshidabad", "Nadia", "Paschim Medinipur", "Purba Medinipur", "Purba Bardhaman", "Paschim Bardhaman", "Birbhum", "Bankura", "Purulia", "Jalpaiguri", "Alipurduar", "Cooch Behar", "Uttar Dinajpur", "Dakshin Dinajpur", "Kalimpong", "Jhargram"],
+      "Uttar Pradesh": ["Lucknow", "Kanpur", "Varanasi", "Prayagraj", "Agra", "Gautam Buddha Nagar", "Ghaziabad", "Meerut", "Bareilly", "Aligarh", "Moradabad", "Saharanpur", "Gorakhpur", "Ayodhya", "Firozabad", "Jhansi", "Muzaffarnagar", "Mathura", "Budaun", "Rampur", "Shahjahanpur", "Farrukhabad", "Mau", "Hapur", "Etawah", "Mirzapur", "Bulandshahr", "Sambhal", "Amroha", "Hardoi", "Fatehpur", "Raebareli", "Jalaun", "Sitapur", "Bahraich", "Unnao", "Jaunpur", "Lakhimpur Kheri", "Hathras", "Banda", "Pilibhit", "Barabanki", "Gonda", "Mainpuri", "Lalitpur", "Etah", "Deoria", "Ghazipur", "Sultanpur", "Azamgarh", "Bijnor", "Basti", "Ballia", "Shamli", "Kasganj", "Amethi", "Bhadohi", "Chitrakoot", "Hamirpur", "Kaushambi", "Kushinagar", "Mahoba", "Maharajganj", "Pratapgarh", "Sant Kabir Nagar", "Siddharthnagar", "Sonbhadra", "Shravasti"],
+      "Delhi": ["Central Delhi", "East Delhi", "New Delhi", "North Delhi", "North East Delhi", "North West Delhi", "Shahdara", "South Delhi", "South East Delhi", "South West Delhi", "West Delhi"],
+      "Odisha": ["Khurda", "Cuttack", "Puri", "Sundargarh", "Ganjam", "Sambalpur", "Balasore", "Bhadrak", "Bargarh", "Angul", "Balangir", "Boudh", "Deogarh", "Dhenkanal", "Gajapati", "Jagatsinghpur", "Jajpur", "Jharsuguda", "Kalahandi", "Kandhamal", "Kendrapara", "Kendujhar", "Koraput", "Malkangiri", "Mayurbhanj", "Nabarangpur", "Nayagarh", "Nuapada", "Rayagada", "Subarnapur"],
+      "Maharashtra": ["Mumbai City", "Mumbai Suburban", "Pune", "Nagpur", "Thane", "Nashik", "Chhatrapati Sambhaji Nagar", "Solapur", "Amravati", "Kolhapur", "Akola", "Latur", "Dhule", "Ahmednagar", "Chandrapur", "Parbhani", "Jalgaon", "Jalna", "Nanded", "Satara", "Sangli", "Beed", "Bhandara", "Buldhana", "Gadchiroli", "Gondia", "Hingoli", "Nandurbar", "Dharashiv", "Palghar", "Raigad", "Ratnagiri", "Sindhudurg", "Wardha", "Washim", "Yavatmal"],
+      "Madhya Pradesh": ["Bhopal", "Indore", "Gwalior", "Jabalpur", "Ujjain", "Sagar", "Dewas", "Satna", "Ratlam", "Rewa", "Katni", "Singrauli", "Burhanpur", "Khandwa", "Morena", "Bhind", "Chhindwara", "Guna", "Shivpuri", "Vidisha", "Chhatarpur", "Damoh", "Mandsaur", "Khargone", "Neemuch", "Narmadapuram", "Sehore", "Betul", "Seoni", "Datia", "Dhar", "Balaghat", "Barwani", "Shahdol", "Tikamgarh", "Alirajpur", "Anuppur", "Ashoknagar", "Dindori", "Harda", "Jhabua", "Mandla", "Narsinghpur", "Panna", "Raisen", "Rajgarh", "Sheopur", "Sidhi", "Umaria", "Niwari"],
+      "Rajasthan": ["Jaipur", "Jodhpur", "Kota", "Bikaner", "Ajmer", "Udaipur", "Bhilwara", "Alwar", "Bharatpur", "Sikar", "Pali", "Sri Ganganagar", "Chittorgarh", "Tonk", "Hanumangarh", "Dholpur", "Sawai Madhopur", "Churu", "Barmer", "Jhunjhunu", "Nagaur", "Banswara", "Baran", "Bundi", "Dausa", "Dungarpur", "Jaisalmer", "Jalore", "Jhalawar", "Karauli", "Pratapgarh", "Rajsamand", "Sirohi"],
+      "Gujarat": ["Ahmedabad", "Surat", "Vadodara", "Rajkot", "Bhavnagar", "Jamnagar", "Junagadh", "Gandhinagar", "Anand", "Navsari", "Morbi", "Nadiad", "Surendranagar", "Bharuch", "Mehsana", "Kutch", "Porbandar", "Palanpur", "Valsad", "Amreli", "Botad", "Dahod", "Aravalli", "Banaskantha", "Chhota Udaipur", "Dang", "Devbhoomi Dwarka", "Gir Somnath", "Kheda", "Mahisagar", "Narmada", "Panchmahal", "Sabarkantha", "Tapi"],
+      "Haryana": ["Gurugram", "Faridabad", "Panipat", "Ambala", "Yamunanagar", "Rohtak", "Hisar", "Karnal", "Sonipat", "Panchkula", "Bhiwani", "Sirsa", "Jind", "Kaithal", "Rewari", "Palwal", "Fatehabad", "Charkhi Dadri", "Jhajjar", "Kurukshetra", "Mahendragarh", "Nuh"],
+      "Punjab": ["Ludhiana", "Amritsar", "Jalandhar", "Patiala", "Bathinda", "Hoshiarpur", "SAS Nagar", "Pathankot", "Moga", "Malerkotla", "Muktsar", "Barnala", "Firozpur", "Kapurthala", "Sangrur", "Fazilka", "Faridkot", "Fatehgarh Sahib", "Gurdaspur", "Mansa", "Rupnagar", "SBS Nagar", "Tarn Taran"],
+      "Karnataka": ["Bengaluru Urban", "Bengaluru Rural", "Mysuru", "Dharwad", "Dakshina Kannada", "Belagavi", "Kalaburagi", "Davanagere", "Ballari", "Vijayapura", "Shivamogga", "Tumakuru", "Raichur", "Bidar", "Gadag", "Hassan", "Udupi", "Chikkamagaluru", "Bagalkote", "Chamarajanagar", "Chikkaballapura", "Chitradurga", "Kodagu", "Kolar", "Koppal", "Mandya", "Ramanagara", "Uttara Kannada", "Yadgir", "Vijayanagara"],
+      "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Tiruchirappalli", "Salem", "Tirunelveli", "Tiruppur", "Vellore", "Erode", "Thoothukudi", "Dindigul", "Thanjavur", "Ranipet", "Karur", "Nilgiris", "Kanyakumari", "Kanchipuram", "Cuddalore", "Tiruvannamalai", "Pudukkottai", "Nagapattinam", "Ariyalur", "Chengalpattu", "Dharmapuri", "Kallakurichi", "Krishnagiri", "Mayiladuthurai", "Namakkal", "Perambalur", "Ramanathapuram", "Tenkasi", "Theni", "Thiruvallur", "Thiruvarur", "Tirupathur", "Viluppuram", "Virudhunagar"],
+      "Telangana": ["Hyderabad", "Warangal", "Nizamabad", "Khammam", "Karimnagar", "Mahbubnagar", "Nalgonda", "Adilabad", "Suryapet", "Siddipet", "Jagtial", "Mancherial", "Nirmal", "Bhadradri Kothagudem", "Hanamkonda", "Jangaon", "Jayashankar Bhupalpally", "Jogulamba Gadwal", "Komaram Bheem", "Mahabubabad", "Medak", "Medchal-Malkajgiri", "Mulugu", "Nagarkurnool", "Narayanpet", "Peddapalli", "Rajanna Sircilla", "Ranga Reddy", "Sangareddy", "Vikarabad", "Wanaparthy", "Yadadri Bhuvanagiri"],
+      "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Guntur", "Nellore", "Kurnool", "East Godavari", "Tirupati", "YSR Kadapa", "Kakinada", "Anantapur", "Eluru", "Vizianagaram", "Prakasam", "Nandyal", "Krishna", "Chittoor", "West Godavari", "Srikakulam", "Palnadu", "Konaseema", "Anakapalli", "Annamayya", "Bapatla", "Parvathipuram Manyam", "Sri Sathya Sai"],
+      "Kerala": ["Thiruvananthapuram", "Ernakulam", "Kozhikode", "Kollam", "Thrissur", "Alappuzha", "Palakkad", "Malappuram", "Kannur", "Kottayam", "Kasaragod", "Pathanamthitta", "Idukki", "Wayanad"],
+      "Chhattisgarh": ["Raipur", "Durg", "Bilaspur", "Korba", "Rajnandgaon", "Raigarh", "Bastar", "Surguja", "Dhamtari", "Balod", "Baloda Bazar", "Balrampur", "Bemetara", "Bijapur", "Dantewada", "Gariaband", "Janjgir Champa", "Jashpur", "Kabirdham", "Kanker", "Kondagaon", "Koriya", "Mahasamund", "Mungeli", "Narayanpur", "Sukma", "Surajpur"],
+      "Assam": ["Kamrup Metropolitan", "Cachar", "Dibrugarh", "Jorhat", "Nagaon", "Tinsukia", "Sonitpur", "Bongaigaon", "Karimganj", "Sivasagar", "Goalpara", "Barpeta", "Dhubri", "Baksa", "Darrang", "Golaghat", "Hailakandi", "Kamrup", "Karbi Anglong", "Kokrajhar", "Lakhimpur", "Morigaon", "Nalbari"],
+      "Uttarakhand": ["Dehradun", "Haridwar", "Nainital", "Udham Singh Nagar", "Almora", "Pithoragarh", "Chamoli", "Pauri Garhwal", "Tehri Garhwal", "Uttarkashi", "Bageshwar", "Champawat", "Rudraprayag"],
+      "Himachal Pradesh": ["Shimla", "Kangra", "Mandi", "Solan", "Kullu", "Bilaspur", "Chamba", "Hamirpur", "Kinnaur", "Lahaul and Spiti", "Sirmaur", "Una"],
+      "Jammu and Kashmir": ["Srinagar", "Jammu", "Anantnag", "Baramulla", "Kathua", "Udhampur", "Budgam", "Pulwama", "Kupwara", "Poonch", "Rajouri", "Doda", "Ganderbal", "Bandipora", "Kulgam", "Shopian", "Samba", "Reasi", "Ramban", "Kishtwar"],
+      "Goa": ["North Goa", "South Goa"],
+      "Tripura": ["West Tripura", "North Tripura", "Gomati", "Khowai", "Sepahijala", "South Tripura", "Unakoti", "Dhalai"],
+      "Manipur": ["Imphal East", "Imphal West", "Bishnupur", "Thoubal", "Churachandpur", "Senapati", "Ukhrul", "Chandel", "Tamenglong"],
+      "Meghalaya": ["East Khasi Hills", "West Garo Hills", "West Jaintia Hills", "East Garo Hills", "Ri-Bhoi", "South Garo Hills", "West Khasi Hills"],
+      "Nagaland": ["Kohima", "Dimapur", "Mokokchung", "Tuensang", "Wokha", "Zunheboto", "Mon", "Phek"],
+      "Mizoram": ["Aizawl", "Lunglei", "Champhai", "Kolasib", "Serchhip", "Mamit", "Lawngtlai", "Siaha"],
+      "Arunachal Pradesh": ["Papum Pare", "Tawang", "West Kameng", "East Kameng", "Lower Subansiri", "Upper Subansiri", "West Siang", "East Siang", "Lohit", "Changlang", "Tirap"],
+      "Sikkim": ["Gangtok", "Namchi", "Gyalshing", "Mangan", "Pakyong", "Soreng"],
+      "Chandigarh": ["Chandigarh"],
+      "Ladakh": ["Leh", "Kargil"],
+      "Puducherry": ["Puducherry", "Karaikal", "Mahe", "Yanam"],
+      "Andaman and Nicobar": ["South Andaman", "North and Middle Andaman", "Nicobar"],
+      "Dadra and Nagar Haveli and Daman and Diu": ["Daman", "Diu", "Dadra and Nagar Haveli"],
+      "Lakshadweep": ["Kavaratti", "Agatti", "Amini", "Andrott", "Minicoy"]
+    };
+
+    // 10 DUMMY HALLS (JHARKHAND)
     const allHalls = [
-      // 5 BOKARO HALLS
-      { id: 1, name: "Royal Palace Marriage Hall", district: "Bokaro", locality: "Sector 4", capacity: 600, rent: 45000, img: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80", tags: ["AC Banquet", "Parking", "2 Rooms"] },
-      { id: 2, name: "Grand Celebration Lawn", district: "Bokaro", locality: "Chas", capacity: 1000, rent: 60000, img: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=600&q=80", tags: ["Big Lawn", "Catering Space", "Stage"] },
-      { id: 3, name: "Shagun Banquet & Resort", district: "Bokaro", locality: "Co-operative Colony", capacity: 500, rent: 50000, img: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80", tags: ["Resort Style", "AC Rooms", "Full Power"] },
-      { id: 4, name: "Utsav Vivah Bhawan", district: "Bokaro", locality: "Siwandih", capacity: 400, rent: 35000, img: "https://images.unsplash.com/photo-1545232979-fbf6a84f3e39?auto=format&fit=crop&w=600&q=80", tags: ["Budget Friendly", "Parking", "Kitchen"] },
-      { id: 5, name: "Milan Marriage Garden", district: "Bokaro", locality: "Sector 1", capacity: 450, rent: 40000, img: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80", tags: ["Garden Lawn", "Indoor Hall", "Lighting"] },
-
-      // 3 DHANBAD HALLS
-      { id: 6, name: "Kohinoor Banquet Hall", district: "Dhanbad", locality: "Bank More", capacity: 700, rent: 55000, img: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=600&q=80", tags: ["Prime Location", "Central AC", "Elevator"] },
-      { id: 7, name: "Rajwada Palace & Resort", district: "Dhanbad", locality: "Saraidhela", capacity: 1200, rent: 65000, img: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=600&q=80", tags: ["Luxury Stage", "Huge Lawn", "Valet Parking"] },
-      { id: 8, name: "Royal Green Lawn", district: "Dhanbad", locality: "Govindpur", capacity: 500, rent: 48000, img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80", tags: ["Open Sky", "Music System", "Catering"] },
-
-      // 2 RANCHI HALLS
-      { id: 9, name: "Capitol Banquet & Conventions", district: "Ranchi", locality: "Lalpur", capacity: 800, rent: 75000, img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=600&q=80", tags: ["Premium Banquets", "AC Rooms", "VIP Lounge"] },
-      { id: 10, name: "Urmila Resort & Wedding Lawn", district: "Ranchi", locality: "Morabadi", capacity: 1100, rent: 70000, img: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80", tags: ["Scenic Garden", "Grand Stage", "Large Parking"] }
+      { id: 1, name: "Royal Palace Marriage Hall", state: "Jharkhand", district: "Bokaro", locality: "Sector 4", capacity: 600, rent: 45000, img: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80", tags: ["AC Banquet", "Parking", "2 Rooms"] },
+      { id: 2, name: "Grand Celebration Lawn", state: "Jharkhand", district: "Bokaro", locality: "Chas", capacity: 1000, rent: 60000, img: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=600&q=80", tags: ["Big Lawn", "Catering Space", "Stage"] },
+      { id: 3, name: "Shagun Banquet & Resort", state: "Jharkhand", district: "Bokaro", locality: "Co-operative Colony", capacity: 500, rent: 50000, img: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80", tags: ["Resort Style", "AC Rooms", "Full Power"] },
+      { id: 4, name: "Utsav Vivah Bhawan", state: "Jharkhand", district: "Bokaro", locality: "Siwandih", capacity: 400, rent: 35000, img: "https://images.unsplash.com/photo-1545232979-fbf6a84f3e39?auto=format&fit=crop&w=600&q=80", tags: ["Budget Friendly", "Parking", "Kitchen"] },
+      { id: 5, name: "Milan Marriage Garden", state: "Jharkhand", district: "Bokaro", locality: "Sector 1", capacity: 450, rent: 40000, img: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80", tags: ["Garden Lawn", "Indoor Hall", "Lighting"] },
+      { id: 6, name: "Kohinoor Banquet Hall", state: "Jharkhand", district: "Dhanbad", locality: "Bank More", capacity: 700, rent: 55000, img: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=600&q=80", tags: ["Prime Location", "Central AC", "Elevator"] },
+      { id: 7, name: "Rajwada Palace & Resort", state: "Jharkhand", district: "Dhanbad", locality: "Saraidhela", capacity: 1200, rent: 65000, img: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=600&q=80", tags: ["Luxury Stage", "Huge Lawn", "Valet Parking"] },
+      { id: 8, name: "Royal Green Lawn", state: "Jharkhand", district: "Dhanbad", locality: "Govindpur", capacity: 500, rent: 48000, img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80", tags: ["Open Sky", "Music System", "Catering"] },
+      { id: 9, name: "Capitol Banquet & Conventions", state: "Jharkhand", district: "Ranchi", locality: "Lalpur", capacity: 800, rent: 75000, img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=600&q=80", tags: ["Premium Banquets", "AC Rooms", "VIP Lounge"] },
+      { id: 10, name: "Urmila Resort & Wedding Lawn", state: "Jharkhand", district: "Ranchi", locality: "Morabadi", capacity: 1100, rent: 70000, img: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80", tags: ["Scenic Garden", "Grand Stage", "Large Parking"] }
     ];
 
     let currentHall = null;
     let chosenDate = null;
-    const bookedDates = [4, 9, 15, 20, 25]; // Booked dates ❌
+    const bookedDates = [4, 9, 15, 20, 25];
+
+    function initStates() {
+      const stateSelect = document.getElementById('stateSelect');
+      stateSelect.innerHTML = `<option value="All">📍 All India (Saare Rajye)</option>`;
+
+      Object.keys(indiaData).sort().forEach(st => {
+        const opt = document.createElement('option');
+        opt.value = st;
+        opt.innerText = "📍 " + st;
+        if (st === "Jharkhand") opt.selected = true;
+        stateSelect.appendChild(opt);
+      });
+
+      onStateChange();
+    }
+
+    function onStateChange() {
+      const selectedState = document.getElementById('stateSelect').value;
+      const districtSelect = document.getElementById('districtSelect');
+      districtSelect.innerHTML = `<option value="All">Semast District (Sabhi)</option>`;
+
+      if (selectedState !== "All" && indiaData[selectedState]) {
+        indiaData[selectedState].forEach(dist => {
+          const opt = document.createElement('option');
+          opt.value = dist;
+          opt.innerText = dist;
+          districtSelect.appendChild(opt);
+        });
+      }
+
+      applyFilters();
+    }
 
     function renderHalls(list) {
       const cont = document.getElementById('hallsContainer');
       cont.innerHTML = "";
       document.getElementById('resultsCount').innerText = "Showing " + list.length + " Halls";
+
+      if (list.length === 0) {
+        cont.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; background: white; border-radius: 14px; color: var(--muted);">
+          <h3>Is Sheher/District me abhi koi hall listed nahi hai!</h3>
+          <p style="font-size: 13px; margin-top: 6px;">Jaldi hi naye hall owners yahan judne wale hain.</p>
+        </div>`;
+        return;
+      }
 
       list.forEach(h => {
         const card = document.createElement('div');
@@ -479,25 +541,25 @@
     }
 
     function applyFilters() {
+      const state = document.getElementById('stateSelect').value;
       const dist = document.getElementById('districtSelect').value;
       const search = document.getElementById('searchInput').value.toLowerCase().trim();
 
       const filtered = allHalls.filter(h => {
-        const matchDist = (dist === "All") || (h.district === dist);
-        const matchSearch = h.name.toLowerCase().includes(search) || h.locality.toLowerCase().includes(search);
-        return matchDist && matchSearch;
+        const matchState = (state === "All") || (h.state === state);
+        const matchDist = (dist === "All") || (h.district.toLowerCase() === dist.toLowerCase());
+        const matchSearch = h.name.toLowerCase().includes(search) || h.locality.toLowerCase().includes(search) || h.district.toLowerCase().includes(search);
+        return matchState && matchDist && matchSearch;
       });
 
       renderHalls(filtered);
     }
 
-    // GALLERY POPUP
     function openGallery(name) {
       document.getElementById('galleryTitle').innerText = name + " - Photos & Video Tour";
       document.getElementById('galleryModal').style.display = 'block';
     }
 
-    // OFFER POPUP WITH STRICT AMOUNT VALIDATION
     function openOfferModal(hallId) {
       currentHall = allHalls.find(h => h.id === hallId);
       chosenDate = null;
@@ -539,11 +601,10 @@
             document.getElementById('pickedDateLabel').innerText = chosenDate + " (Available)";
           };
         }
-                grid.appendChild(slot);
+        grid.appendChild(slot);
       }
     }
 
-    // STRICT OFFER SUBMISSION
     function submitValidOffer() {
       const enteredPrice = Number(document.getElementById('offerPriceBox').value);
 
@@ -554,12 +615,10 @@
         return alert("Kripya valid Offer Amount (₹) dalein!");
       }
 
-      // STRICT RULE 1: Offer cannot exceed the Base Rent!
       if (enteredPrice > currentHall.rent) {
         return alert("❌ Invalid Offer!\n\nIs hall ka Base Rent ₹" + currentHall.rent.toLocaleString('en-IN') + " hai. Aap isse zyada (₹" + enteredPrice.toLocaleString('en-IN') + ") ka offer nahi bhej sakte! Kripya base rent ke barabar ya kam offer dalein.");
       }
 
-      // STRICT RULE 2: Anti-Phone Number Lock
       if (String(enteredPrice).length >= 10) {
         return alert("Aap mobile number enter nahi kar sakte! Sirf valid offer amount enter karein.");
       }
@@ -576,10 +635,7 @@
       window.location.href = "index.html";
     }
 
-    // Default Load Bokaro
-    applyFilters();
+    initStates();
   </script>
 </body>
 </html>
-
-      
