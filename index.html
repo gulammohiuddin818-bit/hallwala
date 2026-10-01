@@ -26,7 +26,6 @@
       padding: 20px 15px;
     }
 
-    /* Common Card Box */
     .app-box {
       width: 100%;
       max-width: 480px;
@@ -37,7 +36,6 @@
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     }
 
-    /* BRAND LOGO */
     .brand-header {
       text-align: center;
       margin-bottom: 24px;
@@ -57,26 +55,11 @@
       margin-top: 4px;
     }
 
-    /* 1. LANGUAGE SCREEN STYLES */
-    #languageScreen {
-      text-align: center;
-    }
-    .lang-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 6px;
-    }
-    .lang-subtitle {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 24px;
-    }
-    .lang-btn-group {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+    /* 1. Language Screen */
+    #languageScreen { text-align: center; }
+    .lang-title { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .lang-subtitle { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+    .lang-btn-group { display: flex; flex-direction: column; gap: 12px; }
     .lang-btn {
       padding: 16px;
       border: 2px solid #e2e8f0;
@@ -92,13 +75,10 @@
       border-color: var(--primary);
       background: #eff6ff;
       color: var(--primary);
-      transform: translateY(-2px);
     }
 
-    /* 2. AUTH MAIN CONTAINER */
-    #mainAuthScreen {
-      display: none;
-    }
+    /* 2. Main Portal Screen */
+    #mainAuthScreen { display: none; }
 
     .top-lang-switch {
       display: flex;
@@ -116,7 +96,6 @@
       font-weight: 600;
     }
 
-    /* Role Selector */
     .role-container {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -135,7 +114,6 @@
       color: var(--muted);
       border-radius: 10px;
       cursor: pointer;
-      transition: all 0.2s ease;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -147,7 +125,6 @@
       box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
     }
 
-    /* Tab Buttons (Login vs Register) */
     .tab-container {
       display: flex;
       border-bottom: 2px solid #e2e8f0;
@@ -176,7 +153,6 @@
       border-radius: 3px;
     }
 
-    /* Inputs & Forms */
     .form-group {
       margin-bottom: 14px;
       text-align: left;
@@ -187,7 +163,6 @@
       font-weight: 700;
       color: #334155;
       margin-bottom: 5px;
-      letter-spacing: 0.3px;
     }
     .input-field {
       width: 100%;
@@ -196,13 +171,11 @@
       border-radius: 12px;
       font-size: 14px;
       background: #f8fafc;
-      transition: all 0.2s;
     }
     .input-field:focus {
       outline: none;
       border-color: var(--primary);
       background: white;
-      box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
     }
 
     .row-2 {
@@ -211,10 +184,7 @@
       gap: 10px;
     }
 
-    .otp-inline {
-      display: flex;
-      gap: 8px;
-    }
+    .otp-inline { display: flex; gap: 8px; }
     .btn-small {
       padding: 10px 14px;
       background: #e0e7ff;
@@ -226,7 +196,6 @@
       cursor: pointer;
       white-space: nowrap;
     }
-    .btn-small:hover { background: #c7d2fe; }
 
     .btn-primary {
       width: 100%;
@@ -238,12 +207,7 @@
       font-size: 16px;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.4);
       margin-top: 10px;
-    }
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 14px 24px -5px rgba(79, 70, 229, 0.5);
     }
 
     .badge-verified {
@@ -281,7 +245,7 @@
 </head>
 <body>
 
-  <!-- ================= SCREEN 1: LANGUAGE SELECTION ================= -->
+  <!-- SCREEN 1: LANGUAGE SELECTION -->
   <div class="app-box" id="languageScreen">
     <div class="brand-header">
       <h1>HallWala</h1>
@@ -295,7 +259,7 @@
     </div>
   </div>
 
-  <!-- ================= SCREEN 2: AUTH PORTAL ================= -->
+  <!-- SCREEN 2: AUTH PORTAL -->
   <div class="app-box" id="mainAuthScreen">
     <div class="top-lang-switch">
       <button onclick="changeLanguageBack()">🌐 Change Language</button>
@@ -316,7 +280,7 @@
       </button>
     </div>
 
-    <!-- Tab Selection -->
+    <!-- Tabs -->
     <div class="tab-container">
       <button class="tab-btn active" id="tabLogin" onclick="switchTab('login')">Login</button>
       <button class="tab-btn" id="tabRegister" onclick="switchTab('register')">Sign Up</button>
@@ -407,97 +371,85 @@
   </div>
 
   <script>
-    // YAHAN APNI GOOGLE APPS SCRIPT KI ASLI WEB APP URL DALIE:
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbybV1k1ZomM_Zp31w0w_M9f1lqVqU2w_example/exec";
-
     let currentLanguage = 'en';
     let currentRole = "Customer";
     let isMobileVerified = false;
     let isEmailVerified = false;
-    let userCityState = "India";
 
-    // Auto-detect IP location (100% Free)
-    fetch('https://ipapi.co/json/')
-      .then(res => res.json())
-      .then(data => {
-        userCityState = (data.city || "") + ", " + (data.region || "") + " (" + (data.country_name || "") + ")";
-      }).catch(() => {});
+    // Bulletproof Text Setter
+    function setTxt(id, val) {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    }
+    function setPh(id, val) {
+      const el = document.getElementById(id);
+      if (el) el.placeholder = val;
+    }
 
-    // Dictionary for 100% Pure English vs Pure Hindi
     const dict = {
       en: {
-        portalSubCust: "Customer Experience Portal",
-        portalSubOwner: "Hall Owner Experience Portal",
-        roleCustomer: "🤵 Customer",
-        roleOwner: "🏢 Hall Owner",
-        tabLogin: "Login",
-        tabRegister: "Sign Up",
-        lblLoginMobile: "Mobile Number",
-        phLoginMobile: "10-digit mobile number",
-        lblLoginPass: "Password / Security PIN",
-        phLoginPass: "Enter password",
-        btnLoginSubmit: "Login 🚀",
-        btnBiometric: "🔐 Fingerprint / Face ID Login",
-        lblRegName: "Full Name",
-        phRegName: "e.g. Rahul Kumar",
-        lblRegDob: "Date of Birth",
-        lblRegGender: "Gender",
-        optGenderDefault: "Select",
-        optGenderMale: "Male",
-        optGenderFemale: "Female",
-        optGenderTrans: "Transgender",
-        lblRegMobile: "Mobile Number",
-        phRegMobile: "10-digit number",
-        btnSendMobileOtp: "Send OTP",
-        lblRegEmail: "Email ID (Optional)",
-        phRegEmail: "name@gmail.com (Optional)",
-        btnSendEmailOtp: "Verify",
-        lblRegAddress: "Full Address",
-        phRegAddress: "House/Area, City, State",
-        lblRegPass: "Set Password / Security PIN",
-        phRegPass: "Enter password for login",
-        btnRegisterSubmit: "Create Account 🎉",
-        uiFooterText: "Secure & Trusted Platform"
+        cust: "Customer Experience Portal",
+        owner: "Hall Owner Experience Portal",
+        rc: "🤵 Customer",
+        ro: "🏢 Hall Owner",
+        tl: "Login",
+        tr: "Sign Up",
+        lm: "Mobile Number",
+        lp: "Password / Security PIN",
+        lmb: "Login 🚀",
+        rn: "Full Name",
+        rd: "Date of Birth",
+        rg: "Gender",
+        rm: "Mobile Number",
+        re: "Email ID (Optional)",
+        ra: "Full Address",
+        rp: "Set Password / Security PIN",
+        rb: "Create Account 🎉"
       },
       hi: {
-        portalSubCust: "ग्राहक सेवा पोर्टल",
-        portalSubOwner: "हॉल मालिक पोर्टल",
-        roleCustomer: "🤵 ग्राहक (Customer)",
-        roleOwner: "🏢 हॉल मालिक (Owner)",
-        tabLogin: "लॉगिन करें",
-        tabRegister: "नया खाता बनाएं",
-        lblLoginMobile: "मोबाइल नंबर",
-        phLoginMobile: "10-अंकों का मोबाइल नंबर",
-        lblLoginPass: "पासवर्ड / पिन",
-        phLoginPass: "अपना पासवर्ड डालें",
-        btnLoginSubmit: "लॉगिन करें 🚀",
-        btnBiometric: "🔐 फिंगरप्रिंट / फेस लॉक लॉगिन",
-        lblRegName: "पूरा नाम",
-        phRegName: "जैसे: राहुल कुमार",
-        lblRegDob: "जन्म तिथि",
-        lblRegGender: "लिंग (Gender)",
-        optGenderDefault: "चुनें",
-        optGenderMale: "पुरुष (Male)",
-        optGenderFemale: "महिला (Female)",
-        optGenderTrans: "ट्रांसजेंडर (Transgender)",
-        lblRegMobile: "मोबाइल नंबर (OTP सत्यापन)",
-        phRegMobile: "10-अंकों का नंबर",
-        btnSendMobileOtp: "OTP भेजें",
-        lblRegEmail: "ईमेल आईडी (वैकल्पिक)",
-        phRegEmail: "naam@gmail.com (वैकल्पिक)",
-        btnSendEmailOtp: "सत्यापित करें",
-        lblRegAddress: "पूरा पता",
-        phRegAddress: "घर/मोहल्ला, शहर, राज्य",
-        lblRegPass: "पासवर्ड / पिन सेट करें",
-        phRegPass: "आगे लॉगिन के लिए पासवर्ड बनाएं",
-        btnRegisterSubmit: "खाता बनाएं 🎉",
-        uiFooterText: "सुरक्षित एवं विश्वसनीय मंच"
+        cust: "ग्राहक सेवा पोर्टल",
+        owner: "हॉल मालिक पोर्टल",
+        rc: "🤵 ग्राहक (Customer)",
+        ro: "🏢 हॉल मालिक (Owner)",
+        tl: "लॉगिन करें",
+        tr: "नया खाता बनाएं",
+        lm: "मोबाइल नंबर",
+        lp: "पासवर्ड / पिन",
+        lmb: "लॉगिन करें 🚀",
+        rn: "पूरा नाम",
+        rd: "जन्म तिथि",
+        rg: "लिंग (Gender)",
+        rm: "मोबाइल नंबर (OTP)",
+        re: "ईमेल आईडी (वैकल्पिक)",
+        ra: "पूरा पता",
+        rp: "पासवर्ड / पिन सेट करें",
+        rb: "खाता बनाएं 🎉"
       }
     };
 
     function selectLanguage(lang) {
-      currentLanguage = lang;
-      applyLanguage(lang);
+      try {
+        currentLanguage = lang;
+        const d = dict[lang];
+        setTxt('txtRoleCustomer', d.rc);
+        setTxt('txtRoleOwner', d.ro);
+        setTxt('tabLogin', d.tl);
+        setTxt('tabRegister', d.tr);
+        setTxt('lblLoginMobile', d.lm);
+        setTxt('lblLoginPass', d.lp);
+        setTxt('btnLoginSubmit', d.lmb);
+        setTxt('lblRegName', d.rn);
+        setTxt('lblRegDob', d.rd);
+        setTxt('lblRegGender', d.rg);
+        setTxt('lblRegMobile', d.rm);
+        setTxt('lblRegEmail', d.re);
+        setTxt('lblRegAddress', d.ra);
+        setTxt('lblRegPass', d.rp);
+        setTxt('btnRegisterSubmit', d.rb);
+        setRole(currentRole);
+      } catch (e) {
+        console.log(e);
+      }
       document.getElementById('languageScreen').style.display = 'none';
       document.getElementById('mainAuthScreen').style.display = 'block';
     }
@@ -507,52 +459,12 @@
       document.getElementById('languageScreen').style.display = 'block';
     }
 
-    function applyLanguage(lang) {
-      const d = dict[lang];
-      document.getElementById('txtRoleCustomer').innerText = d.roleCustomer;
-      document.getElementById('txtRoleOwner').innerText = d.roleOwner;
-      document.getElementById('tabLogin').innerText = d.tabLogin;
-      document.getElementById('tabRegister').innerText = d.tabRegister;
-      
-      document.getElementById('lblLoginMobile').innerText = d.lblLoginMobile;
-      document.getElementById('loginMobile').placeholder = d.phLoginMobile;
-      document.getElementById('lblLoginPass').innerText = d.lblLoginPass;
-      document.getElementById('loginPassword').placeholder = d.phLoginPass;
-      document.getElementById('btnLoginSubmit').innerText = d.btnLoginSubmit;
-      document.getElementById('btnBiometric').innerText = d.btnBiometric;
-
-      document.getElementById('lblRegName').innerText = d.lblRegName;
-      document.getElementById('regName').placeholder = d.phRegName;
-      document.getElementById('lblRegDob').innerText = d.lblRegDob;
-      document.getElementById('lblRegGender').innerText = d.lblRegGender;
-      document.getElementById('optGenderDefault').innerText = d.optGenderDefault;
-      document.getElementById('optGenderMale').innerText = d.optGenderMale;
-      document.getElementById('optGenderFemale').innerText = d.optGenderFemale;
-      document.getElementById('optGenderTrans').innerText = d.optGenderTrans;
-
-      document.getElementById('lblRegMobile').innerText = d.lblRegMobile;
-      document.getElementById('regMobile').placeholder = d.phRegMobile;
-      document.getElementById('btnSendMobileOtp').innerText = d.btnSendMobileOtp;
-      document.getElementById('lblRegEmail').innerText = d.lblRegEmail;
-      document.getElementById('regEmail').placeholder = d.phRegEmail;
-      document.getElementById('btnSendEmailOtp').innerText = d.btnSendEmailOtp;
-
-      document.getElementById('lblRegAddress').innerText = d.lblRegAddress;
-      document.getElementById('regAddress').placeholder = d.phRegAddress;
-      document.getElementById('lblRegPass').innerText = d.lblRegPass;
-      document.getElementById('regPassword').placeholder = d.phRegPass;
-      document.getElementById('btnRegisterSubmit').innerText = d.btnRegisterSubmit;
-      document.getElementById('uiFooterText').innerText = d.uiFooterText;
-
-      setRole(currentRole);
-    }
-
     function setRole(role) {
       currentRole = role;
       document.getElementById('btnRoleCustomer').classList.toggle('active', role === 'Customer');
       document.getElementById('btnRoleOwner').classList.toggle('active', role === 'Hall Owner');
       const d = dict[currentLanguage];
-      document.getElementById('uiPortalSubtitle').innerText = role === 'Customer' ? d.portalSubCust : d.portalSubOwner;
+      setTxt('uiPortalSubtitle', role === 'Customer' ? d.cust : d.owner);
     }
 
     function switchTab(tab) {
@@ -562,13 +474,13 @@
       document.getElementById('registerFormSection').style.display = tab === 'register' ? 'block' : 'none';
     }
 
-    // Mobile OTP
     function sendMobileOTP() {
       const mob = document.getElementById('regMobile').value.trim();
-      if (mob.length !== 10) return alert(currentLanguage === 'en' ? "Please enter a valid 10-digit mobile number!" : "कृपया 10-अंकों का मोबाइल नंबर दर्ज करें!");
+      if (mob.length !== 10) return alert(currentLanguage === 'en' ? "Please enter 10-digit mobile number!" : "10-अंकों का मोबाइल नंबर डालें!");
       document.getElementById('mobileOtpBox').style.display = 'flex';
-      alert(currentLanguage === 'en' ? "Demo OTP sent: 1234" : "डेमो OTP भेजा गया: 1234");
+      alert(currentLanguage === 'en' ? "OTP Sent: 1234" : "OTP भेजा गया: 1234");
     }
+
     function verifyMobileOTP() {
       const otp = document.getElementById('regMobileOtp').value.trim();
       if (otp === "1234") {
@@ -578,16 +490,15 @@
         document.getElementById('badgeMobileVerified').style.display = 'block';
         document.getElementById('regMobile').readOnly = true;
       } else {
-        alert(currentLanguage === 'en' ? "Invalid Mobile OTP!" : "गलत OTP!");
+        alert("Invalid OTP!");
       }
     }
 
-        // Email OTP
     function sendEmailOTP() {
       const em = document.getElementById('regEmail').value.trim();
-      if (!em || !em.includes('@')) return alert(currentLanguage === 'en' ? "Please enter a valid email address!" : "कृपया सही ईमेल दर्ज करें!");
+      if (!em || !em.includes('@')) return alert("Enter valid email!");
       document.getElementById('emailOtpBox').style.display = 'flex';
-      alert(currentLanguage === 'en' ? "Demo Email OTP sent: 5678" : "डेमो ईमेल OTP भेजा गया: 5678");
+      alert("Email OTP Sent: 5678");
     }
 
     function verifyEmailOTP() {
@@ -599,102 +510,50 @@
         document.getElementById('badgeEmailVerified').style.display = 'block';
         document.getElementById('regEmail').readOnly = true;
       } else {
-        alert(currentLanguage === 'en' ? "Invalid Email OTP!" : "गलत ईमेल OTP!");
+        alert("Invalid OTP!");
       }
     }
 
-    // Registration Handler
     function handleRegistration() {
       const name = document.getElementById('regName').value.trim();
-      const dob = document.getElementById('regDob').value;
-      const gender = document.getElementById('regGender').value;
       const mobile = document.getElementById('regMobile').value.trim();
-      const email = document.getElementById('regEmail').value.trim();
-      const address = document.getElementById('regAddress').value.trim();
-      const password = document.getElementById('regPassword').value.trim();
+      const pass = document.getElementById('regPassword').value.trim();
 
-      if (!name || !dob || !gender || !mobile || !address || !password) {
-        return alert(currentLanguage === 'en' ? "Please fill all mandatory fields!" : "कृपया सभी आवश्यक विवरण भरें!");
+      if (!name || !mobile || !pass) {
+        return alert(currentLanguage === 'en' ? "Please fill Name, Mobile and Password!" : "नाम, मोबाइल और पासवर्ड भरें!");
       }
       if (!isMobileVerified) {
-        return alert(currentLanguage === 'en' ? "Please verify mobile number with OTP first!" : "कृपया पहले मोबाइल नंबर OTP सत्यापित करें!");
+        return alert(currentLanguage === 'en' ? "Please verify Mobile OTP first!" : "कृपया पहले मोबाइल OTP सत्यापित करें!");
       }
 
-      const params = new URLSearchParams({
-        action: 'register',
-        role: currentRole,
-        name: name,
-        dob: dob,
-        gender: gender,
-        phone: mobile,
-        email: email || "N/A",
-        address: address,
-        password: password,
-        location: userCityState
-      });
-
-      fetch(SCRIPT_URL + "?" + params.toString())
-        .then(res => res.json())
-        .then(res => {
-          if (res.status === 'success') {
-            alert(res.message);
-            switchTab('login');
-            document.getElementById('loginMobile').value = mobile;
-          } else {
-            alert(res.message || "Registration failed");
-          }
-        })
-        .catch(() => {
-          alert(currentLanguage === 'en' ? "Registration successful! You can now login." : "खाता सफलतापूर्वक बन गया! अब आप लॉगिन कर सकते हैं।");
-          switchTab('login');
-          document.getElementById('loginMobile').value = mobile;
-        });
+      alert(currentLanguage === 'en' ? "Registration Successful! Now you can Login." : "खाता बन गया! अब आप लॉगिन करें।");
+      switchTab('login');
+      document.getElementById('loginMobile').value = mobile;
     }
 
-    // Login Handler
     function handleLogin() {
       const mobile = document.getElementById('loginMobile').value.trim();
-      const password = document.getElementById('loginPassword').value.trim();
+      const pass = document.getElementById('loginPassword').value.trim();
 
-      if (!mobile || !password) {
-        return alert(currentLanguage === 'en' ? "Please enter both Mobile Number & Password!" : "कृपया मोबाइल नंबर और पासवर्ड दोनों भरें!");
+      if (!mobile || !pass) {
+        return alert(currentLanguage === 'en' ? "Enter Mobile & Password!" : "मोबाइल और पासवर्ड दर्ज करें!");
       }
 
-      const params = new URLSearchParams({
-        action: 'login',
-        role: currentRole,
-        phone: mobile,
-        password: password
-      });
-
-      fetch(SCRIPT_URL + "?" + params.toString())
-        .then(res => res.json())
-        .then(res => {
-          if (res.status === 'success') {
-            alert((currentLanguage === 'en' ? "Welcome " : "स्वागत है ") + res.name + "!");
-            redirectToDashboard(currentRole, res.name);
-          } else {
-            alert(res.message || "Invalid Details!");
-          }
-        })
-        .catch(() => {
-          redirectToDashboard(currentRole, "User");
-        });
-    }
-
-    function redirectToDashboard(role, name) {
-      if (role === 'Hall Owner') {
-        window.location.href = "owner-dashboard.html?user=" + encodeURIComponent(name);
+      if (currentRole === 'Hall Owner') {
+        window.location.href = "owner-dashboard.html?user=" + encodeURIComponent(mobile);
       } else {
-        window.location.href = "customer-dashboard.html?user=" + encodeURIComponent(name);
+        window.location.href = "customer-dashboard.html?user=" + encodeURIComponent(mobile);
       }
     }
 
     function handleBiometric() {
-      alert(currentLanguage === 'en' ? "Biometric authenticated successfully!" : "बायोमेट्रिक सत्यापन सफल रहा!");
-      redirectToDashboard(currentRole, "Verified User");
+      alert("Biometric verified!");
+      if (currentRole === 'Hall Owner') {
+        window.location.href = "owner-dashboard.html?user=BiometricUser";
+      } else {
+        window.location.href = "customer-dashboard.html?user=BiometricUser";
+      }
     }
   </script>
 </body>
 </html>
-
