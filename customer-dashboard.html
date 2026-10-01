@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Dashboard - HallWala</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-dark: #3730a3;
+      --accent: #f43f5e;
+      --bg: #f8fafc;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --card: #ffffff;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--bg); color: var(--text); min-height: 100vh; }
+
+    header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .brand-title {
+      font-size: 22px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #4f46e5, #f43f5e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge {
+      background: #eff6ff;
+      color: var(--primary);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .logout-btn {
+      background: none;
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .logout-btn:hover { background: #fee2e2; color: #ef4444; border-color: #fca5a5; }
+
+    .hero-banner {
+      background: linear-gradient(135deg, #1e1b4b, #312e81);
+      color: white;
+      padding: 36px 20px;
+      text-align: center;
+    }
+    .hero-banner h2 { font-size: 24px; margin-bottom: 8px; font-weight: 800; }
+    .hero-banner p { font-size: 14px; color: #c7d2fe; margin-bottom: 20px; }
+
+    .search-bar {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      gap: 8px;
+      background: white;
+      padding: 6px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    .search-bar input {
+      flex: 1;
+      border: none;
+      padding: 10px 14px;
+      font-size: 14px;
+      outline: none;
+      border-radius: 8px;
+    }
+    .search-bar button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .main-wrap {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 0 16px;
+    }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    .section-head h3 { font-size: 18px; font-weight: 800; }
+
+    .hall-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .hall-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .hall-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px -10px rgba(0,0,0,0.15);
+    }
+    .hall-image {
+      height: 180px;
+      width: 100%;
+      background-size: cover;
+      background-position: center;
+    }
+    .hall-details { padding: 18px; }
+    .hall-title { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+    .hall-loc { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+    
+    .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+    .tag {
+      background: #f1f5f9;
+      color: #475569;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .action-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+    }
+    .rent-label { font-size: 11px; color: var(--muted); }
+    .rent-price { font-size: 18px; font-weight: 800; color: var(--text); }
+    
+    .btn-offer {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-offer:hover { background: #e11d48; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand-title">HallWala</div>
+    <div class="user-pill">
+      <div class="badge">🤵 <span id="userNameLabel">Customer</span></div>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <div class="hero-banner">
+    <h2>Book Marriage Halls & Lawns at Your Price</h2>
+    <p>Compare facilities, check capacity, and send custom booking offers</p>
+    <div class="search-bar">
+      <input type="text" placeholder="Search area, locality, or hall name...">
+      <button>Search</button>
+    </div>
+  </div>
+
+  <div class="main-wrap">
+    <div class="section-head">
+      <h3>Available Halls & Lawns</h3>
+    </div>
+
+    <div class="hall-grid">
+      <!-- Hall 1 -->
+      <div class="hall-card">
+        <div class="hall-image" style="background-image: url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80');"></div>
+        <div class="hall-details">
+          <div class="hall-title">Royal Palace Marriage Hall</div>
+          <div class="hall-loc">📍 Bokaro Steel City</div>
+          <div class="tags">
+            <span class="tag">Capacity: 600</span>
+            <span class="tag">AC Banquets</span>
+            <span class="tag">Parking</span>
+          </div>
+          <div class="action-row">
+            <div>
+              <div class="rent-label">Base Rent</div>
+              <div class="rent-price">₹45,000</div>
+            </div>
+            <button class="btn-offer" onclick="sendOffer('Royal Palace', 45000)">Make Offer</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hall 2 -->
+      <div class="hall-card">
+        <div class="hall-image" style="background-image: url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=600&q=80');"></div>
+        <div class="hall-details">
+          <div class="hall-title">Grand Celebration Lawn</div>
+          <div class="hall-loc">📍 Chas, Bokaro</div>
+          <div class="tags">
+            <span class="tag">Capacity: 1000</span>
+            <span class="tag">Open Lawn</span>
+            <span class="tag">Catering Available</span>
+          </div>
+          <div class="action-row">
+            <div>
+              <div class="rent-label">Base Rent</div>
+              <div class="rent-price">₹60,000</div>
+            </div>
+            <button class="btn-offer" onclick="sendOffer('Grand Celebration Lawn', 60000)">Make Offer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const userVal = urlParams.get('user');
+    if (userVal) {
+      document.getElementById('userNameLabel').innerText = userVal;
+    }
+
+    function sendOffer(hallName, basePrice) {
+      const offer = prompt(hallName + " (Base: ₹" + basePrice + ")\nAap kitne rupaye ka offer dena chahte hain? (₹):");
+      if (offer) {
+        alert("Aapka ₹" + offer + " ka offer successfully bhej diya gaya hai! Hall maalik ke confirmation ka intezar karein.");
+      }
+    }
+
+    function logout() {
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
