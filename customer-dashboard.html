@@ -19,9 +19,9 @@
       --success: #16a34a;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding-bottom: 80px; }
+    body { background-color: var(--bg); color: var(--text); padding-bottom: 80px; min-height: 100vh; }
 
-    /* Top Header (Clean) */
+    /* Top Header */
     header {
       background: var(--card);
       border-bottom: 1px solid var(--border);
@@ -39,68 +39,94 @@
       -webkit-text-fill-color: transparent;
     }
 
-    /* Screens */
-    .screen { display: none; max-width: 1150px; margin: 0 auto; padding: 16px; }
-    .screen.active { display: block; }
-
-    /* Search & Filter Area */
-    .filter-box {
-      background: white; padding: 16px; border-radius: 16px;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 20px;
-      display: grid; grid-template-columns: 1fr 1fr 2fr; gap: 10px;
-    }
-    @media(max-width: 768px) { .filter-box { grid-template-columns: 1fr; } }
-    .f-ctrl { padding: 12px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 14px; outline: none; font-weight: 600; }
-
-    /* Hall Cards */
-    .hall-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
-    .hall-card { background: white; border-radius: 18px; border: 1px solid var(--border); overflow: hidden; }
-    .media-thumb { height: 200px; background-size: cover; background-position: center; position: relative; cursor: pointer; }
-    .view-btn { position: absolute; top: 10px; left: 10px; background: rgba(79,70,229,0.9); color: white; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; }
-    .h-info { padding: 16px; }
-    .h-title { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
-    .h-loc { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
-    .action-row { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 12px; margin-top: 12px; }
-    .rent-price { font-size: 18px; font-weight: 800; }
-    .btn-offer { background: var(--accent); color: white; border: none; padding: 10px 16px; border-radius: 10px; font-weight: 700; cursor: pointer; }
-
     /* Bottom Navigation */
     .bottom-nav {
       position: fixed; bottom: 0; left: 0; width: 100%; background: white;
       border-top: 1px solid var(--border); display: flex; justify-content: space-around;
       padding: 12px 0; z-index: 100; box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
     }
-    .nav-item { text-align: center; color: var(--muted); cursor: pointer; font-weight: 600; font-size: 12px; flex: 1; }
+    .nav-item { text-align: center; color: var(--muted); cursor: pointer; font-weight: 600; font-size: 12px; flex: 1; transition: 0.2s;}
     .nav-item.active { color: var(--primary); }
-    .nav-icon { font-size: 20px; margin-bottom: 4px; display: block; }
+    .nav-icon { font-size: 22px; margin-bottom: 4px; display: block; }
 
-    /* Account Screen */
+    /* Screens */
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* Filter Area */
+    .filter-section {
+      background: linear-gradient(135deg, #1e1b4b, #312e81);
+      color: white;
+      padding: 24px 16px;
+    }
+    .filter-section h2 { font-size: 20px; margin-bottom: 16px; text-align: center; font-weight: 800; }
+    .filter-bar {
+      max-width: 950px; margin: 0 auto; display: grid;
+      grid-template-columns: 1.2fr 1.2fr 1.6fr; gap: 10px;
+      background: white; padding: 10px; border-radius: 14px;
+    }
+    @media(max-width: 768px) { .filter-bar { grid-template-columns: 1fr; } }
+    .filter-control {
+      padding: 12px 14px; border: 1.5px solid var(--border);
+      border-radius: 10px; font-size: 14px; outline: none;
+      color: var(--text); font-weight: 600; background: white;
+    }
+
+    .main-wrap { max-width: 1150px; margin: 20px auto; padding: 0 16px; }
+    .results-count { font-size: 14px; font-weight: 700; color: var(--muted); margin-bottom: 16px; }
+
+    /* Hall Cards */
+    .hall-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+    .hall-card { background: white; border-radius: 18px; border: 1px solid var(--border); overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
+    .media-thumb { height: 200px; background-size: cover; background-position: center; position: relative; cursor: pointer; }
+    .media-badge { position: absolute; bottom: 10px; right: 10px; background: rgba(15, 23, 42, 0.85); color: white; padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; }
+    .tap-hint { position: absolute; top: 10px; left: 10px; background: rgba(79, 70, 229, 0.9); color: white; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; }
+    
+    .h-info { padding: 16px; display: flex; flex-direction: column; justify-content: space-between; }
+    .h-title { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+    .h-loc { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+    .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+    .tag { background: #f1f5f9; color: #475569; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; }
+    
+    .action-row { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 14px; }
+    .rent-price { font-size: 18px; font-weight: 800; color: var(--text); }
+    .btn-offer { background: var(--accent); color: white; border: none; padding: 10px 14px; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; }
+
+    /* Account & Bookings Screens */
     .acc-header { text-align: center; padding: 20px 0; }
     .acc-avatar { width: 80px; height: 80px; background: #e0e7ff; border-radius: 50%; margin: 0 auto 12px auto; display: flex; align-items: center; justify-content: center; font-size: 32px; }
     .acc-box { background: white; border-radius: 16px; border: 1px solid var(--border); padding: 20px; max-width: 500px; margin: 0 auto; }
     .acc-group { margin-bottom: 16px; }
     .acc-group label { display: block; font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
-    .acc-input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 15px; font-weight: 600; background: #f8fafc; }
+    .acc-input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 15px; font-weight: 600; background: #f8fafc; outline: none; }
     .btn-save { width: 100%; background: var(--primary); color: white; padding: 14px; border: none; border-radius: 10px; font-weight: 700; font-size: 16px; margin-top: 10px; cursor: pointer; }
     .btn-logout { width: 100%; background: #fee2e2; color: #ef4444; padding: 14px; border: none; border-radius: 10px; font-weight: 700; font-size: 16px; margin-top: 16px; cursor: pointer; }
 
-    /* Modal & Real Calendar */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.75); z-index: 1000; overflow-y: auto; padding: 20px 10px; }
-    .modal-box { max-width: 500px; background: white; margin: auto; border-radius: 20px; padding: 20px; position: relative; }
-    .modal-close { position: absolute; top: 14px; right: 14px; background: #f1f5f9; border: none; font-size: 18px; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; }
-    
-    .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-weight: 800; font-size: 18px; }
-    .cal-btn { background: #e0e7ff; color: var(--primary); border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-weight: 700; }
-    .weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 8px; }
+    /* Modals (Gallery & Calendar) */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(5px); z-index: 1000; overflow-y: auto; padding: 20px 10px; }
+    .modal-box { max-width: 600px; background: white; margin: 20px auto; border-radius: 20px; padding: 22px; position: relative; }
+    .modal-close { position: absolute; top: 14px; right: 14px; background: #f1f5f9; border: none; font-size: 18px; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-weight: 700; }
+
+    .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0; }
+    .gallery-item { height: 140px; border-radius: 10px; background-size: cover; background-position: center; position: relative; }
+    .gallery-label { position: absolute; bottom: 6px; left: 6px; background: rgba(0,0,0,0.7); color: white; padding: 2px 6px; font-size: 10px; border-radius: 4px; font-weight: 600; }
+    .video-preview-box { background: #0f172a; color: white; border-radius: 12px; padding: 20px; text-align: center; margin-top: 10px; }
+
+    /* Real Calendar Layout */
+    .cal-wrapper { border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin: 18px 0; }
+    .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-weight: 800; font-size: 16px; }
+    .cal-btn { background: #e0e7ff; color: var(--primary); border: none; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-weight: 800; }
+    .weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 12px; font-weight: 800; color: var(--muted); margin-bottom: 8px; }
     .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-    .day { padding: 12px 0; text-align: center; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; border: 1px solid transparent; }
+    .day { padding: 12px 0; text-align: center; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; border: 1px solid transparent; display: flex; flex-direction: column; align-items: center; gap: 2px;}
     .day.empty { visibility: hidden; }
     .day.past { color: #cbd5e1; cursor: not-allowed; background: #f8fafc; }
     .day.available { background: #ecfdf5; color: var(--success); border-color: #a7f3d0; }
-    .day.booked { background: #fee2e2; color: var(--danger); text-decoration: line-through; cursor: not-allowed; }
-    .day.selected { background: var(--primary) !important; color: white !important; }
+    .day.booked { background: #fee2e2; color: var(--danger); text-decoration: line-through; cursor: not-allowed; border-color: #fca5a5; }
+    .day.selected { background: var(--primary) !important; color: white !important; transform: scale(1.05); }
 
-    .offer-inp { width: 100%; padding: 14px; border: 2px solid var(--border); border-radius: 12px; font-size: 18px; font-weight: 800; margin: 10px 0; text-align: center; }
+    .input-offer { width: 100%; padding: 14px; border: 2px solid var(--border); border-radius: 10px; font-size: 18px; font-weight: 800; margin: 8px 0 12px 0; text-align: center; }
+    .btn-submit-offer { width: 100%; padding: 14px; background: var(--accent); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -109,28 +135,38 @@
     <div class="brand-title">HallWala</div>
   </header>
 
-  <!-- SCREEN 1: HOME (EXPLORE) -->
+  <!-- SCREEN 1: HOME -->
   <div id="screen-home" class="screen active">
-    <div class="filter-box">
-      <select id="stateSelect" class="f-ctrl"><option value="Jharkhand">📍 Jharkhand</option></select>
-      <select id="districtSelect" class="f-ctrl"><option value="Bokaro">Bokaro</option></select>
-      <input type="text" id="searchInput" class="f-ctrl" placeholder="Search by name..." onkeyup="filterHalls()">
+    
+    <div class="filter-section">
+      <h2>Find the Best Marriage Halls in Your City</h2>
+      <div class="filter-bar">
+        <select id="stateSelect" class="filter-control" onchange="onStateChange()"></select>
+        <select id="districtSelect" class="filter-control" onchange="applyFilters()">
+          <option value="All">All Cities & Districts</option>
+        </select>
+        <input type="text" id="searchInput" class="filter-control" placeholder="Search by locality or hall name..." onkeyup="applyFilters()">
+      </div>
     </div>
-    <div class="hall-grid" id="hallsContainer"></div>
+
+    <div class="main-wrap">
+      <div class="results-count" id="resultsCount">Loading halls...</div>
+      <div class="hall-grid" id="hallsContainer"></div>
+    </div>
   </div>
 
   <!-- SCREEN 2: BOOKINGS -->
-  <div id="screen-bookings" class="screen">
+  <div id="screen-bookings" class="screen main-wrap">
     <h2 style="margin-bottom: 16px;">My Bookings & Offers</h2>
-    <div style="background: white; padding: 30px; text-align: center; border-radius: 16px; border: 1px solid var(--border);">
+    <div style="background: white; padding: 40px 20px; text-align: center; border-radius: 16px; border: 1px solid var(--border);">
       <div style="font-size: 40px; margin-bottom: 10px;">📅</div>
-      <h3 style="color: var(--muted);">No active bookings yet.</h3>
-      <p style="font-size: 13px; color: #94a3b8;">Make an offer from the home screen to see it here.</p>
+      <h3 style="color: var(--text); margin-bottom: 6px;">No active bookings yet.</h3>
+      <p style="font-size: 13px; color: var(--muted);">Make an offer from the home screen to see it here.</p>
     </div>
   </div>
 
   <!-- SCREEN 3: ACCOUNT -->
-  <div id="screen-account" class="screen">
+  <div id="screen-account" class="screen main-wrap">
     <div class="acc-header">
       <div class="acc-avatar">🤵</div>
       <h2 id="accDisplayPhone">Loading...</h2>
@@ -142,109 +178,225 @@
         <input type="text" class="acc-input" id="accName" placeholder="Enter your full name">
       </div>
       <div class="acc-group">
-        <label>Email Address (For Invoices/Tokens)</label>
+        <label>Email Address (For PDF Agreements & Invoices)</label>
         <input type="email" class="acc-input" id="accEmail" placeholder="your.email@gmail.com">
       </div>
       <div class="acc-group">
         <label>Registered Mobile</label>
         <input type="text" class="acc-input" id="accPhone" readonly style="background: #e2e8f0; color: #64748b;">
       </div>
-      <button class="btn-save" onclick="saveProfile()">Save Profile</button>
-      <button class="btn-logout" onclick="logout()">Logout</button>
+      <button class="btn-save" onclick="saveProfile()">Save Profile Details</button>
+      <button class="btn-logout" onclick="logout()">Logout / Sign Out</button>
     </div>
   </div>
 
   <!-- BOTTOM NAVIGATION -->
   <div class="bottom-nav">
     <div class="nav-item active" id="nav-home" onclick="switchScreen('home')">
-      <span class="nav-icon">🏠</span><span id="lblHome">Home</span>
+      <span class="nav-icon">🏠</span><span>Home</span>
     </div>
     <div class="nav-item" id="nav-bookings" onclick="switchScreen('bookings')">
-      <span class="nav-icon">📅</span><span id="lblBookings">Bookings</span>
+      <span class="nav-icon">📅</span><span>Bookings</span>
     </div>
     <div class="nav-item" id="nav-account" onclick="switchScreen('account')">
-      <span class="nav-icon">👤</span><span id="lblAccount">Account</span>
+      <span class="nav-icon">👤</span><span>Account</span>
+    </div>
+  </div>
+
+  <!-- GALLERY MODAL -->
+  <div class="modal-overlay" id="galleryModal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal('galleryModal')">✕</button>
+      <h2 id="galleryTitle" style="font-size:20px; font-weight:800; margin-bottom:4px;">Hall Gallery</h2>
+      <p style="font-size:12px; color:var(--muted); margin-bottom:14px;">Banquet, Deluxe Rooms, Dining & Lawn Views</p>
+
+      <div class="gallery-grid">
+        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=500&q=80');"><span class="gallery-label">Main Banquet Hall</span></div>
+        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=500&q=80');"><span class="gallery-label">AC Bridal / Deluxe Bedroom</span></div>
+        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=500&q=80');"><span class="gallery-label">Buffet & Dining Area</span></div>
+        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=500&q=80');"><span class="gallery-label">Stage & Open Lawn</span></div>
+      </div>
+      <div class="video-preview-box">
+        <div style="font-size:26px; margin-bottom:4px;">▶️</div>
+        <div style="font-weight:700; font-size:14px;">Hall Video Tour Available</div>
+        <div style="font-size:11px; color:#94a3b8;">High Definition (HD) Drone & Walkthrough Clip</div>
+      </div>
     </div>
   </div>
 
   <!-- OFFER & REAL CALENDAR MODAL -->
   <div class="modal-overlay" id="offerModal">
     <div class="modal-box">
-      <button class="modal-close" onclick="closeModal()">✕</button>
-      <h2 id="mHallName" style="font-size:20px; font-weight:800;">Hall Name</h2>
-      <p id="mHallLoc" style="color:var(--muted); font-size:13px; margin-bottom:16px;">Base Rent: ₹0</p>
+      <button class="modal-close" onclick="closeModal('offerModal')">✕</button>
+      <h2 id="offerHallName" style="font-size:20px; font-weight:800; margin-bottom:4px;">Hall Name</h2>
+      <p id="offerHallMeta" style="color:var(--muted); font-size:13px; margin-bottom:14px;">Base Rent: ₹45,000</p>
 
-      <!-- Real Calendar UI -->
-      <div style="border: 1px solid var(--border); padding: 16px; border-radius: 16px; margin-bottom: 16px;">
+      <!-- REAL SLIDING CALENDAR -->
+      <div class="cal-wrapper">
         <div class="cal-header">
           <button class="cal-btn" onclick="changeMonth(-1)">❮</button>
           <span id="monthYearDisplay">Month Year</span>
           <button class="cal-btn" onclick="changeMonth(1)">❯</button>
         </div>
         <div class="weekdays">
-          <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+          <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
         </div>
         <div class="days-grid" id="calendarDays"></div>
+        <div style="text-align:center; font-size:11px; color:var(--muted); margin-top:10px;">🟢 Available | 🔴 ❌ Booked | ⚪ Past Dates</div>
+      </div>
+
+      <div style="background:#fffbeb; border-left:4px solid #f59e0b; padding:10px; font-size:12px; color:#92400e; border-radius:6px; margin-bottom:12px; font-weight:600;">
+        🔒 Direct phone number sharing is restricted. Valid agreements & tokens will be sent to Email/WhatsApp automatically after owner accepts.
       </div>
 
       <div style="text-align: center; margin-bottom: 12px;">
-        <p style="font-size:12px; font-weight:700; color:var(--muted);">Selected Date</p>
-        <h3 id="pickedDateText" style="color:var(--primary);">None</h3>
+        <p style="font-size:12px; font-weight:700; color:var(--muted);">Selected Booking Date</p>
+        <h3 id="pickedDateLabel" style="color:var(--primary);">Please select a date</h3>
       </div>
 
-      <label style="font-size:12px; font-weight:700; color:var(--muted);">YOUR OFFER AMOUNT (₹)</label>
-      <input type="number" id="offerVal" class="offer-inp" placeholder="₹ Amount">
-      <div style="font-size:11px; color:#92400e; background:#fffbeb; padding:8px; border-radius:6px; margin-bottom:12px; font-weight:600;">
-        ⚠️ Privacy & Token Rule: Payment details and agreements will be generated via Email/WhatsApp securely after owner accepts. No personal numbers here.
-      </div>
+      <label style="font-size:12px; font-weight:700; color:var(--muted);" id="maxOfferHelp">ENTER YOUR OFFER AMOUNT (₹)</label>
+      <input type="number" id="offerPriceBox" class="input-offer" placeholder="₹ Amount">
 
-      <button class="btn-save" onclick="submitOffer()">Send Offer 🚀</button>
+      <button class="btn-submit-offer" onclick="submitValidOffer()">Make Offer to Owner 🚀</button>
     </div>
   </div>
 
   <script>
     // System Variables
     const urlParams = new URLSearchParams(window.location.search);
-    const userPhone = urlParams.get('user') || '9876543210';
-    let currentLang = 'en'; // Assuming English default, can be toggled
-    
+    const userPhone = urlParams.get('user') || 'DemoUser';
     document.getElementById('accPhone').value = userPhone;
     document.getElementById('accDisplayPhone').innerText = userPhone;
 
-    // Navigation Logic
+    // Bottom Navigation Logic
     function switchScreen(screen) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      
       document.getElementById('screen-' + screen).classList.add('active');
       document.getElementById('nav-' + screen).classList.add('active');
     }
 
-    // Dummy Hall Data
-    const dummyHalls = [
-      { id: 1, name: "Royal Palace", loc: "Sector 4, Bokaro", rent: 45000, img: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" },
-      { id: 2, name: "Grand Celebration", loc: "Chas, Bokaro", rent: 60000, img: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=600&q=80" },
-      { id: 3, name: "Shagun Resort", loc: "Co-op Colony, Bokaro", rent: 50000, img: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80" }
+    function logout() { window.location.href = "index.html"; }
+    function saveProfile() { alert("Profile Details Saved!\nLegal PDF Agreements & Tokens will now be sent to this email automatically."); }
+
+    // PURE CLEAN INDIA MASTER DATA: ALL CAPITALS, CITIES & DISTRICTS (NO TAGS)
+    const indiaData = {
+      "Andaman and Nicobar": ["Port Blair", "Nicobar", "North and Middle Andaman", "South Andaman"],
+      "Andhra Pradesh": ["Amaravati", "Visakhapatnam", "Alluri Sitharama Raju", "Anakapalli", "Ananthapuramu", "Annamayya", "Bapatla", "Chittoor", "Dr. B.R. Ambedkar Konaseema", "East Godavari", "Eluru", "Guntur", "Kakinada", "Krishna", "Kurnool", "Nandyal", "NTR", "Palnadu", "Parvathipuram Manyam", "Prakasam", "Sri Potti Sriramulu Nellore", "Sri Sathya Sai", "Srikakulam", "Tirupati", "Vizianagaram", "West Godavari", "YSR Kadapa"],
+      "Arunachal Pradesh": ["Itanagar", "Anjaw", "Changlang", "Dibang Valley", "East Kameng", "East Siang", "Kamle", "Kra Daadi", "Kurung Kumey", "Lepa Rada", "Lohit", "Longding", "Lower Dibang Valley", "Lower Siang", "Lower Subansiri", "Namsai", "Pakke Kessang", "Papum Pare", "Shi Yomi", "Siang", "Tawang", "Tirap", "Upper Siang", "Upper Subansiri", "West Kameng", "West Siang"],
+      "Assam": ["Dispur", "Guwahati", "Baksa", "Barpeta", "Biswanath", "Bongaigaon", "Cachar", "Charaideo", "Chirang", "Darrang", "Dhemaji", "Dhubri", "Dibrugarh", "Dima Hasao", "Goalpara", "Golaghat", "Hailakandi", "Hojai", "Jorhat", "Kamrup", "Kamrup Metropolitan", "Karbi Anglong", "Karimganj", "Kokrajhar", "Lakhimpur", "Majuli", "Morigaon", "Nagaon", "Nalbari", "Sivasagar", "Sonitpur", "South Salmara-Mankachar", "Tamulpur", "Tinsukia", "Udalguri", "West Karbi Anglong"],
+      "Bihar": ["Patna", "Araria", "Arwal", "Aurangabad", "Banka", "Begusarai", "Bhagalpur", "Bhojpur", "Buxar", "Darbhanga", "East Champaran", "Gaya", "Gopalganj", "Jamui", "Jehanabad", "Kaimur", "Katihar", "Khagaria", "Kishanganj", "Lakhisarai", "Madhepura", "Madhubani", "Munger", "Muzaffarpur", "Nalanda", "Nawada", "Purnia", "Rohtas", "Saharsa", "Samastipur", "Saran", "Sheikhpura", "Sheohar", "Sitamarhi", "Siwan", "Supaul", "Vaishali", "West Champaran"],
+      "Chandigarh": ["Chandigarh"],
+      "Chhattisgarh": ["Raipur", "Balod", "Baloda Bazar", "Balrampur", "Bastar", "Bemetara", "Bijapur", "Bilaspur", "Dantewada", "Dhamtari", "Durg", "Gariaband", "Gaurela Pendra Marwahi", "Janjgir Champa", "Jashpur", "Kabirdham", "Kanker", "Khairagarh", "Kondagaon", "Korba", "Koriya", "Mahasamund", "Manendragarh", "Mohla Manpur", "Mungeli", "Narayanpur", "Raigarh", "Rajnandgaon", "Sakti", "Sarangarh Bilaigarh", "Sukma", "Surajpur", "Surguja"],
+      "Dadra and Nagar Haveli and Daman and Diu": ["Daman", "Diu", "Dadra and Nagar Haveli"],
+      "Delhi": ["New Delhi", "Central Delhi", "East Delhi", "North Delhi", "North East Delhi", "North West Delhi", "Shahdara", "South Delhi", "South East Delhi", "South West Delhi", "West Delhi"],
+      "Goa": ["Panaji", "North Goa", "South Goa"],
+      "Gujarat": ["Gandhinagar", "Ahmedabad", "Amreli", "Anand", "Aravalli", "Banaskantha", "Bharuch", "Bhavnagar", "Botad", "Chhota Udaipur", "Dahod", "Dang", "Devbhoomi Dwarka", "Gir Somnath", "Jamnagar", "Junagadh", "Kheda", "Kutch", "Mahisagar", "Mehsana", "Morbi", "Narmada", "Navsari", "Panchmahal", "Patan", "Porbandar", "Rajkot", "Sabarkantha", "Surat", "Surendranagar", "Tapi", "Vadodara", "Valsad"],
+      "Haryana": ["Chandigarh", "Gurugram", "Ambala", "Bhiwani", "Charkhi Dadri", "Faridabad", "Fatehabad", "Hisar", "Jhajjar", "Jind", "Kaithal", "Karnal", "Kurukshetra", "Mahendragarh", "Nuh", "Palwal", "Panchkula", "Panipat", "Rewari", "Rohtak", "Sirsa", "Sonipat", "Yamunanagar"],
+      "Himachal Pradesh": ["Shimla", "Dharamshala", "Bilaspur", "Chamba", "Hamirpur", "Kangra", "Kinnaur", "Kullu", "Lahaul and Spiti", "Mandi", "Sirmaur", "Solan", "Una"],
+      "Jammu and Kashmir": ["Srinagar", "Jammu", "Anantnag", "Bandipora", "Baramulla", "Budgam", "Doda", "Ganderbal", "Kathua", "Kishtwar", "Kulgam", "Kupwara", "Poonch", "Pulwama", "Rajouri", "Ramban", "Reasi", "Samba", "Shopian", "Udhampur"],
+      "Jharkhand": ["Ranchi", "Bokaro", "Chatra", "Deoghar", "Dhanbad", "Dumka", "East Singhbhum", "Garhwa", "Giridih", "Godda", "Gumla", "Hazaribagh", "Jamtara", "Khunti", "Koderma", "Latehar", "Lohardaga", "Pakur", "Palamu", "Ramgarh", "Sahibganj", "Seraikela Kharsawan", "Simdega", "West Singhbhum"],
+      "Karnataka": ["Bengaluru", "Bagalkote", "Ballari", "Belagavi", "Bengaluru Rural", "Bidar", "Chamarajanagar", "Chikkaballapura", "Chikkamagaluru", "Chitradurga", "Dakshina Kannada", "Davanagere", "Dharwad", "Gadag", "Hassan", "Haveri", "Kalaburagi", "Kodagu", "Kolar", "Koppal", "Mandya", "Mysuru", "Raichur", "Ramanagara", "Shivamogga", "Tumakuru", "Udupi", "Uttara Kannada", "Vijayanagara", "Vijayapura", "Yadgir"],
+      "Kerala": ["Thiruvananthapuram", "Alappuzha", "Ernakulam", "Idukki", "Kannur", "Kasaragod", "Kollam", "Kottayam", "Kozhikode", "Malappuram", "Palakkad", "Pathanamthitta", "Thrissur", "Wayanad"],
+      "Ladakh": ["Leh", "Kargil"],
+      "Lakshadweep": ["Kavaratti", "Agatti", "Amini", "Andrott", "Kalpeni", "Minicoy"],
+      "Madhya Pradesh": ["Bhopal", "Indore", "Gwalior", "Agar Malwa", "Alirajpur", "Anuppur", "Ashoknagar", "Balaghat", "Barwani", "Betul", "Bhind", "Burhanpur", "Chhatarpur", "Chhindwara", "Damoh", "Datia", "Dewas", "Dhar", "Dindori", "Guna", "Harda", "Jabalpur", "Jhabua", "Katni", "Khandwa", "Khargone", "Maihar", "Mandla", "Mandsaur", "Mauganj", "Morena", "Narsinghpur", "Neemuch", "Niwari", "Pandhurna", "Panna", "Raisen", "Rajgarh", "Ratlam", "Rewa", "Sagar", "Satna", "Sehore", "Seoni", "Shahdol", "Shajapur", "Sheopur", "Shivpuri", "Sidhi", "Singrauli", "Tikamgarh", "Ujjain", "Umaria", "Vidisha"],
+      "Maharashtra": ["Mumbai", "Pune", "Nagpur", "Ahmednagar", "Akola", "Amravati", "Beed", "Bhandara", "Buldhana", "Chandrapur", "Chhatrapati Sambhaji Nagar", "Dharashiv", "Dhule", "Gadchiroli", "Gondia", "Hingoli", "Jalgaon", "Jalna", "Kolhapur", "Latur", "Nanded", "Nandurbar", "Nashik", "Palghar", "Parbhani", "Raigad", "Ratnagiri", "Sangli", "Satara", "Sindhudurg", "Solapur", "Thane", "Wardha", "Washim", "Yavatmal"],
+      "Manipur": ["Imphal", "Bishnupur", "Chandel", "Churachandpur", "Imphal East", "Imphal West", "Jiribam", "Kakching", "Kamjong", "Kangpokpi", "Noney", "Pherzawl", "Senapati", "Tamenglong", "Tengnoupal", "Thoubal", "Ukhrul"],
+      "Meghalaya": ["Shillong", "East Garo Hills", "East Jaintia Hills", "East Khasi Hills", "Eastern West Khasi Hills", "North Garo Hills", "Ri-Bhoi", "South Garo Hills", "South West Garo Hills", "South West Khasi Hills", "West Garo Hills", "West Jaintia Hills", "West Khasi Hills"],
+      "Mizoram": ["Aizawl", "Champhai", "Hnahthial", "Khawzawl", "Kolasib", "Lawngtlai", "Lunglei", "Mamit", "Saitual", "Serchhip", "Siaha"],
+      "Nagaland": ["Kohima", "Chümoukedima", "Dimapur", "Kiphire", "Longleng", "Mokokchung", "Mon", "Niuland", "Noklak", "Peren", "Phek", "Shamator", "Tseminyü", "Tuensang", "Wokha", "Zunheboto"],
+      "Odisha": ["Bhubaneswar", "Cuttack", "Angul", "Balangir", "Balasore", "Bargarh", "Bhadrak", "Boudh", "Deogarh", "Dhenkanal", "Gajapati", "Ganjam", "Jagatsinghpur", "Jajpur", "Jharsuguda", "Kalahandi", "Kandhamal", "Kendrapara", "Kendujhar", "Khordha", "Koraput", "Malkangiri", "Mayurbhanj", "Nabarangpur", "Nayagarh", "Nuapada", "Puri", "Rayagada", "Sambalpur", "Subarnapur", "Sundargarh"],
+      "Puducherry": ["Puducherry", "Karaikal", "Mahe", "Yanam"],
+      "Punjab": ["Chandigarh", "Amritsar", "Ludhiana", "Barnala", "Bathinda", "Faridkot", "Fatehgarh Sahib", "Fazilka", "Firozpur", "Gurdaspur", "Hoshiarpur", "Jalandhar", "Kapurthala", "Malerkotla", "Mansa", "Moga", "Muktsar", "Pathankot", "Patiala", "Rupnagar", "SAS Nagar", "SBS Nagar", "Sangrur", "Tarn Taran"],
+      "Rajasthan": ["Jaipur", "Ajmer", "Alwar", "Banswara", "Baran", "Barmer", "Bharatpur", "Bhilwara", "Bikaner", "Bundi", "Chittorgarh", "Churu", "Dausa", "Dholpur", "Dungarpur", "Hanumangarh", "Jaisalmer", "Jalore", "Jhalawar", "Jhunjhunu", "Jodhpur", "Karauli", "Kota", "Nagaur", "Pali", "Pratapgarh", "Rajsamand", "Sawai Madhopur", "Sikar", "Sirohi", "Sri Ganganagar", "Tonk", "Udaipur"],
+      "Sikkim": ["Gangtok", "Gyalshing", "Mangan", "Namchi", "Pakyong", "Soreng"],
+      "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Ariyalur", "Chengalpattu", "Cuddalore", "Dharmapuri", "Dindigul", "Erode", "Kallakurichi", "Kanchipuram", "Kanyakumari", "Karur", "Krishnagiri", "Mayiladuthurai", "Nagapattinam", "Namakkal", "Nilgiris", "Perambalur", "Pudukkottai", "Ramanathapuram", "Ranipet", "Salem", "Sivaganga", "Tenkasi", "Thanjavur", "Theni", "Thoothukudi", "Tiruchirappalli", "Tirunelveli", "Tirupathur", "Tiruppur", "Tiruvallur", "Tiruvannamalai", "Tiruvarur", "Vellore", "Viluppuram", "Virudhunagar"],
+      "Telangana": ["Hyderabad", "Adilabad", "Bhadradri Kothagudem", "Hanamkonda", "Jagtial", "Jangaon", "Jayashankar Bhupalpally", "Jogulamba Gadwal", "Kamareddy", "Karimnagar", "Khammam", "Komaram Bheem", "Mahabubabad", "Mahbubnagar", "Mancherial", "Medak", "Medchal-Malkajgiri", "Mulugu", "Nagarkurnool", "Nalgonda", "Narayanpet", "Nirmal", "Nizamabad", "Peddapalli", "Rajanna Sircilla", "Ranga Reddy", "Sangareddy", "Siddipet", "Suryapet", "Vikarabad", "Wanaparthy", "Warangal", "Yadadri Bhuvanagiri"],
+      "Tripura": ["Agartala", "Dhalai", "Gomati", "Khowai", "North Tripura", "Sepahijala", "South Tripura", "Unakoti", "West Tripura"],
+      "Uttar Pradesh": ["Lucknow", "Kanpur", "Varanasi", "Noida", "Agra", "Aligarh", "Ambedkar Nagar", "Amethi", "Amroha", "Auraiya", "Ayodhya", "Azamgarh", "Baghpat", "Bahraich", "Ballia", "Balrampur", "Banda", "Barabanki", "Bareilly", "Basti", "Bhadohi", "Bijnor", "Budaun", "Bulandshahr", "Chandauli", "Chitrakoot", "Deoria", "Etah", "Etawah", "Farrukhabad", "Fatehpur", "Firozabad", "Ghaziabad", "Ghazipur", "Gonda", "Gorakhpur", "Hamirpur", "Hapur", "Hardoi", "Hathras", "Jalaun", "Jaunpur", "Jhansi", "Kannauj", "Kanpur Dehat", "Kasganj", "Kaushambi", "Kushinagar", "Lakhimpur Kheri", "Lalitpur", "Maharajganj", "Mahoba", "Mainpuri", "Mathura", "Mau", "Meerut", "Mirzapur", "Moradabad", "Muzaffarnagar", "Pilibhit", "Pratapgarh", "Prayagraj", "Raebareli", "Rampur", "Saharanpur", "Sambhal", "Sant Kabir Nagar", "Shahjahanpur", "Shamli", "Shravasti", "Siddharthnagar", "Sitapur", "Sonbhadra", "Sultanpur", "Unnao"],
+      "Uttarakhand": ["Dehradun", "Haridwar", "Almora", "Bageshwar", "Chamoli", "Champawat", "Nainital", "Pauri Garhwal", "Pithoragarh", "Rudraprayag", "Tehri Garhwal", "Udham Singh Nagar", "Uttarkashi"],
+      "West Bengal": ["Kolkata", "Howrah", "Darjeeling", "Alipurduar", "Bankura", "Birbhum", "Cooch Behar", "Dakshin Dinajpur", "Hooghly", "Jalpaiguri", "Jhargram", "Kalimpong", "Malda", "Murshidabad", "Nadia", "North 24 Parganas", "Paschim Bardhaman", "Paschim Medinipur", "Purba Bardhaman", "Purba Medinipur", "Purulia", "South 24 Parganas", "Uttar Dinajpur"]
+    };
+
+    // DUMMY HALLS DATA (Jharkhand)
+    const allHalls = [
+      { id: 1, name: "Royal Palace", state: "Jharkhand", district: "Bokaro", locality: "Sector 4", capacity: 600, rent: 45000, img: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80", tags: ["AC Banquet", "Parking", "2 Rooms"] },
+      { id: 2, name: "Grand Celebration", state: "Jharkhand", district: "Bokaro", locality: "Chas", capacity: 1000, rent: 60000, img: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=600&q=80", tags: ["Big Lawn", "Catering Space", "Stage"] },
+      { id: 3, name: "Shagun Resort", state: "Jharkhand", district: "Bokaro", locality: "Co-op Colony", capacity: 500, rent: 50000, img: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80", tags: ["Resort Style", "AC Rooms", "Full Power"] },
+      { id: 4, name: "Utsav Bhawan", state: "Jharkhand", district: "Bokaro", locality: "Siwandih", capacity: 400, rent: 35000, img: "https://images.unsplash.com/photo-1545232979-fbf6a84f3e39?auto=format&fit=crop&w=600&q=80", tags: ["Budget Friendly", "Parking", "Kitchen"] },
+      { id: 5, name: "Milan Garden", state: "Jharkhand", district: "Bokaro", locality: "Sector 1", capacity: 450, rent: 40000, img: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80", tags: ["Garden Lawn", "Indoor Hall", "Lighting"] },
+      { id: 6, name: "Kohinoor Banquet", state: "Jharkhand", district: "Dhanbad", locality: "Bank More", capacity: 700, rent: 55000, img: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=600&q=80", tags: ["Prime Location", "Central AC", "Elevator"] },
+      { id: 7, name: "Rajwada Palace", state: "Jharkhand", district: "Dhanbad", locality: "Saraidhela", capacity: 1200, rent: 65000, img: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=600&q=80", tags: ["Luxury Stage", "Huge Lawn", "Valet Parking"] },
+      { id: 8, name: "Capitol Conventions", state: "Jharkhand", district: "Ranchi", locality: "Lalpur", capacity: 800, rent: 75000, img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=600&q=80", tags: ["Premium Banquets", "AC Rooms", "VIP Lounge"] },
+      { id: 9, name: "Urmila Wedding Lawn", state: "Jharkhand", district: "Ranchi", locality: "Morabadi", capacity: 1100, rent: 70000, img: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80", tags: ["Scenic Garden", "Grand Stage", "Large Parking"] }
     ];
 
-    function renderHalls() {
+    function initStates() {
+      const stateSelect = document.getElementById('stateSelect');
+      stateSelect.innerHTML = `<option value="All">All States & Union Territories</option>`;
+
+      const sortedStates = Object.keys(indiaData).sort();
+      sortedStates.forEach(st => {
+        const opt = document.createElement('option');
+        opt.value = st;
+        opt.innerText = st;
+        if (st === "Jharkhand") opt.selected = true;
+        stateSelect.appendChild(opt);
+      });
+
+      onStateChange();
+    }
+
+    function onStateChange() {
+      const selectedState = document.getElementById('stateSelect').value;
+      const districtSelect = document.getElementById('districtSelect');
+      districtSelect.innerHTML = `<option value="All">All Cities & Districts</option>`;
+
+      if (selectedState !== "All" && indiaData[selectedState]) {
+        const sortedDistricts = [...indiaData[selectedState]].sort();
+        sortedDistricts.forEach(dist => {
+          const opt = document.createElement('option');
+          opt.value = dist;
+          opt.innerText = dist;
+          districtSelect.appendChild(opt);
+        });
+      }
+      applyFilters();
+    }
+
+    function renderHalls(list) {
       const cont = document.getElementById('hallsContainer');
       cont.innerHTML = "";
-      dummyHalls.forEach(h => {
+      document.getElementById('resultsCount').innerText = "Showing " + list.length + " Halls";
+
+      if (list.length === 0) {
+        cont.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; background: white; border-radius: 14px; color: var(--muted);">
+          <h3>No halls available in this city yet!</h3>
+          <p style="font-size: 13px; margin-top: 6px;">New hall owners are joining soon across India.</p>
+        </div>`;
+        return;
+      }
+
+      list.forEach(h => {
         cont.innerHTML += `
           <div class="hall-card">
-            <div class="media-thumb" style="background-image: url('${h.img}')">
-              <span class="view-btn">View Gallery</span>
+            <div class="media-thumb" style="background-image: url('${h.img}')" onclick="openGallery('${h.name}')">
+              <span class="tap-hint">Tap Photo to view Rooms & Video 🎥</span>
+              <span class="media-badge">📸 4 Photos | 🎥 1 Video</span>
             </div>
             <div class="h-info">
-              <div class="h-title">${h.name}</div>
-              <div class="h-loc">📍 ${h.loc}</div>
+              <div>
+                <div class="h-title">${h.name}</div>
+                <div class="h-loc">📍 ${h.locality}, ${h.district} | Capacity: ${h.capacity}</div>
+                <div class="tags">${h.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+              </div>
               <div class="action-row">
                 <div>
-                  <div style="font-size:11px; color:var(--muted)">Base Rent</div>
-                  <div class="rent-price">₹${h.rent.toLocaleString()}</div>
+                  <div style="font-size:11px; color:var(--muted);">Base Rent</div>
+                  <div class="rent-price">₹${h.rent.toLocaleString('en-IN')}</div>
                 </div>
-                <button class="btn-offer" onclick="openOffer(${h.id})">Check & Offer</button>
+                <button class="btn-offer" onclick="openOfferModal(${h.id})">Check Dates & Offer</button>
               </div>
             </div>
           </div>
@@ -252,25 +404,49 @@
       });
     }
 
-    // --- REAL SLIDING CALENDAR LOGIC ---
-    let nav = 0; // Months navigation offset
-    let activeHallObj = null;
-    let selectedFullDate = null;
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    
-    // Simulating database booked dates (Format: DD-MM-YYYY)
-    const dbBookedDates = ["15-11-2026", "20-11-2026", "05-12-2026", "12-12-2026"];
+    function applyFilters() {
+      const state = document.getElementById('stateSelect').value;
+      const dist = document.getElementById('districtSelect').value;
+      const search = document.getElementById('searchInput').value.toLowerCase().trim();
 
-    function openOffer(id) {
-      activeHallObj = dummyHalls.find(h => h.id === id);
-      document.getElementById('mHallName').innerText = activeHallObj.name;
-      document.getElementById('mHallLoc').innerText = "Base Rent: ₹" + activeHallObj.rent.toLocaleString();
-      document.getElementById('offerVal').value = "";
-      document.getElementById('offerVal').max = activeHallObj.rent;
-      selectedFullDate = null;
-      document.getElementById('pickedDateText').innerText = "None";
+      const filtered = allHalls.filter(h => {
+        const matchState = (state === "All") || (h.state === state);
+        const matchDist = (dist === "All") || (h.district.toLowerCase() === dist.toLowerCase());
+        const matchSearch = h.name.toLowerCase().includes(search) || h.locality.toLowerCase().includes(search) || h.district.toLowerCase().includes(search);
+        return matchState && matchDist && matchSearch;
+      });
+      renderHalls(filtered);
+    }
+
+    // MODALS LOGIC
+    function openGallery(name) {
+      document.getElementById('galleryTitle').innerText = name + " - Photos & Video Tour";
+      document.getElementById('galleryModal').style.display = 'block';
+    }
+
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+    // --- REAL CALENDAR & OFFER LOGIC ---
+    let nav = 0;
+    let currentHall = null;
+    let chosenFullDate = null;
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const dbBookedDates = ["15-11-2026", "20-11-2026", "05-12-2026"]; 
+
+    function openOfferModal(hallId) {
+      currentHall = allHalls.find(h => h.id === hallId);
+      document.getElementById('offerHallName').innerText = currentHall.name;
+      document.getElementById('offerHallMeta').innerText = "📍 " + currentHall.locality + ", " + currentHall.district + " | Official Base Rent: ₹" + currentHall.rent.toLocaleString('en-IN');
       
-      nav = 0; // Reset to current month
+      const priceBox = document.getElementById('offerPriceBox');
+      priceBox.value = "";
+      priceBox.max = currentHall.rent;
+
+      chosenFullDate = null;
+      document.getElementById('pickedDateLabel').innerText = "Please select a date";
+      
+      nav = 0; 
       loadCalendar();
       document.getElementById('offerModal').style.display = 'block';
     }
@@ -281,25 +457,21 @@
     }
 
     function loadCalendar() {
-      const dt = new Date(); // Actual current date (Real Time)
-      if (nav !== 0) { dt.setMonth(new Date().getMonth() + nav); } // Slide month
+      const dt = new Date(); 
+      if (nav !== 0) { dt.setMonth(new Date().getMonth() + nav); }
       
-      const day = dt.getDate();
       const month = dt.getMonth();
       const year = dt.getFullYear();
 
       const firstDayOfMonth = new Date(year, month, 1);
       const daysInMonth = new Date(year, month + 1, 0).getDate();
-      const dateString = firstDayOfMonth.toLocaleDateString('en-us', {
-        weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric'
-      });
-      const paddingDays = weekdays.indexOf(dateString.split(', ')[0]); // Get empty boxes
+      const dateString = firstDayOfMonth.toLocaleDateString('en-us', { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric' });
+      const paddingDays = weekdays.indexOf(dateString.split(', ')[0]);
 
       document.getElementById('monthYearDisplay').innerText = `${months[month]} ${year}`;
       const calendarDays = document.getElementById('calendarDays');
       calendarDays.innerHTML = '';
 
-      // Today's exact zero-hour date for "past date" comparison
       const todayReal = new Date();
       todayReal.setHours(0,0,0,0);
 
@@ -309,30 +481,27 @@
 
         if (i > paddingDays) {
           const dayNum = i - paddingDays;
-          dayDiv.innerText = dayNum;
-
-          // Check if date is in past
           const thisDateObj = new Date(year, month, dayNum);
-          
-          // Format date string to match DB format (DD-MM-YYYY)
           const formattedDate = `${String(dayNum).padStart(2, '0')}-${String(month+1).padStart(2, '0')}-${year}`;
 
           if (thisDateObj < todayReal) {
             dayDiv.classList.add('past');
+            dayDiv.innerHTML = `<span>${dayNum}</span><span style="font-size:9px;">⚪</span>`;
           } 
           else if (dbBookedDates.includes(formattedDate)) {
             dayDiv.classList.add('booked');
-            dayDiv.onclick = () => alert("This date is already Booked!");
+            dayDiv.innerHTML = `<span>${dayNum}</span><span style="font-size:10px;">❌</span>`;
+            dayDiv.onclick = () => alert("This date is already Booked by another customer!");
           } 
           else {
             dayDiv.classList.add('available');
-            if (selectedFullDate === formattedDate) {
-              dayDiv.classList.add('selected');
-            }
+            dayDiv.innerHTML = `<span>${dayNum}</span><span style="font-size:9px;">🟢</span>`;
+            if (chosenFullDate === formattedDate) { dayDiv.classList.add('selected'); }
+            
             dayDiv.onclick = () => {
-              selectedFullDate = formattedDate;
-              document.getElementById('pickedDateText').innerText = `${dayNum} ${months[month]} ${year}`;
-              loadCalendar(); // Re-render to show selection
+              chosenFullDate = formattedDate;
+              document.getElementById('pickedDateLabel').innerText = `${dayNum} ${months[month]} ${year}`;
+              loadCalendar();
             };
           }
         } else {
@@ -342,24 +511,20 @@
       }
     }
 
-    const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    function submitValidOffer() {
+      const enteredPrice = Number(document.getElementById('offerPriceBox').value);
 
-    function submitOffer() {
-      const amt = Number(document.getElementById('offerVal').value);
-      if(!selectedFullDate) return alert("Please select an available date from the calendar!");
-      if(!amt || amt > activeHallObj.rent) return alert("Offer must be valid and cannot exceed Base Rent (₹" + activeHallObj.rent + ")");
-      if(String(amt).length >= 10) return alert("Phone numbers not allowed!");
+      if (!chosenFullDate) return alert("Please select an available green date from the calendar first!");
+      if (!enteredPrice || enteredPrice <= 0) return alert("Please enter a valid offer amount (₹)!");
+      if (enteredPrice > currentHall.rent) return alert("❌ Invalid Offer!\nThe base rent is ₹" + currentHall.rent.toLocaleString('en-IN') + ". Your offer cannot exceed the base rent!");
+      if (String(enteredPrice).length >= 10) return alert("Phone numbers are not allowed! Please enter an offer amount.");
 
-      alert(`Offer Sent Successfully!\nHall: ${activeHallObj.name}\nDate: ${selectedFullDate}\nAmount: ₹${amt}\n\nNext Step: Hall Owner will review. Once accepted, you will pay the Token Amount here to auto-generate the legal PDF agreement via Email.`);
-      closeModal();
+      alert(`🎉 Offer Sent Successfully!\n\nHall: ${currentHall.name}\nDate: ${chosenFullDate}\nYour Offer: ₹${enteredPrice.toLocaleString('en-IN')}\n\nNext Step: Hall Owner will review this. Once accepted, you will pay the Token Amount here to automatically generate the legal PDF agreement via Email/WhatsApp.`);
+      closeModal('offerModal');
     }
 
-    function closeModal() { document.getElementById('offerModal').style.display = 'none'; }
-    function logout() { window.location.href = "index.html"; }
-    function saveProfile() { alert("Profile details saved! Your invoices will be sent to the updated Email."); }
-
-    // Init App
-    renderHalls();
+    // Launch App
+    initStates();
   </script>
 </body>
 </html>
