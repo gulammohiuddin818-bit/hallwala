@@ -2,160 +2,106 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HallWala - Customer Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Customer Dashboard - HallWala</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #4f46e5;
-      --primary-dark: #3730a3;
-      --accent: #f43f5e;
+      --primary-dark: #4338ca;
       --bg: #f8fafc;
       --text: #0f172a;
       --muted: #64748b;
       --border: #e2e8f0;
-      --card: #ffffff;
-      --danger: #ef4444;
-      --success: #16a34a;
+      --success: #10b981;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding-bottom: 80px; min-height: 100vh; }
+    body { background-color: var(--bg); color: var(--text); padding-bottom: 90px; }
 
-    /* Top Header */
-    header {
-      background: var(--card);
-      border-bottom: 1px solid var(--border);
-      padding: 16px 20px;
-      text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 50;
-    }
-    .brand-title {
-      font-size: 24px;
-      font-weight: 800;
-      background: linear-gradient(135deg, #4f46e5, #f43f5e);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+    /* TOP HEADER */
+    .top-header { background: white; padding: 16px 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
+    .top-header h1 { font-size: 22px; font-weight: 800; color: #db2777; }
 
-    /* Bottom Navigation */
-    .bottom-nav {
-      position: fixed; bottom: 0; left: 0; width: 100%; background: white;
-      border-top: 1px solid var(--border); display: flex; justify-content: space-around;
-      padding: 12px 0; z-index: 100; box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
-    }
-    .nav-item { text-align: center; color: var(--muted); cursor: pointer; font-weight: 600; font-size: 12px; flex: 1; transition: 0.2s;}
-    .nav-item.active { color: var(--primary); }
-    .nav-icon { font-size: 22px; margin-bottom: 4px; display: block; }
-
-    /* Screens */
+    /* SCREENS */
     .screen { display: none; }
     .screen.active { display: block; }
+    .main-wrap { padding: 20px; }
 
-    /* Filter Area */
-    .filter-section {
-      background: linear-gradient(135deg, #1e1b4b, #312e81);
-      color: white;
-      padding: 24px 16px;
-    }
-    .filter-section h2 { font-size: 20px; margin-bottom: 16px; text-align: center; font-weight: 800; }
-    .filter-bar {
-      max-width: 950px; margin: 0 auto; display: grid;
-      grid-template-columns: 1.2fr 1.2fr 1.6fr; gap: 10px;
-      background: white; padding: 10px; border-radius: 14px;
-    }
-    @media(max-width: 768px) { .filter-bar { grid-template-columns: 1fr; } }
-    .filter-control {
-      padding: 12px 14px; border: 1.5px solid var(--border);
-      border-radius: 10px; font-size: 14px; outline: none;
-      color: var(--text); font-weight: 600; background: white;
-    }
-
-    .main-wrap { max-width: 1150px; margin: 20px auto; padding: 0 16px; }
-    .results-count { font-size: 14px; font-weight: 700; color: var(--muted); margin-bottom: 16px; }
-
-    /* Hall Cards */
-    .hall-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
-    .hall-card { background: white; border-radius: 18px; border: 1px solid var(--border); overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
-    .media-thumb { height: 200px; background-size: cover; background-position: center; position: relative; cursor: pointer; }
-    .media-badge { position: absolute; bottom: 10px; right: 10px; background: rgba(15, 23, 42, 0.85); color: white; padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; }
-    .tap-hint { position: absolute; top: 10px; left: 10px; background: rgba(79, 70, 229, 0.9); color: white; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; }
+    /* SEARCH HERO SECTION */
+    .hero-search { background: linear-gradient(135deg, #1e3a8a, #4338ca); padding: 30px 20px; text-align: center; color: white; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; margin-bottom: 20px; }
+    .hero-search h2 { font-size: 20px; font-weight: 800; margin-bottom: 20px; line-height: 1.4; }
     
-    .h-info { padding: 16px; display: flex; flex-direction: column; justify-content: space-between; }
-    .h-title { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
-    .h-loc { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
-    .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
-    .tag { background: #f1f5f9; color: #475569; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; }
-    
-    .action-row { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 14px; }
-    .rent-price { font-size: 18px; font-weight: 800; color: var(--text); }
-    .btn-offer { background: var(--accent); color: white; border: none; padding: 10px 14px; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; }
+    .search-box { background: white; padding: 15px; border-radius: 12px; display: flex; flex-direction: column; gap: 12px; }
+    .search-box select, .search-box input { width: 100%; padding: 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; color: var(--text); outline: none; }
+    .search-box select:focus, .search-box input:focus { border-color: var(--primary); }
 
-    /* Account & Bookings Screens */
-    .acc-header { text-align: center; padding: 20px 0; }
-    .acc-avatar { width: 80px; height: 80px; background: #e0e7ff; border-radius: 50%; margin: 0 auto 12px auto; display: flex; align-items: center; justify-content: center; font-size: 32px; }
-    .acc-box { background: white; border-radius: 16px; border: 1px solid var(--border); padding: 20px; max-width: 500px; margin: 0 auto; }
-    .acc-group { margin-bottom: 16px; }
-    .acc-group label { display: block; font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
-    .acc-input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 15px; font-weight: 600; background: #f8fafc; outline: none; }
-    .btn-save { width: 100%; background: var(--primary); color: white; padding: 14px; border: none; border-radius: 10px; font-weight: 700; font-size: 16px; margin-top: 10px; cursor: pointer; }
-    .btn-logout { width: 100%; background: #fee2e2; color: #ef4444; padding: 14px; border: none; border-radius: 10px; font-weight: 700; font-size: 16px; margin-top: 16px; cursor: pointer; }
+    /* HALL CARDS */
+    .hall-card { background: white; border-radius: 16px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid var(--border); }
+    .hall-img { width: 100%; height: 180px; background-color: #e2e8f0; object-fit: cover; }
+    .hall-details { padding: 16px; }
+    .hall-title { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+    .hall-loc { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+    .hall-price { font-size: 18px; font-weight: 800; color: var(--primary); margin-bottom: 16px; }
+    .btn-book { width: 100%; padding: 12px; background: var(--primary); color: white; text-align: center; border: none; border-radius: 8px; font-weight: 700; font-size: 15px; cursor: pointer; }
 
-    /* Modals (Gallery & Calendar) */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(5px); z-index: 1000; overflow-y: auto; padding: 20px 10px; }
-    .modal-box { max-width: 600px; background: white; margin: 20px auto; border-radius: 20px; padding: 22px; position: relative; }
-    .modal-close { position: absolute; top: 14px; right: 14px; background: #f1f5f9; border: none; font-size: 18px; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-weight: 700; }
+    /* FOOTER DESIGN */
+    .site-footer { background-color: #0f172a; color: #cbd5e1; padding: 40px 20px 100px 20px; margin-top: 30px; }
+    .footer-grid { max-width: 1150px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; }
+    .footer-brand { font-size: 22px; font-weight: 800; color: white; margin-bottom: 12px; background: linear-gradient(135deg, #4f46e5, #f43f5e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .footer-heading { font-size: 15px; font-weight: 800; color: white; margin-bottom: 16px; }
+    .footer-links { list-style: none; padding: 0; }
+    .footer-links li { margin-bottom: 12px; }
+    .footer-links a { color: #94a3b8; text-decoration: none; font-size: 13px; font-weight: 600; }
+    .footer-contact { font-size: 13px; color: #94a3b8; margin-bottom: 10px; display: flex; gap: 8px; font-weight: 600; }
+    .footer-bottom { text-align: center; border-top: 1px solid #1e293b; margin-top: 40px; padding-top: 20px; font-size: 13px; color: #64748b; }
 
-    .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0; }
-    .gallery-item { height: 140px; border-radius: 10px; background-size: cover; background-position: center; position: relative; }
-    .gallery-label { position: absolute; bottom: 6px; left: 6px; background: rgba(0,0,0,0.7); color: white; padding: 2px 6px; font-size: 10px; border-radius: 4px; font-weight: 600; }
-    .video-preview-box { background: #0f172a; color: white; border-radius: 12px; padding: 20px; text-align: center; margin-top: 10px; }
-
-    /* Real Calendar Layout */
-    .cal-wrapper { border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin: 18px 0; }
-    .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-weight: 800; font-size: 16px; }
-    .cal-btn { background: #e0e7ff; color: var(--primary); border: none; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-weight: 800; }
-    .weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 12px; font-weight: 800; color: var(--muted); margin-bottom: 8px; }
-    .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-    .day { padding: 12px 0; text-align: center; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; border: 1px solid transparent; display: flex; flex-direction: column; align-items: center; gap: 2px;}
-    .day.empty { visibility: hidden; }
-    .day.past { color: #cbd5e1; cursor: not-allowed; background: #f8fafc; }
-    .day.available { background: #ecfdf5; color: var(--success); border-color: #a7f3d0; }
-    .day.booked { background: #fee2e2; color: var(--danger); text-decoration: line-through; cursor: not-allowed; border-color: #fca5a5; }
-    .day.selected { background: var(--primary) !important; color: white !important; transform: scale(1.05); }
-
-    .input-offer { width: 100%; padding: 14px; border: 2px solid var(--border); border-radius: 10px; font-size: 18px; font-weight: 800; margin: 8px 0 12px 0; text-align: center; }
-    .btn-submit-offer { width: 100%; padding: 14px; background: var(--accent); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; }
+    /* BOTTOM NAV */
+    .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 12px 0; box-shadow: 0 -2px 15px rgba(0,0,0,0.05); z-index: 1000; border-top: 1px solid var(--border); }
+    .nav-item { text-align: center; color: var(--muted); cursor: pointer; font-size: 12px; font-weight: 600; flex: 1; }
+    .nav-item.active { color: var(--primary); }
+    .nav-icon { font-size: 20px; display: block; margin-bottom: 4px; }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="brand-title">HallWala</div>
-  </header>
+  <!-- HEADER -->
+  <div class="top-header">
+    <h1>HallWala</h1>
+  </div>
 
-  <!-- SCREEN 1: HOME -->
+  <!-- SCREEN 1: HOME (SEARCH & HALLS) -->
   <div id="screen-home" class="screen active">
-    
-    <div class="filter-section">
+    <div class="hero-search">
       <h2>Find the Best Marriage Halls in Your City</h2>
-      <div class="filter-bar">
-        <select id="stateSelect" class="filter-control" onchange="onStateChange()"></select>
-        <select id="districtSelect" class="filter-control" onchange="applyFilters()">
-          <option value="All">All Cities & Districts</option>
+      <div class="search-box">
+        <select id="stateSelect" onchange="loadCities()">
+          <option value="">Select State</option>
         </select>
-        <input type="text" id="searchInput" class="filter-control" placeholder="Search by locality or hall name..." onkeyup="applyFilters()">
+        <select id="citySelect">
+          <option value="">All Cities & Districts</option>
+        </select>
+        <input type="text" id="searchInput" placeholder="Search by locality or hall name...">
       </div>
     </div>
 
     <div class="main-wrap">
-      <div class="results-count" id="resultsCount">Loading halls...</div>
-      <div class="hall-grid" id="hallsContainer"></div>
+      <h3 style="margin-bottom: 15px;">Recommended Halls</h3>
+      <div id="hallsContainer">
+        <!-- Dummy Hall Card -->
+        <div class="hall-card">
+          <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=500" class="hall-img" alt="Hall">
+          <div class="hall-details">
+            <div class="hall-title">Royal Palace Marriage Hall</div>
+            <div class="hall-loc">📍 Sector 4, Bokaro</div>
+            <div class="hall-price">₹40,000 / day</div>
+            <button class="btn-book" onclick="switchScreen('bookings')">Check Availability</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- SCREEN 2: BOOKINGS -->
+  <!-- SCREEN 2: BOOKINGS & RAZORPAY -->
   <div id="screen-bookings" class="screen main-wrap">
     <h2 style="margin-bottom: 16px;">My Bookings & Offers</h2>
 
@@ -190,50 +136,52 @@
         </button>
       </div>
     </div>
-    </div>
-  
+  </div>
 
   <!-- SCREEN 3: ACCOUNT -->
   <div id="screen-account" class="screen main-wrap">
-    <div class="acc-header">
-      <div class="acc-avatar">🤵</div>
-      <h2 id="accDisplayPhone">Loading...</h2>
-      <p style="color: var(--muted); font-size: 14px;">Customer Profile</p>
-    </div>
-    <div class="acc-box">
-      <div class="acc-group">
-        <label>Full Name</label>
-        <input type="text" class="acc-input" id="accName" placeholder="Enter your full name">
-      </div>
-      <div class="acc-group">
-        <label>Email Address (For PDF Agreements & Invoices)</label>
-        <input type="email" class="acc-input" id="accEmail" placeholder="your.email@gmail.com">
-      </div>
-      <div class="acc-group">
-        <label>Registered Mobile</label>
-        <input type="text" class="acc-input" id="accPhone" readonly style="background: #e2e8f0; color: #64748b;">
-      </div>
-      <button class="btn-save" onclick="saveProfile()">Save Profile Details</button>
-      <button class="btn-logout" onclick="logout()">Logout / Sign Out</button>
+    <h2 style="margin-bottom: 20px;">My Profile</h2>
+    <div style="background: white; padding: 20px; border-radius: 16px; border: 1px solid var(--border);">
+      <p style="font-size: 14px; color: var(--muted); margin-bottom: 8px;">Full Name</p>
+      <input type="text" id="accName" value="Gulam Mohiuddin" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 16px;">
+      
+      <p style="font-size: 14px; color: var(--muted); margin-bottom: 8px;">Mobile Number</p>
+      <input type="text" id="accPhone" value="9876543210" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px;">
     </div>
   </div>
-  <!-- ======================================= -->
-  <!-- HALLWALA PROFESSIONAL FOOTER START      -->
-  <!-- ======================================= -->
-  <style>
-    .site-footer { background-color: #0f172a; ... }
-    /* ... bacha hua lamba footer code ... */
-  </footer>
-  <!-- ======================================= -->
-  <!-- HALLWALA PROFESSIONAL FOOTER END        -->
-  <!-- ======================================= -->
 
-  <!-- BOTTOM NAVIGATION -->
-  <div class="bottom-nav">
-    <div class="nav-item active" id="nav-home" onclick="switchScreen('home')">
-      <span class="nav-icon">🏠</span><span>Home</span>
-                  </div>
-                  
+  <!-- PROFESSIONAL FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">HallWala</div>
+        <p style="font-size: 13px; line-height: 1.6;">India's most trusted platform for booking marriage halls, banquets, and event spaces. Transparent, secure, and hassle-free.</p>
+      </div>
+      <div>
+        <div class="footer-heading">Platform Links</div>
+        <ul class="footer-links">
+          <li><a href="index.html">Home / Sign In</a></li>
+          <li><a href="customer-dashboard.html">Search Halls</a></li>
+          <li><a href="owner-dashboard.html">Vendor Portal</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Legal & Policies</div>
+        <ul class="footer-links">
+          <li><a href="legal.html">Terms & Conditions</a></li>
+          <li><a href="legal.html">Privacy Policy</a></li>
+          <li><a href="legal.html">Refund & Cancellations</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Contact Support</div>
+        <div class="footer-contact"><span>📧</span> support@hallwala.in</div>
+        <div class="footer-contact"><span>📍</span> Islampur, Siwandih, Hesabatu West, Bokaro, Jharkhand - India</div>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 HallWala. All rights reserved.</div>
+  </footer>
+
   <!-- BOTTOM NAVIGATION -->
   <div class="bottom-nav">
     <div class="nav-item active" id="nav-home" onclick="switchScreen('home')">
@@ -247,413 +195,77 @@
     </div>
   </div>
 
-  <!-- GALLERY MODAL -->
-  <div class="modal-overlay" id="galleryModal">
-    <div class="modal-box">
-      <button class="modal-close" onclick="closeModal('galleryModal')">✕</button>
-      <h2 id="galleryTitle" style="font-size:20px; font-weight:800; margin-bottom:4px;">Hall Gallery</h2>
-      <p style="font-size:12px; color:var(--muted); margin-bottom:14px;">Banquet, Deluxe Rooms, Dining & Lawn Views</p>
-
-      <div class="gallery-grid">
-        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=500&q=80');"><span class="gallery-label">Main Banquet Hall</span></div>
-        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=500&q=80');"><span class="gallery-label">AC Bridal / Deluxe Bedroom</span></div>
-        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=500&q=80');"><span class="gallery-label">Buffet & Dining Area</span></div>
-        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=500&q=80');"><span class="gallery-label">Stage & Open Lawn</span></div>
-      </div>
-      <div class="video-preview-box">
-        <div style="font-size:26px; margin-bottom:4px;">▶️</div>
-        <div style="font-weight:700; font-size:14px;">Hall Video Tour Available</div>
-        <div style="font-size:11px; color:#94a3b8;">High Definition (HD) Drone & Walkthrough Clip</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- OFFER & REAL CALENDAR MODAL -->
-  <div class="modal-overlay" id="offerModal">
-    <div class="modal-box">
-      <button class="modal-close" onclick="closeModal('offerModal')">✕</button>
-      <h2 id="offerHallName" style="font-size:20px; font-weight:800; margin-bottom:4px;">Hall Name</h2>
-      <p id="offerHallMeta" style="color:var(--muted); font-size:13px; margin-bottom:14px;">Base Rent: ₹45,000</p>
-
-      <!-- REAL SLIDING CALENDAR -->
-      <div class="cal-wrapper">
-        <div class="cal-header">
-          <button class="cal-btn" onclick="changeMonth(-1)">❮</button>
-          <span id="monthYearDisplay">Month Year</span>
-          <button class="cal-btn" onclick="changeMonth(1)">❯</button>
-        </div>
-        <div class="weekdays">
-          <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
-        </div>
-        <div class="days-grid" id="calendarDays"></div>
-        <div style="text-align:center; font-size:11px; color:var(--muted); margin-top:10px;">🟢 Available | 🔴 ❌ Booked | ⚪ Past Dates</div>
-      </div>
-
-      <div style="background:#fffbeb; border-left:4px solid #f59e0b; padding:10px; font-size:12px; color:#92400e; border-radius:6px; margin-bottom:12px; font-weight:600;">
-        🔒 Direct phone number sharing is restricted. Valid agreements & tokens will be sent to Email/WhatsApp automatically after owner accepts.
-      </div>
-
-      <div style="text-align: center; margin-bottom: 12px;">
-        <p style="font-size:12px; font-weight:700; color:var(--muted);">Selected Booking Date</p>
-        <h3 id="pickedDateLabel" style="color:var(--primary);">Please select a date</h3>
-      </div>
-
-      <label style="font-size:12px; font-weight:700; color:var(--muted);" id="maxOfferHelp">ENTER YOUR OFFER AMOUNT (₹)</label>
-      <input type="number" id="offerPriceBox" class="input-offer" placeholder="₹ Amount">
-
-      <button class="btn-submit-offer" onclick="submitValidOffer()">Make Offer to Owner 🚀</button>
-    </div>
-  </div>
-
+  <!-- JAVASCRIPT FOR STATES, CITIES & NAVIGATION -->
   <script>
-    // System Variables
-    const urlParams = new URLSearchParams(window.location.search);
-    const userPhone = urlParams.get('user') || 'DemoUser';
-    document.getElementById('accPhone').value = userPhone;
-    document.getElementById('accDisplayPhone').innerText = userPhone;
-
-    // Bottom Navigation Logic
-    function switchScreen(screen) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      document.getElementById('screen-' + screen).classList.add('active');
-      document.getElementById('nav-' + screen).classList.add('active');
-    }
-
-    function logout() { window.location.href = "index.html"; }
-    function saveProfile() { alert("Profile Details Saved!\nLegal PDF Agreements & Tokens will now be sent to this email automatically."); }
-
-    // PURE CLEAN INDIA MASTER DATA: ALL CAPITALS, CITIES & DISTRICTS (NO TAGS)
-    const indiaData = {
-      "Andaman and Nicobar": ["Port Blair", "Nicobar", "North and Middle Andaman", "South Andaman"],
-      "Andhra Pradesh": ["Amaravati", "Visakhapatnam", "Alluri Sitharama Raju", "Anakapalli", "Ananthapuramu", "Annamayya", "Bapatla", "Chittoor", "Dr. B.R. Ambedkar Konaseema", "East Godavari", "Eluru", "Guntur", "Kakinada", "Krishna", "Kurnool", "Nandyal", "NTR", "Palnadu", "Parvathipuram Manyam", "Prakasam", "Sri Potti Sriramulu Nellore", "Sri Sathya Sai", "Srikakulam", "Tirupati", "Vizianagaram", "West Godavari", "YSR Kadapa"],
-      "Arunachal Pradesh": ["Itanagar", "Anjaw", "Changlang", "Dibang Valley", "East Kameng", "East Siang", "Kamle", "Kra Daadi", "Kurung Kumey", "Lepa Rada", "Lohit", "Longding", "Lower Dibang Valley", "Lower Siang", "Lower Subansiri", "Namsai", "Pakke Kessang", "Papum Pare", "Shi Yomi", "Siang", "Tawang", "Tirap", "Upper Siang", "Upper Subansiri", "West Kameng", "West Siang"],
-      "Assam": ["Dispur", "Guwahati", "Baksa", "Barpeta", "Biswanath", "Bongaigaon", "Cachar", "Charaideo", "Chirang", "Darrang", "Dhemaji", "Dhubri", "Dibrugarh", "Dima Hasao", "Goalpara", "Golaghat", "Hailakandi", "Hojai", "Jorhat", "Kamrup", "Kamrup Metropolitan", "Karbi Anglong", "Karimganj", "Kokrajhar", "Lakhimpur", "Majuli", "Morigaon", "Nagaon", "Nalbari", "Sivasagar", "Sonitpur", "South Salmara-Mankachar", "Tamulpur", "Tinsukia", "Udalguri", "West Karbi Anglong"],
-      "Bihar": ["Patna", "Araria", "Arwal", "Aurangabad", "Banka", "Begusarai", "Bhagalpur", "Bhojpur", "Buxar", "Darbhanga", "East Champaran", "Gaya", "Gopalganj", "Jamui", "Jehanabad", "Kaimur", "Katihar", "Khagaria", "Kishanganj", "Lakhisarai", "Madhepura", "Madhubani", "Munger", "Muzaffarpur", "Nalanda", "Nawada", "Purnia", "Rohtas", "Saharsa", "Samastipur", "Saran", "Sheikhpura", "Sheohar", "Sitamarhi", "Siwan", "Supaul", "Vaishali", "West Champaran"],
-      "Chandigarh": ["Chandigarh"],
-      "Chhattisgarh": ["Raipur", "Balod", "Baloda Bazar", "Balrampur", "Bastar", "Bemetara", "Bijapur", "Bilaspur", "Dantewada", "Dhamtari", "Durg", "Gariaband", "Gaurela Pendra Marwahi", "Janjgir Champa", "Jashpur", "Kabirdham", "Kanker", "Khairagarh", "Kondagaon", "Korba", "Koriya", "Mahasamund", "Manendragarh", "Mohla Manpur", "Mungeli", "Narayanpur", "Raigarh", "Rajnandgaon", "Sakti", "Sarangarh Bilaigarh", "Sukma", "Surajpur", "Surguja"],
-      "Dadra and Nagar Haveli and Daman and Diu": ["Daman", "Diu", "Dadra and Nagar Haveli"],
-      "Delhi": ["New Delhi", "Central Delhi", "East Delhi", "North Delhi", "North East Delhi", "North West Delhi", "Shahdara", "South Delhi", "South East Delhi", "South West Delhi", "West Delhi"],
-      "Goa": ["Panaji", "North Goa", "South Goa"],
-      "Gujarat": ["Gandhinagar", "Ahmedabad", "Amreli", "Anand", "Aravalli", "Banaskantha", "Bharuch", "Bhavnagar", "Botad", "Chhota Udaipur", "Dahod", "Dang", "Devbhoomi Dwarka", "Gir Somnath", "Jamnagar", "Junagadh", "Kheda", "Kutch", "Mahisagar", "Mehsana", "Morbi", "Narmada", "Navsari", "Panchmahal", "Patan", "Porbandar", "Rajkot", "Sabarkantha", "Surat", "Surendranagar", "Tapi", "Vadodara", "Valsad"],
-      "Haryana": ["Chandigarh", "Gurugram", "Ambala", "Bhiwani", "Charkhi Dadri", "Faridabad", "Fatehabad", "Hisar", "Jhajjar", "Jind", "Kaithal", "Karnal", "Kurukshetra", "Mahendragarh", "Nuh", "Palwal", "Panchkula", "Panipat", "Rewari", "Rohtak", "Sirsa", "Sonipat", "Yamunanagar"],
-      "Himachal Pradesh": ["Shimla", "Dharamshala", "Bilaspur", "Chamba", "Hamirpur", "Kangra", "Kinnaur", "Kullu", "Lahaul and Spiti", "Mandi", "Sirmaur", "Solan", "Una"],
-      "Jammu and Kashmir": ["Srinagar", "Jammu", "Anantnag", "Bandipora", "Baramulla", "Budgam", "Doda", "Ganderbal", "Kathua", "Kishtwar", "Kulgam", "Kupwara", "Poonch", "Pulwama", "Rajouri", "Ramban", "Reasi", "Samba", "Shopian", "Udhampur"],
-      "Jharkhand": ["Ranchi", "Bokaro", "Chatra", "Deoghar", "Dhanbad", "Dumka", "East Singhbhum", "Garhwa", "Giridih", "Godda", "Gumla", "Hazaribagh", "Jamtara", "Khunti", "Koderma", "Latehar", "Lohardaga", "Pakur", "Palamu", "Ramgarh", "Sahibganj", "Seraikela Kharsawan", "Simdega", "West Singhbhum"],
-      "Karnataka": ["Bengaluru", "Bagalkote", "Ballari", "Belagavi", "Bengaluru Rural", "Bidar", "Chamarajanagar", "Chikkaballapura", "Chikkamagaluru", "Chitradurga", "Dakshina Kannada", "Davanagere", "Dharwad", "Gadag", "Hassan", "Haveri", "Kalaburagi", "Kodagu", "Kolar", "Koppal", "Mandya", "Mysuru", "Raichur", "Ramanagara", "Shivamogga", "Tumakuru", "Udupi", "Uttara Kannada", "Vijayanagara", "Vijayapura", "Yadgir"],
-      "Kerala": ["Thiruvananthapuram", "Alappuzha", "Ernakulam", "Idukki", "Kannur", "Kasaragod", "Kollam", "Kottayam", "Kozhikode", "Malappuram", "Palakkad", "Pathanamthitta", "Thrissur", "Wayanad"],
-      "Ladakh": ["Leh", "Kargil"],
-      "Lakshadweep": ["Kavaratti", "Agatti", "Amini", "Andrott", "Kalpeni", "Minicoy"],
-      "Madhya Pradesh": ["Bhopal", "Indore", "Gwalior", "Agar Malwa", "Alirajpur", "Anuppur", "Ashoknagar", "Balaghat", "Barwani", "Betul", "Bhind", "Burhanpur", "Chhatarpur", "Chhindwara", "Damoh", "Datia", "Dewas", "Dhar", "Dindori", "Guna", "Harda", "Jabalpur", "Jhabua", "Katni", "Khandwa", "Khargone", "Maihar", "Mandla", "Mandsaur", "Mauganj", "Morena", "Narsinghpur", "Neemuch", "Niwari", "Pandhurna", "Panna", "Raisen", "Rajgarh", "Ratlam", "Rewa", "Sagar", "Satna", "Sehore", "Seoni", "Shahdol", "Shajapur", "Sheopur", "Shivpuri", "Sidhi", "Singrauli", "Tikamgarh", "Ujjain", "Umaria", "Vidisha"],
-      "Maharashtra": ["Mumbai", "Pune", "Nagpur", "Ahmednagar", "Akola", "Amravati", "Beed", "Bhandara", "Buldhana", "Chandrapur", "Chhatrapati Sambhaji Nagar", "Dharashiv", "Dhule", "Gadchiroli", "Gondia", "Hingoli", "Jalgaon", "Jalna", "Kolhapur", "Latur", "Nanded", "Nandurbar", "Nashik", "Palghar", "Parbhani", "Raigad", "Ratnagiri", "Sangli", "Satara", "Sindhudurg", "Solapur", "Thane", "Wardha", "Washim", "Yavatmal"],
-      "Manipur": ["Imphal", "Bishnupur", "Chandel", "Churachandpur", "Imphal East", "Imphal West", "Jiribam", "Kakching", "Kamjong", "Kangpokpi", "Noney", "Pherzawl", "Senapati", "Tamenglong", "Tengnoupal", "Thoubal", "Ukhrul"],
-      "Meghalaya": ["Shillong", "East Garo Hills", "East Jaintia Hills", "East Khasi Hills", "Eastern West Khasi Hills", "North Garo Hills", "Ri-Bhoi", "South Garo Hills", "South West Garo Hills", "South West Khasi Hills", "West Garo Hills", "West Jaintia Hills", "West Khasi Hills"],
-      "Mizoram": ["Aizawl", "Champhai", "Hnahthial", "Khawzawl", "Kolasib", "Lawngtlai", "Lunglei", "Mamit", "Saitual", "Serchhip", "Siaha"],
-      "Nagaland": ["Kohima", "Chümoukedima", "Dimapur", "Kiphire", "Longleng", "Mokokchung", "Mon", "Niuland", "Noklak", "Peren", "Phek", "Shamator", "Tseminyü", "Tuensang", "Wokha", "Zunheboto"],
-      "Odisha": ["Bhubaneswar", "Cuttack", "Angul", "Balangir", "Balasore", "Bargarh", "Bhadrak", "Boudh", "Deogarh", "Dhenkanal", "Gajapati", "Ganjam", "Jagatsinghpur", "Jajpur", "Jharsuguda", "Kalahandi", "Kandhamal", "Kendrapara", "Kendujhar", "Khordha", "Koraput", "Malkangiri", "Mayurbhanj", "Nabarangpur", "Nayagarh", "Nuapada", "Puri", "Rayagada", "Sambalpur", "Subarnapur", "Sundargarh"],
-      "Puducherry": ["Puducherry", "Karaikal", "Mahe", "Yanam"],
-      "Punjab": ["Chandigarh", "Amritsar", "Ludhiana", "Barnala", "Bathinda", "Faridkot", "Fatehgarh Sahib", "Fazilka", "Firozpur", "Gurdaspur", "Hoshiarpur", "Jalandhar", "Kapurthala", "Malerkotla", "Mansa", "Moga", "Muktsar", "Pathankot", "Patiala", "Rupnagar", "SAS Nagar", "SBS Nagar", "Sangrur", "Tarn Taran"],
-      "Rajasthan": ["Jaipur", "Ajmer", "Alwar", "Banswara", "Baran", "Barmer", "Bharatpur", "Bhilwara", "Bikaner", "Bundi", "Chittorgarh", "Churu", "Dausa", "Dholpur", "Dungarpur", "Hanumangarh", "Jaisalmer", "Jalore", "Jhalawar", "Jhunjhunu", "Jodhpur", "Karauli", "Kota", "Nagaur", "Pali", "Pratapgarh", "Rajsamand", "Sawai Madhopur", "Sikar", "Sirohi", "Sri Ganganagar", "Tonk", "Udaipur"],
-      "Sikkim": ["Gangtok", "Gyalshing", "Mangan", "Namchi", "Pakyong", "Soreng"],
-      "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Ariyalur", "Chengalpattu", "Cuddalore", "Dharmapuri", "Dindigul", "Erode", "Kallakurichi", "Kanchipuram", "Kanyakumari", "Karur", "Krishnagiri", "Mayiladuthurai", "Nagapattinam", "Namakkal", "Nilgiris", "Perambalur", "Pudukkottai", "Ramanathapuram", "Ranipet", "Salem", "Sivaganga", "Tenkasi", "Thanjavur", "Theni", "Thoothukudi", "Tiruchirappalli", "Tirunelveli", "Tirupathur", "Tiruppur", "Tiruvallur", "Tiruvannamalai", "Tiruvarur", "Vellore", "Viluppuram", "Virudhunagar"],
-      "Telangana": ["Hyderabad", "Adilabad", "Bhadradri Kothagudem", "Hanamkonda", "Jagtial", "Jangaon", "Jayashankar Bhupalpally", "Jogulamba Gadwal", "Kamareddy", "Karimnagar", "Khammam", "Komaram Bheem", "Mahabubabad", "Mahbubnagar", "Mancherial", "Medak", "Medchal-Malkajgiri", "Mulugu", "Nagarkurnool", "Nalgonda", "Narayanpet", "Nirmal", "Nizamabad", "Peddapalli", "Rajanna Sircilla", "Ranga Reddy", "Sangareddy", "Siddipet", "Suryapet", "Vikarabad", "Wanaparthy", "Warangal", "Yadadri Bhuvanagiri"],
-      "Tripura": ["Agartala", "Dhalai", "Gomati", "Khowai", "North Tripura", "Sepahijala", "South Tripura", "Unakoti", "West Tripura"],
-      "Uttar Pradesh": ["Lucknow", "Kanpur", "Varanasi", "Noida", "Agra", "Aligarh", "Ambedkar Nagar", "Amethi", "Amroha", "Auraiya", "Ayodhya", "Azamgarh", "Baghpat", "Bahraich", "Ballia", "Balrampur", "Banda", "Barabanki", "Bareilly", "Basti", "Bhadohi", "Bijnor", "Budaun", "Bulandshahr", "Chandauli", "Chitrakoot", "Deoria", "Etah", "Etawah", "Farrukhabad", "Fatehpur", "Firozabad", "Ghaziabad", "Ghazipur", "Gonda", "Gorakhpur", "Hamirpur", "Hapur", "Hardoi", "Hathras", "Jalaun", "Jaunpur", "Jhansi", "Kannauj", "Kanpur Dehat", "Kasganj", "Kaushambi", "Kushinagar", "Lakhimpur Kheri", "Lalitpur", "Maharajganj", "Mahoba", "Mainpuri", "Mathura", "Mau", "Meerut", "Mirzapur", "Moradabad", "Muzaffarnagar", "Pilibhit", "Pratapgarh", "Prayagraj", "Raebareli", "Rampur", "Saharanpur", "Sambhal", "Sant Kabir Nagar", "Shahjahanpur", "Shamli", "Shravasti", "Siddharthnagar", "Sitapur", "Sonbhadra", "Sultanpur", "Unnao"],
-      "Uttarakhand": ["Dehradun", "Haridwar", "Almora", "Bageshwar", "Chamoli", "Champawat", "Nainital", "Pauri Garhwal", "Pithoragarh", "Rudraprayag", "Tehri Garhwal", "Udham Singh Nagar", "Uttarkashi"],
-      "West Bengal": ["Kolkata", "Howrah", "Darjeeling", "Alipurduar", "Bankura", "Birbhum", "Cooch Behar", "Dakshin Dinajpur", "Hooghly", "Jalpaiguri", "Jhargram", "Kalimpong", "Malda", "Murshidabad", "Nadia", "North 24 Parganas", "Paschim Bardhaman", "Paschim Medinipur", "Purba Bardhaman", "Purba Medinipur", "Purulia", "South 24 Parganas", "Uttar Dinajpur"]
+    // State and City Data
+    const locationData = {
+      "Jharkhand": ["Bokaro", "Ranchi", "Dhanbad", "Jamshedpur", "Hazaribagh"],
+      "Bihar": ["Patna", "Gaya", "Bhagalpur", "Muzaffarpur"],
+      "West Bengal": ["Kolkata", "Asansol", "Siliguri", "Durgapur"]
     };
-
-    // DUMMY HALLS DATA (Jharkhand)
-    const allHalls = [
-      { id: 1, name: "Royal Palace", state: "Jharkhand", district: "Bokaro", locality: "Sector 4", capacity: 600, rent: 45000, img: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80", tags: ["AC Banquet", "Parking", "2 Rooms"] },
-      { id: 2, name: "Grand Celebration", state: "Jharkhand", district: "Bokaro", locality: "Chas", capacity: 1000, rent: 60000, img: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=600&q=80", tags: ["Big Lawn", "Catering Space", "Stage"] },
-      { id: 3, name: "Shagun Resort", state: "Jharkhand", district: "Bokaro", locality: "Co-op Colony", capacity: 500, rent: 50000, img: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80", tags: ["Resort Style", "AC Rooms", "Full Power"] },
-      { id: 4, name: "Utsav Bhawan", state: "Jharkhand", district: "Bokaro", locality: "Siwandih", capacity: 400, rent: 35000, img: "https://images.unsplash.com/photo-1545232979-fbf6a84f3e39?auto=format&fit=crop&w=600&q=80", tags: ["Budget Friendly", "Parking", "Kitchen"] },
-      { id: 5, name: "Milan Garden", state: "Jharkhand", district: "Bokaro", locality: "Sector 1", capacity: 450, rent: 40000, img: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80", tags: ["Garden Lawn", "Indoor Hall", "Lighting"] },
-      { id: 6, name: "Kohinoor Banquet", state: "Jharkhand", district: "Dhanbad", locality: "Bank More", capacity: 700, rent: 55000, img: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=600&q=80", tags: ["Prime Location", "Central AC", "Elevator"] },
-      { id: 7, name: "Rajwada Palace", state: "Jharkhand", district: "Dhanbad", locality: "Saraidhela", capacity: 1200, rent: 65000, img: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=600&q=80", tags: ["Luxury Stage", "Huge Lawn", "Valet Parking"] },
-      { id: 8, name: "Capitol Conventions", state: "Jharkhand", district: "Ranchi", locality: "Lalpur", capacity: 800, rent: 75000, img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=600&q=80", tags: ["Premium Banquets", "AC Rooms", "VIP Lounge"] },
-      { id: 9, name: "Urmila Wedding Lawn", state: "Jharkhand", district: "Ranchi", locality: "Morabadi", capacity: 1100, rent: 70000, img: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80", tags: ["Scenic Garden", "Grand Stage", "Large Parking"] }
-    ];
 
     function initStates() {
       const stateSelect = document.getElementById('stateSelect');
-      stateSelect.innerHTML = `<option value="All">All States & Union Territories</option>`;
-
-      const sortedStates = Object.keys(indiaData).sort();
-      sortedStates.forEach(st => {
-        const opt = document.createElement('option');
-        opt.value = st;
-        opt.innerText = st;
-        if (st === "Jharkhand") opt.selected = true;
+      for (let state in locationData) {
+        let opt = document.createElement('option');
+        opt.value = state;
+        opt.innerText = state;
         stateSelect.appendChild(opt);
-      });
-
-      onStateChange();
+      }
     }
 
-    function onStateChange() {
-      const selectedState = document.getElementById('stateSelect').value;
-      const districtSelect = document.getElementById('districtSelect');
-      districtSelect.innerHTML = `<option value="All">All Cities & Districts</option>`;
-
-      if (selectedState !== "All" && indiaData[selectedState]) {
-        const sortedDistricts = [...indiaData[selectedState]].sort();
-        sortedDistricts.forEach(dist => {
-          const opt = document.createElement('option');
-          opt.value = dist;
-          opt.innerText = dist;
-          districtSelect.appendChild(opt);
+    function loadCities() {
+      const stateSelect = document.getElementById('stateSelect');
+      const citySelect = document.getElementById('citySelect');
+      citySelect.innerHTML = '<option value="">All Cities & Districts</option>';
+      
+      let selectedState = stateSelect.value;
+      if (selectedState && locationData[selectedState]) {
+        locationData[selectedState].forEach(city => {
+          let opt = document.createElement('option');
+          opt.value = city;
+          opt.innerText = city;
+          citySelect.appendChild(opt);
         });
       }
-      applyFilters();
     }
 
-    function renderHalls(list) {
-      const cont = document.getElementById('hallsContainer');
-      cont.innerHTML = "";
-      document.getElementById('resultsCount').innerText = "Showing " + list.length + " Halls";
-
-      if (list.length === 0) {
-        cont.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; background: white; border-radius: 14px; color: var(--muted);">
-          <h3>No halls available in this city yet!</h3>
-          <p style="font-size: 13px; margin-top: 6px;">New hall owners are joining soon across India.</p>
-        </div>`;
-        return;
-      }
-
-      list.forEach(h => {
-        cont.innerHTML += `
-          <div class="hall-card">
-            <div class="media-thumb" style="background-image: url('${h.img}')" onclick="openGallery('${h.name}')">
-              <span class="tap-hint">Tap Photo to view Rooms & Video 🎥</span>
-              <span class="media-badge">📸 4 Photos | 🎥 1 Video</span>
-            </div>
-            <div class="h-info">
-              <div>
-                <div class="h-title">${h.name}</div>
-                <div class="h-loc">📍 ${h.locality}, ${h.district} | Capacity: ${h.capacity}</div>
-                <div class="tags">${h.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
-              </div>
-              <div class="action-row">
-                <div>
-                  <div style="font-size:11px; color:var(--muted);">Base Rent</div>
-                  <div class="rent-price">₹${h.rent.toLocaleString('en-IN')}</div>
-                </div>
-                <button class="btn-offer" onclick="openOfferModal(${h.id})">Check Dates & Offer</button>
-              </div>
-            </div>
-          </div>
-        `;
-      });
-    }
-
-    function applyFilters() {
-      const state = document.getElementById('stateSelect').value;
-      const dist = document.getElementById('districtSelect').value;
-      const search = document.getElementById('searchInput').value.toLowerCase().trim();
-
-      const filtered = allHalls.filter(h => {
-        const matchState = (state === "All") || (h.state === state);
-        const matchDist = (dist === "All") || (h.district.toLowerCase() === dist.toLowerCase());
-        const matchSearch = h.name.toLowerCase().includes(search) || h.locality.toLowerCase().includes(search) || h.district.toLowerCase().includes(search);
-        return matchState && matchDist && matchSearch;
-      });
-      renderHalls(filtered);
-    }
-
-    // MODALS LOGIC
-    function openGallery(name) {
-      document.getElementById('galleryTitle').innerText = name + " - Photos & Video Tour";
-      document.getElementById('galleryModal').style.display = 'block';
-    }
-
-    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-
-    // --- REAL CALENDAR & OFFER LOGIC ---
-    let nav = 0;
-    let currentHall = null;
-    let chosenFullDate = null;
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const dbBookedDates = ["15-11-2026", "20-11-2026", "05-12-2026"]; 
-
-    function openOfferModal(hallId) {
-      currentHall = allHalls.find(h => h.id === hallId);
-      document.getElementById('offerHallName').innerText = currentHall.name;
-      document.getElementById('offerHallMeta').innerText = "📍 " + currentHall.locality + ", " + currentHall.district + " | Official Base Rent: ₹" + currentHall.rent.toLocaleString('en-IN');
+    function switchScreen(screenName) {
+      document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
       
-      const priceBox = document.getElementById('offerPriceBox');
-      priceBox.value = "";
-      priceBox.max = currentHall.rent;
-
-      chosenFullDate = null;
-      document.getElementById('pickedDateLabel').innerText = "Please select a date";
-      
-      nav = 0; 
-      loadCalendar();
-      document.getElementById('offerModal').style.display = 'block';
+      document.getElementById('screen-' + screenName).classList.add('active');
+      document.getElementById('nav-' + screenName).classList.add('active');
+      window.scrollTo(0, 0);
     }
 
-    function changeMonth(dir) {
-      nav += dir;
-      loadCalendar();
-    }
-
-    function loadCalendar() {
-      const dt = new Date(); 
-      if (nav !== 0) { dt.setMonth(new Date().getMonth() + nav); }
-      
-      const month = dt.getMonth();
-      const year = dt.getFullYear();
-
-      const firstDayOfMonth = new Date(year, month, 1);
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
-      const dateString = firstDayOfMonth.toLocaleDateString('en-us', { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric' });
-      const paddingDays = weekdays.indexOf(dateString.split(', ')[0]);
-
-      document.getElementById('monthYearDisplay').innerText = `${months[month]} ${year}`;
-      const calendarDays = document.getElementById('calendarDays');
-      calendarDays.innerHTML = '';
-
-      const todayReal = new Date();
-      todayReal.setHours(0,0,0,0);
-
-      for (let i = 1; i <= paddingDays + daysInMonth; i++) {
-        const dayDiv = document.createElement('div');
-        dayDiv.classList.add('day');
-
-        if (i > paddingDays) {
-          const dayNum = i - paddingDays;
-          const thisDateObj = new Date(year, month, dayNum);
-          const formattedDate = `${String(dayNum).padStart(2, '0')}-${String(month+1).padStart(2, '0')}-${year}`;
-
-          if (thisDateObj < todayReal) {
-            dayDiv.classList.add('past');
-            dayDiv.innerHTML = `<span>${dayNum}</span><span style="font-size:9px;">⚪</span>`;
-          } 
-          else if (dbBookedDates.includes(formattedDate)) {
-            dayDiv.classList.add('booked');
-            dayDiv.innerHTML = `<span>${dayNum}</span><span style="font-size:10px;">❌</span>`;
-            dayDiv.onclick = () => alert("This date is already Booked by another customer!");
-          } 
-          else {
-            dayDiv.classList.add('available');
-            dayDiv.innerHTML = `<span>${dayNum}</span><span style="font-size:9px;">🟢</span>`;
-            if (chosenFullDate === formattedDate) { dayDiv.classList.add('selected'); }
-            
-            dayDiv.onclick = () => {
-              chosenFullDate = formattedDate;
-              document.getElementById('pickedDateLabel').innerText = `${dayNum} ${months[month]} ${year}`;
-              loadCalendar();
-            };
-          }
-        } else {
-          dayDiv.classList.add('empty');
-        }
-        calendarDays.appendChild(dayDiv);
-      }
-    }
-
-    function submitValidOffer() {
-      const enteredPrice = Number(document.getElementById('offerPriceBox').value);
-
-      if (!chosenFullDate) return alert("Please select an available green date from the calendar first!");
-      if (!enteredPrice || enteredPrice <= 0) return alert("Please enter a valid offer amount (₹)!");
-      if (enteredPrice > currentHall.rent) return alert("❌ Invalid Offer!\nThe base rent is ₹" + currentHall.rent.toLocaleString('en-IN') + ". Your offer cannot exceed the base rent!");
-      if (String(enteredPrice).length >= 10) return alert("Phone numbers are not allowed! Please enter an offer amount.");
-
-      alert(`🎉 Offer Sent Successfully!\n\nHall: ${currentHall.name}\nDate: ${chosenFullDate}\nYour Offer: ₹${enteredPrice.toLocaleString('en-IN')}\n\nNext Step: Hall Owner will review this. Once accepted, you will pay the Token Amount here to automatically generate the legal PDF agreement via Email/WhatsApp.`);
-      closeModal('offerModal');
-    }
-
-    // Launch App
+    // Initialize the app
     initStates();
   </script>
-    <!-- Razorpay Integration Script -->
+
+  <!-- RAZORPAY INTEGRATION SCRIPT -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script>
     function startRazorpayPayment(amount) {
-      // Razorpay options setup
       var options = {
-          "key": "rzp_test_dummy_key_here", // Baad mein isko aapke asli Razorpay key se badlenge
-          "amount": amount * 100, // Amount paise mein hota hai
+          "key": "rzp_test_dummy_key_here", // Razorpay Key
+          "amount": amount * 100, 
           "currency": "INR",
           "name": "HallWala Platform",
           "description": "10% Token Booking Amount",
           "image": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
           "handler": function (response){
-              alert("🎉 Payment Successful!\nPayment ID: " + response.razorpay_payment_id + "\n\n₹" + amount + " ka Token pay ho gaya hai.\n(₹1000 HallWala ko gaya aur baaki Vendor ko)\n\nPDF Agreement aur Token Receipt aapke Email aur WhatsApp par bhej di gayi hai!");
+              alert("🎉 Payment Successful!\nPayment ID: " + response.razorpay_payment_id + "\n\n₹" + amount + " ka Token pay ho gaya hai.\n(₹1000 HallWala ko gaya aur baaki Vendor ko)");
           },
           "prefill": {
               "name": document.getElementById('accName').value || "Customer",
-              "email": document.getElementById('accEmail').value || "customer@example.com",
               "contact": document.getElementById('accPhone').value || "9876543210"
           },
-          "theme": {
-              "color": "#4f46e5"
-          }
+          "theme": { "color": "#4f46e5" }
       };
       var rzp1 = new Razorpay(options);
       rzp1.open();
     }
   </script>
-    <!-- Razorpay Integration Script -->
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <script>
-    function startRazorpayPayment(amount) {
-      // Razorpay options setup
-      var options = {
-          "key": "rzp_test_dummy_key_here", // Baad mein isko aapke asli Razorpay key se badlenge
-          "amount": amount * 100, // Amount paise mein hota hai
-          "currency": "INR",
-          "name": "HallWala Platform",
-          "description": "10% Token Booking Amount",
-          "image": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
-          "handler": function (response){
-              alert("🎉 Payment Successful!\nPayment ID: " + response.razorpay_payment_id + "\n\n₹" + amount + " ka Token pay ho gaya hai.\n(₹1000 HallWala ko gaya aur baaki Vendor ko)\n\nPDF Agreement aur Token Receipt aapke Email aur WhatsApp par bhej di gayi hai!");
-          },
-          "prefill": {
-              "name": document.getElementById('accName').value || "Customer",
-              "email": document.getElementById('accEmail').value || "customer@example.com",
-              "contact": document.getElementById('accPhone').value || "9876543210"
-          },
-          "theme": {
-              "color": "#4f46e5"
-          }
-      };
-      var rzp1 = new Razorpay(options);
-      rzp1.open();
-    }
-  </script>
-    <!-- Razorpay Integration Script -->
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <script>
-    function startRazorpayPayment(amount) {
-      // Razorpay options setup
-      var options = {
-          "key": "rzp_test_dummy_key_here", // Baad mein isko aapke asli Razorpay key se badlenge
-          "amount": amount * 100, // Amount paise mein hota hai
-          "currency": "INR",
-          "name": "HallWala Platform",
-          "description": "10% Token Booking Amount",
-          "image": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
-          "handler": function (response){
-              alert("🎉 Payment Successful!\nPayment ID: " + response.razorpay_payment_id + "\n\n₹" + amount + " ka Token pay ho gaya hai.\n(₹1000 HallWala ko gaya aur baaki Vendor ko)\n\nPDF Agreement aur Token Receipt aapke Email aur WhatsApp par bhej di gayi hai!");
-          },
-          "prefill": {
-              "name": document.getElementById('accName').value || "Customer",
-              "email": document.getElementById('accEmail').value || "customer@example.com",
-              "contact": document.getElementById('accPhone').value || "9876543210"
-          },
-          "theme": {
-              "color": "#4f46e5"
-          }
-      };
-      var rzp1 = new Razorpay(options);
-      rzp1.open();
-    }
-  </script>
-  
 </body>
 </html>
