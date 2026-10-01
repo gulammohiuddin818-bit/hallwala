@@ -559,7 +559,12 @@
   <!-- HALLWALA PROFESSIONAL FOOTER START      -->
   <!-- ======================================= -->
   <style>
-    .site-footer { background-color: #0f172a; color: #cbd5e1; padding: 40px 20px 100px 20px; margin-top: 50px; font-family: 'Plus Jakarta Sans', sans-serif; }
+    /* PAGE LAYOUT FIX (Box in center, Footer at bottom) */
+    body { display: flex !important; flex-direction: column !important; min-height: 100vh !important; }
+    #languageScreen, #mainAuthScreen { margin: auto !important; margin-top: 10vh !important; }
+    
+    /* FOOTER DESIGN */
+    .site-footer { width: 100% !important; box-sizing: border-box; background-color: #0f172a; color: #cbd5e1; padding: 40px 20px 30px 20px; margin-top: auto; font-family: 'Plus Jakarta Sans', sans-serif; }
     .footer-grid { max-width: 1150px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; }
     .footer-brand { font-size: 22px; font-weight: 800; color: white; margin-bottom: 12px; background: linear-gradient(135deg, #4f46e5, #f43f5e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .footer-heading { font-size: 15px; font-weight: 800; color: white; margin-bottom: 16px; }
@@ -569,7 +574,8 @@
     .footer-links a:hover { color: #f43f5e; padding-left: 4px; }
     .footer-contact { font-size: 13px; color: #94a3b8; margin-bottom: 10px; display: flex; gap: 8px; font-weight: 600; }
     .footer-bottom { text-align: center; border-top: 1px solid #1e293b; margin-top: 40px; padding-top: 20px; font-size: 13px; font-weight: 600; color: #64748b; }
-  </style>
+    </style>
+  
 
   <footer class="site-footer">
     <div class="footer-grid">
