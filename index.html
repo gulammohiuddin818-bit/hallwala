@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,7 @@
       --primary-dark: #3730a3;
       --accent: #f43f5e;
       --bg: #0f172a;
-      --card-bg: rgba(255, 255, 255, 0.95);
+      --card-bg: rgba(255, 255, 255, 0.98);
       --text: #1e293b;
       --muted: #64748b;
     }
@@ -26,22 +26,24 @@
       padding: 20px 15px;
     }
 
-    .auth-wrapper {
+    /* Common Card Box */
+    .app-box {
       width: 100%;
       max-width: 480px;
       background: var(--card-bg);
       backdrop-filter: blur(16px);
       border-radius: 24px;
       padding: 32px 24px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.2);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     }
 
+    /* BRAND LOGO */
     .brand-header {
       text-align: center;
       margin-bottom: 24px;
     }
     .brand-header h1 {
-      font-size: 32px;
+      font-size: 34px;
       font-weight: 800;
       background: linear-gradient(135deg, #4f46e5, #f43f5e);
       -webkit-background-clip: text;
@@ -51,8 +53,67 @@
     .brand-header p {
       color: var(--muted);
       font-size: 13px;
-      font-weight: 500;
+      font-weight: 600;
       margin-top: 4px;
+    }
+
+    /* 1. LANGUAGE SCREEN STYLES */
+    #languageScreen {
+      text-align: center;
+    }
+    .lang-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .lang-subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .lang-btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .lang-btn {
+      padding: 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
+      background: #f8fafc;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .lang-btn:hover {
+      border-color: var(--primary);
+      background: #eff6ff;
+      color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    /* 2. AUTH MAIN CONTAINER */
+    #mainAuthScreen {
+      display: none;
+    }
+
+    .top-lang-switch {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 12px;
+    }
+    .top-lang-switch button {
+      background: none;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 4px 10px;
+      font-size: 11px;
+      color: var(--muted);
+      cursor: pointer;
+      font-weight: 600;
     }
 
     /* Role Selector */
@@ -78,7 +139,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
     }
     .role-btn.active {
       background: white;
@@ -86,11 +147,11 @@
       box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
     }
 
-    /* Tabs (Login vs Register) */
+    /* Tab Buttons (Login vs Register) */
     .tab-container {
       display: flex;
       border-bottom: 2px solid #e2e8f0;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
     .tab-btn {
       flex: 1;
@@ -103,9 +164,7 @@
       cursor: pointer;
       position: relative;
     }
-    .tab-btn.active {
-      color: var(--primary);
-    }
+    .tab-btn.active { color: var(--primary); }
     .tab-btn.active::after {
       content: '';
       position: absolute;
@@ -117,7 +176,7 @@
       border-radius: 3px;
     }
 
-    /* Form Styles */
+    /* Inputs & Forms */
     .form-group {
       margin-bottom: 14px;
       text-align: left;
@@ -128,8 +187,7 @@
       font-weight: 700;
       color: #334155;
       margin-bottom: 5px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.3px;
     }
     .input-field {
       width: 100%;
@@ -181,21 +239,17 @@
       font-weight: 700;
       cursor: pointer;
       box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.4);
-      transition: all 0.2s;
       margin-top: 10px;
     }
     .btn-primary:hover {
       transform: translateY(-1px);
       box-shadow: 0 14px 24px -5px rgba(79, 70, 229, 0.5);
     }
-    .btn-primary:active { transform: translateY(0); }
 
     .badge-verified {
       display: none;
-      align-items: center;
-      gap: 4px;
       color: #16a34a;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 700;
       margin-top: 4px;
     }
@@ -215,89 +269,103 @@
       font-weight: 600;
       color: var(--muted);
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
     }
-    .biometric-btn:hover { border-color: var(--primary); color: var(--primary); }
 
     .helper-text {
       font-size: 12px;
       color: var(--muted);
       text-align: center;
-      margin-top: 14px;
+      margin-top: 16px;
     }
   </style>
 </head>
 <body>
 
-  <div class="auth-wrapper">
-    <!-- Brand Header -->
+  <!-- ================= SCREEN 1: LANGUAGE SELECTION ================= -->
+  <div class="app-box" id="languageScreen">
     <div class="brand-header">
       <h1>HallWala</h1>
-      <p id="portalSubtitle">Customer Experience Portal</p>
+    </div>
+    <div class="lang-title">Choose Your Language</div>
+    <div class="lang-subtitle">अपनी भाषा चुनें</div>
+
+    <div class="lang-btn-group">
+      <button class="lang-btn" onclick="selectLanguage('hi')">🇮🇳 हिन्दी (Hindi)</button>
+      <button class="lang-btn" onclick="selectLanguage('en')">🇬🇧 English</button>
+    </div>
+  </div>
+
+  <!-- ================= SCREEN 2: AUTH PORTAL ================= -->
+  <div class="app-box" id="mainAuthScreen">
+    <div class="top-lang-switch">
+      <button onclick="changeLanguageBack()">🌐 Change Language</button>
     </div>
 
-    <!-- 1. Role Selector (Customer vs Hall Owner) -->
+    <div class="brand-header">
+      <h1>HallWala</h1>
+      <p id="uiPortalSubtitle">Customer Experience Portal</p>
+    </div>
+
+    <!-- Role Selection -->
     <div class="role-container">
       <button class="role-btn active" id="btnRoleCustomer" onclick="setRole('Customer')">
-        🤵 Customer
+        <span id="txtRoleCustomer">🤵 Customer</span>
       </button>
       <button class="role-btn" id="btnRoleOwner" onclick="setRole('Hall Owner')">
-        🏢 Hall Owner
+        <span id="txtRoleOwner">🏢 Hall Owner</span>
       </button>
     </div>
 
-    <!-- 2. Action Tabs (Login vs Register) -->
+    <!-- Tab Selection -->
     <div class="tab-container">
       <button class="tab-btn active" id="tabLogin" onclick="switchTab('login')">Login</button>
-      <button class="tab-btn" id="tabRegister" onclick="switchTab('register')">Naya Account</button>
+      <button class="tab-btn" id="tabRegister" onclick="switchTab('register')">Sign Up</button>
     </div>
 
-    <!-- ================= LOGIN FORM ================= -->
+    <!-- LOGIN FORM -->
     <div id="loginFormSection">
       <div class="form-group">
-        <label>Mobile Number</label>
+        <label id="lblLoginMobile">Mobile Number</label>
         <input type="tel" id="loginMobile" class="input-field" placeholder="10-digit mobile number" maxlength="10">
       </div>
       <div class="form-group">
-        <label>Password ya Security PIN</label>
-        <input type="password" id="loginPassword" class="input-field" placeholder="Apna password dalein">
+        <label id="lblLoginPass">Password / Security PIN</label>
+        <input type="password" id="loginPassword" class="input-field" placeholder="Enter password">
       </div>
-      <button class="btn-primary" onclick="handleLogin()">Login Karein 🚀</button>
+      <button class="btn-primary" id="btnLoginSubmit" onclick="handleLogin()">Login 🚀</button>
 
       <div class="biometric-box">
-        <button class="biometric-btn" onclick="handleBiometric()">
+        <button class="biometric-btn" id="btnBiometric" onclick="handleBiometric()">
           🔐 Fingerprint / Face ID Login
         </button>
       </div>
     </div>
 
-    <!-- ================= REGISTRATION FORM ================= -->
+    <!-- REGISTRATION FORM -->
     <div id="registerFormSection" style="display: none;">
       <div class="form-group">
-        <label>Poora Naam (Full Name)</label>
-        <input type="text" id="regName" class="input-field" placeholder="Jaise: Rahul Kumar">
+        <label id="lblRegName">Full Name</label>
+        <input type="text" id="regName" class="input-field" placeholder="e.g. Rahul Kumar">
       </div>
 
       <div class="row-2">
         <div class="form-group">
-          <label>Janam Tithi (DOB)</label>
+          <label id="lblRegDob">Date of Birth</label>
           <input type="date" id="regDob" class="input-field">
         </div>
         <div class="form-group">
-          <label>Gender</label>
+          <label id="lblRegGender">Gender</label>
           <select id="regGender" class="input-field">
-            <option value="">Chuniye</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Transgender">Transgender</option>
+            <option value="" id="optGenderDefault">Select</option>
+            <option value="Male" id="optGenderMale">Male</option>
+            <option value="Female" id="optGenderFemale">Female</option>
+            <option value="Transgender" id="optGenderTrans">Transgender</option>
           </select>
         </div>
       </div>
 
       <div class="form-group">
-        <label>Mobile Number (OTP Verify Hoga)</label>
+        <label id="lblRegMobile">Mobile Number</label>
         <div class="otp-inline">
           <input type="tel" id="regMobile" class="input-field" placeholder="10-digit number" maxlength="10">
           <button class="btn-small" id="btnSendMobileOtp" onclick="sendMobileOTP()">Send OTP</button>
@@ -310,9 +378,9 @@
       </div>
 
       <div class="form-group">
-        <label>Email ID (Optional)</label>
+        <label id="lblRegEmail">Email ID (Optional)</label>
         <div class="otp-inline">
-          <input type="email" id="regEmail" class="input-field" placeholder="naam@gmail.com (Optional)">
+          <input type="email" id="regEmail" class="input-field" placeholder="name@gmail.com (Optional)">
           <button class="btn-small" id="btnSendEmailOtp" onclick="sendEmailOTP()">Verify</button>
         </div>
         <div id="emailOtpBox" style="display: none; margin-top: 8px;" class="otp-inline">
@@ -323,44 +391,168 @@
       </div>
 
       <div class="form-group">
-        <label>Pata (Full Address)</label>
-        <input type="text" id="regAddress" class="input-field" placeholder="Ghar/Mohalla, Shahar, Rajye">
+        <label id="lblRegAddress">Full Address</label>
+        <input type="text" id="regAddress" class="input-field" placeholder="House/Area, City, State">
       </div>
 
-      <!-- Password / PIN Creation -->
-      <div class="form-group" id="passwordSetupBox">
-        <label>Password / Security PIN Set Karein</label>
-        <input type="password" id="regPassword" class="input-field" placeholder="Aage login ke liye password dalein">
+      <div class="form-group">
+        <label id="lblRegPass">Set Password / Security PIN</label>
+        <input type="password" id="regPassword" class="input-field" placeholder="Enter password for login">
       </div>
 
-      <button class="btn-primary" onclick="handleRegistration()">Account Banayein 🎉</button>
+      <button class="btn-primary" id="btnRegisterSubmit" onclick="handleRegistration()">Create Account 🎉</button>
     </div>
 
-    <p class="helper-text" id="footerText">Surakshit & Bharat Ka Bharosemand Platform</p>
+    <p class="helper-text" id="uiFooterText">Secure & Trusted Platform</p>
   </div>
 
   <script>
-    // YAHAN APNI GOOGLE APPS SCRIPT KI WEB APP URL DALIE:
+    // YAHAN APNI GOOGLE APPS SCRIPT KI ASLI WEB APP URL DALIE:
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbybV1k1ZomM_Zp31w0w_M9f1lqVqU2w_example/exec";
 
+    let currentLanguage = 'en';
     let currentRole = "Customer";
     let isMobileVerified = false;
     let isEmailVerified = false;
-    let userCityState = "Detecting...";
+    let userCityState = "India";
 
-    // Auto-detect User Location (100% Free IP API)
+    // Auto-detect IP location (100% Free)
     fetch('https://ipapi.co/json/')
       .then(res => res.json())
       .then(data => {
         userCityState = (data.city || "") + ", " + (data.region || "") + " (" + (data.country_name || "") + ")";
-      })
-      .catch(() => { userCityState = "India"; });
+      }).catch(() => {});
+
+    // Dictionary for 100% Pure English vs Pure Hindi
+    const dict = {
+      en: {
+        portalSubCust: "Customer Experience Portal",
+        portalSubOwner: "Hall Owner Experience Portal",
+        roleCustomer: "🤵 Customer",
+        roleOwner: "🏢 Hall Owner",
+        tabLogin: "Login",
+        tabRegister: "Sign Up",
+        lblLoginMobile: "Mobile Number",
+        phLoginMobile: "10-digit mobile number",
+        lblLoginPass: "Password / Security PIN",
+        phLoginPass: "Enter password",
+        btnLoginSubmit: "Login 🚀",
+        btnBiometric: "🔐 Fingerprint / Face ID Login",
+        lblRegName: "Full Name",
+        phRegName: "e.g. Rahul Kumar",
+        lblRegDob: "Date of Birth",
+        lblRegGender: "Gender",
+        optGenderDefault: "Select",
+        optGenderMale: "Male",
+        optGenderFemale: "Female",
+        optGenderTrans: "Transgender",
+        lblRegMobile: "Mobile Number",
+        phRegMobile: "10-digit number",
+        btnSendMobileOtp: "Send OTP",
+        lblRegEmail: "Email ID (Optional)",
+        phRegEmail: "name@gmail.com (Optional)",
+        btnSendEmailOtp: "Verify",
+        lblRegAddress: "Full Address",
+        phRegAddress: "House/Area, City, State",
+        lblRegPass: "Set Password / Security PIN",
+        phRegPass: "Enter password for login",
+        btnRegisterSubmit: "Create Account 🎉",
+        uiFooterText: "Secure & Trusted Platform"
+      },
+      hi: {
+        portalSubCust: "ग्राहक सेवा पोर्टल",
+        portalSubOwner: "हॉल मालिक पोर्टल",
+        roleCustomer: "🤵 ग्राहक (Customer)",
+        roleOwner: "🏢 हॉल मालिक (Owner)",
+        tabLogin: "लॉगिन करें",
+        tabRegister: "नया खाता बनाएं",
+        lblLoginMobile: "मोबाइल नंबर",
+        phLoginMobile: "10-अंकों का मोबाइल नंबर",
+        lblLoginPass: "पासवर्ड / पिन",
+        phLoginPass: "अपना पासवर्ड डालें",
+        btnLoginSubmit: "लॉगिन करें 🚀",
+        btnBiometric: "🔐 फिंगरप्रिंट / फेस लॉक लॉगिन",
+        lblRegName: "पूरा नाम",
+        phRegName: "जैसे: राहुल कुमार",
+        lblRegDob: "जन्म तिथि",
+        lblRegGender: "लिंग (Gender)",
+        optGenderDefault: "चुनें",
+        optGenderMale: "पुरुष (Male)",
+        optGenderFemale: "महिला (Female)",
+        optGenderTrans: "ट्रांसजेंडर (Transgender)",
+        lblRegMobile: "मोबाइल नंबर (OTP सत्यापन)",
+        phRegMobile: "10-अंकों का नंबर",
+        btnSendMobileOtp: "OTP भेजें",
+        lblRegEmail: "ईमेल आईडी (वैकल्पिक)",
+        phRegEmail: "naam@gmail.com (वैकल्पिक)",
+        btnSendEmailOtp: "सत्यापित करें",
+        lblRegAddress: "पूरा पता",
+        phRegAddress: "घर/मोहल्ला, शहर, राज्य",
+        lblRegPass: "पासवर्ड / पिन सेट करें",
+        phRegPass: "आगे लॉगिन के लिए पासवर्ड बनाएं",
+        btnRegisterSubmit: "खाता बनाएं 🎉",
+        uiFooterText: "सुरक्षित एवं विश्वसनीय मंच"
+      }
+    };
+
+    function selectLanguage(lang) {
+      currentLanguage = lang;
+      applyLanguage(lang);
+      document.getElementById('languageScreen').style.display = 'none';
+      document.getElementById('mainAuthScreen').style.display = 'block';
+    }
+
+    function changeLanguageBack() {
+      document.getElementById('mainAuthScreen').style.display = 'none';
+      document.getElementById('languageScreen').style.display = 'block';
+    }
+
+    function applyLanguage(lang) {
+      const d = dict[lang];
+      document.getElementById('txtRoleCustomer').innerText = d.roleCustomer;
+      document.getElementById('txtRoleOwner').innerText = d.roleOwner;
+      document.getElementById('tabLogin').innerText = d.tabLogin;
+      document.getElementById('tabRegister').innerText = d.tabRegister;
+      
+      document.getElementById('lblLoginMobile').innerText = d.lblLoginMobile;
+      document.getElementById('loginMobile').placeholder = d.phLoginMobile;
+      document.getElementById('lblLoginPass').innerText = d.lblLoginPass;
+      document.getElementById('loginPassword').placeholder = d.phLoginPass;
+      document.getElementById('btnLoginSubmit').innerText = d.btnLoginSubmit;
+      document.getElementById('btnBiometric').innerText = d.btnBiometric;
+
+      document.getElementById('lblRegName').innerText = d.lblRegName;
+      document.getElementById('regName').placeholder = d.phRegName;
+      document.getElementById('lblRegDob').innerText = d.lblRegDob;
+      document.getElementById('lblRegGender').innerText = d.lblRegGender;
+      document.getElementById('optGenderDefault').innerText = d.optGenderDefault;
+      document.getElementById('optGenderMale').innerText = d.optGenderMale;
+      document.getElementById('optGenderFemale').innerText = d.optGenderFemale;
+      document.getElementById('optGenderTrans').innerText = d.optGenderTrans;
+
+      document.getElementById('lblRegMobile').innerText = d.lblRegMobile;
+      document.getElementById('regMobile').placeholder = d.phRegMobile;
+      document.getElementById('btnSendMobileOtp').innerText = d.btnSendMobileOtp;
+      document.getElementById('lblRegEmail').innerText = d.lblRegEmail;
+      document.getElementById('regEmail').placeholder = d.phRegEmail;
+      document.getElementById('btnSendEmailOtp').innerText = d.btnSendEmailOtp;
+
+      document.getElementById('lblRegAddress').innerText = d.lblRegAddress;
+      document.getElementById('regAddress').placeholder = d.phRegAddress;
+      document.getElementById('lblRegPass').innerText = d.lblRegPass;
+      document.getElementById('regPassword').placeholder = d.phRegPass;
+      document.getElementById('btnRegisterSubmit').innerText = d.btnRegisterSubmit;
+      document.getElementById('uiFooterText').innerText = d.uiFooterText;
+
+      setRole(currentRole);
+    }
 
     function setRole(role) {
       currentRole = role;
       document.getElementById('btnRoleCustomer').classList.toggle('active', role === 'Customer');
       document.getElementById('btnRoleOwner').classList.toggle('active', role === 'Hall Owner');
-      document.getElementById('portalSubtitle').innerText = role + " Experience Portal";
+      const d = dict[currentLanguage];
+      document.getElementById('uiPortalSubtitle').innerText = role === 'Customer' ? d.portalSubCust : d.portalSubOwner;
     }
 
     function switchTab(tab) {
@@ -370,12 +562,12 @@
       document.getElementById('registerFormSection').style.display = tab === 'register' ? 'block' : 'none';
     }
 
-    // OTP Handlers (Mobile)
+    // Mobile OTP
     function sendMobileOTP() {
       const mob = document.getElementById('regMobile').value.trim();
-      if (mob.length !== 10) return alert("Kripya sahi 10-digit mobile number dalein!");
+      if (mob.length !== 10) return alert(currentLanguage === 'en' ? "Please enter a valid 10-digit mobile number!" : "कृपया 10-अंकों का मोबाइल नंबर दर्ज करें!");
       document.getElementById('mobileOtpBox').style.display = 'flex';
-      alert("Mobile OTP bhej diya gaya hai! (Demo OTP: 1234)");
+      alert(currentLanguage === 'en' ? "Demo OTP sent: 1234" : "डेमो OTP भेजा गया: 1234");
     }
     function verifyMobileOTP() {
       const otp = document.getElementById('regMobileOtp').value.trim();
@@ -383,137 +575,13 @@
         isMobileVerified = true;
         document.getElementById('mobileOtpBox').style.display = 'none';
         document.getElementById('btnSendMobileOtp').style.display = 'none';
-        document.getElementById('badgeMobileVerified').style.display = 'flex';
+        document.getElementById('badgeMobileVerified').style.display = 'block';
         document.getElementById('regMobile').readOnly = true;
       } else {
-        alert("Galat Mobile OTP!");
+        alert(currentLanguage === 'en' ? "Invalid Mobile OTP!" : "गलत OTP!");
       }
     }
 
-    // OTP Handlers (Email - Optional)
+    // Email OTP
     function sendEmailOTP() {
-      const em = document.getElementById('regEmail').value.trim();
-      if (!em || !em.includes('@')) return alert("Kripya sahi email address dalein!");
-      document.getElementById('emailOtpBox').style.display = 'flex';
-      alert("Email OTP bhej diya gaya hai! (Demo OTP: 5678)");
-    }
-    function verifyEmailOTP() {
-      const otp = document.getElementById('regEmailOtp').value.trim();
-      if (otp === "5678") {
-        isEmailVerified = true;
-        document.getElementById('emailOtpBox').style.display = 'none';
-        document.getElementById('btnSendEmailOtp').style.display = 'none';
-        document.getElementById('badgeEmailVerified').style.display = 'flex';
-        document.getElementById('regEmail').readOnly = true;
-      } else {
-        alert("Galat Email OTP!");
-      }
-    }
-
-    // Register Submission
-    function handleRegistration() {
-      const name = document.getElementById('regName').value.trim();
-      const dob = document.getElementById('regDob').value;
-      const gender = document.getElementById('regGender').value;
-      const mobile = document.getElementById('regMobile').value.trim();
-      const email = document.getElementById('regEmail').value.trim();
-      const address = document.getElementById('regAddress').value.trim();
-      const password = document.getElementById('regPassword').value.trim();
-
-      if (!name || !dob || !gender || !mobile || !address || !password) {
-        return alert("Kripya saare zaroori fields (Naam, DOB, Gender, Mobile, Pata, Password) bharein!");
-      }
-      if (!isMobileVerified) {
-        return alert("Pehle Mobile Number ko OTP se verify karein!");
-      }
-      if (email && !isEmailVerified) {
-        return alert("Aapne email daala hai, toh kripya use verify karein ya khali chhod dein!");
-      }
-
-      const params = new URLSearchParams({
-        action: 'register',
-        role: currentRole,
-        name: name,
-        dob: dob,
-        gender: gender,
-        phone: mobile,
-        email: email || "N/A",
-        address: address,
-        password: password,
-        location: userCityState
-      });
-
-      // Google Sheet Backend call
-      fetch(SCRIPT_URL + "?" + params.toString())
-        .then(res => res.json())
-        .then(res => {
-          if (res.status === 'success') {
-            alert(res.message);
-            // Switch back to Login tab and fill mobile
-            switchTab('login');
-            document.getElementById('loginMobile').value = mobile;
-          } else {
-            alert(res.message || "Registration fail hua.");
-          }
-        })
-        .catch(err => {
-          // Offline / Demo fallback
-          alert("Account successfully ban gaya! (Offline Mode)\nAb aap Login kar sakte hain.");
-          switchTab('login');
-          document.getElementById('loginMobile').value = mobile;
-        });
-    }
-
-    // Login Submission (No OTP needed! Just Mobile + Password)
-    function handleLogin() {
-      const mobile = document.getElementById('loginMobile').value.trim();
-      const password = document.getElementById('loginPassword').value.trim();
-
-      if (!mobile || !password) {
-        return alert("Kripya Mobile Number aur Password dono dalein!");
-      }
-
-      const params = new URLSearchParams({
-        action: 'login',
-        role: currentRole,
-        phone: mobile,
-        password: password
-      });
-
-      fetch(SCRIPT_URL + "?" + params.toString())
-        .then(res => res.json())
-        .then(res => {
-          if (res.status === 'success') {
-            alert("Swagatam " + res.name + "! Login Safal Raha.");
-            redirectToDashboard(currentRole, res.name);
-          } else {
-            alert(res.message || "Invalid Details!");
-          }
-        })
-        .catch(err => {
-          // Demo fallback check
-          alert("Demo Login Successful as " + currentRole + "!");
-          redirectToDashboard(currentRole, "User");
-        });
-    }
-
-    function redirectToDashboard(role, name) {
-      if (role === 'Hall Owner') {
-        window.location.href = "owner-dashboard.html?user=" + encodeURIComponent(name);
-      } else {
-        window.location.href = "customer-dashboard.html?user=" + encodeURIComponent(name);
-      }
-    }
-
-    function handleBiometric() {
-      if (window.PublicKeyCredential) {
-        alert("Biometric device scan active... Aapka Fingerprint verify hua!");
-        alert("Swagatam! Biometric se Login Safal.");
-        redirectToDashboard(currentRole, "Verified User");
-      } else {
-        alert("Aapke device mein biometric sensor support nahi mila. Kripya Password se login karein.");
-      }
-    }
-  </script>
-</body>
-</html>
+      const em = doc
