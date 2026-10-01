@@ -239,7 +239,7 @@
 
     function initStates() {
       const stateSelect = document.getElementById('stateSelect');
-      for (let state in locationData) {
+      for (let state in indiaData) {
         let opt = document.createElement('option');
         opt.value = state;
         opt.innerText = state;
@@ -253,8 +253,8 @@
       citySelect.innerHTML = '<option value="">All Cities & Districts</option>';
       
       let selectedState = stateSelect.value;
-      if (selectedState && locationData[selectedState]) {
-        locationData[selectedState].forEach(city => {
+      if (selectedState && indiaData[selectedState]) {
+        indiaData[selectedState].forEach(city => {
           let opt = document.createElement('option');
           opt.value = city;
           opt.innerText = city;
