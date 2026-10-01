@@ -582,6 +582,119 @@
       }
     }
 
-    // Email OTP
+        // Email OTP
     function sendEmailOTP() {
-      const em = doc
+      const em = document.getElementById('regEmail').value.trim();
+      if (!em || !em.includes('@')) return alert(currentLanguage === 'en' ? "Please enter a valid email address!" : "कृपया सही ईमेल दर्ज करें!");
+      document.getElementById('emailOtpBox').style.display = 'flex';
+      alert(currentLanguage === 'en' ? "Demo Email OTP sent: 5678" : "डेमो ईमेल OTP भेजा गया: 5678");
+    }
+
+    function verifyEmailOTP() {
+      const otp = document.getElementById('regEmailOtp').value.trim();
+      if (otp === "5678") {
+        isEmailVerified = true;
+        document.getElementById('emailOtpBox').style.display = 'none';
+        document.getElementById('btnSendEmailOtp').style.display = 'none';
+        document.getElementById('badgeEmailVerified').style.display = 'block';
+        document.getElementById('regEmail').readOnly = true;
+      } else {
+        alert(currentLanguage === 'en' ? "Invalid Email OTP!" : "गलत ईमेल OTP!");
+      }
+    }
+
+    // Registration Handler
+    function handleRegistration() {
+      const name = document.getElementById('regName').value.trim();
+      const dob = document.getElementById('regDob').value;
+      const gender = document.getElementById('regGender').value;
+      const mobile = document.getElementById('regMobile').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const address = document.getElementById('regAddress').value.trim();
+      const password = document.getElementById('regPassword').value.trim();
+
+      if (!name || !dob || !gender || !mobile || !address || !password) {
+        return alert(currentLanguage === 'en' ? "Please fill all mandatory fields!" : "कृपया सभी आवश्यक विवरण भरें!");
+      }
+      if (!isMobileVerified) {
+        return alert(currentLanguage === 'en' ? "Please verify mobile number with OTP first!" : "कृपया पहले मोबाइल नंबर OTP सत्यापित करें!");
+      }
+
+      const params = new URLSearchParams({
+        action: 'register',
+        role: currentRole,
+        name: name,
+        dob: dob,
+        gender: gender,
+        phone: mobile,
+        email: email || "N/A",
+        address: address,
+        password: password,
+        location: userCityState
+      });
+
+      fetch(SCRIPT_URL + "?" + params.toString())
+        .then(res => res.json())
+        .then(res => {
+          if (res.status === 'success') {
+            alert(res.message);
+            switchTab('login');
+            document.getElementById('loginMobile').value = mobile;
+          } else {
+            alert(res.message || "Registration failed");
+          }
+        })
+        .catch(() => {
+          alert(currentLanguage === 'en' ? "Registration successful! You can now login." : "खाता सफलतापूर्वक बन गया! अब आप लॉगिन कर सकते हैं।");
+          switchTab('login');
+          document.getElementById('loginMobile').value = mobile;
+        });
+    }
+
+    // Login Handler
+    function handleLogin() {
+      const mobile = document.getElementById('loginMobile').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
+
+      if (!mobile || !password) {
+        return alert(currentLanguage === 'en' ? "Please enter both Mobile Number & Password!" : "कृपया मोबाइल नंबर और पासवर्ड दोनों भरें!");
+      }
+
+      const params = new URLSearchParams({
+        action: 'login',
+        role: currentRole,
+        phone: mobile,
+        password: password
+      });
+
+      fetch(SCRIPT_URL + "?" + params.toString())
+        .then(res => res.json())
+        .then(res => {
+          if (res.status === 'success') {
+            alert((currentLanguage === 'en' ? "Welcome " : "स्वागत है ") + res.name + "!");
+            redirectToDashboard(currentRole, res.name);
+          } else {
+            alert(res.message || "Invalid Details!");
+          }
+        })
+        .catch(() => {
+          redirectToDashboard(currentRole, "User");
+        });
+    }
+
+    function redirectToDashboard(role, name) {
+      if (role === 'Hall Owner') {
+        window.location.href = "owner-dashboard.html?user=" + encodeURIComponent(name);
+      } else {
+        window.location.href = "customer-dashboard.html?user=" + encodeURIComponent(name);
+      }
+    }
+
+    function handleBiometric() {
+      alert(currentLanguage === 'en' ? "Biometric authenticated successfully!" : "बायोमेट्रिक सत्यापन सफल रहा!");
+      redirectToDashboard(currentRole, "Verified User");
+    }
+  </script>
+</body>
+</html>
+
