@@ -283,23 +283,67 @@
     <!-- GRID FOR TOOLS -->
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
 
-      <!-- 1. God-Eye Master Calendar -->
+            <!-- 1. God-Eye Master Calendar -->
       <div class="card" style="border-top: 4px solid #8b5cf6; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
         <h3 style="margin-bottom: 8px; font-size: 16px;">👁️ God-Eye Master Calendar</h3>
-        <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Pan-India Heatmap: Monitor Bookings across all 28 States, UTs & Cities.</p>
-        <select style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 15px; outline: none; font-weight: bold;">
-          <option>🌍 Select State / UT (All India)</option>
-          <option>Jharkhand</option>
-          <option>Maharashtra</option>
-          <option>Delhi (UT)</option>
-          <option>West Bengal</option>
-          <option>Bihar</option>
-          <!-- Backend will load all 28 States & UTs dynamically -->
+        <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Pan-India Heatmap: Monitor Bookings across 28 States, 8 UTs & 4000+ Cities.</p>
+        
+        <!-- STATE SELECTOR -->
+        <select style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 10px; outline: none; font-weight: bold; font-size: 14px;">
+          <option value="">🌍 Select State / UT (All India)</option>
+          <optgroup label="--- 28 STATES ---">
+            <option>Andhra Pradesh</option>
+            <option>Arunachal Pradesh</option>
+            <option>Assam</option>
+            <option>Bihar</option>
+            <option>Chhattisgarh</option>
+            <option>Goa</option>
+            <option>Gujarat</option>
+            <option>Haryana</option>
+            <option>Himachal Pradesh</option>
+            <option>Jharkhand</option>
+            <option>Karnataka</option>
+            <option>Kerala</option>
+            <option>Madhya Pradesh</option>
+            <option>Maharashtra</option>
+            <option>Manipur</option>
+            <option>Meghalaya</option>
+            <option>Mizoram</option>
+            <option>Nagaland</option>
+            <option>Odisha</option>
+            <option>Punjab</option>
+            <option>Rajasthan</option>
+            <option>Sikkim</option>
+            <option>Tamil Nadu</option>
+            <option>Telangana</option>
+            <option>Tripura</option>
+            <option>Uttar Pradesh</option>
+            <option>Uttarakhand</option>
+            <option>West Bengal</option>
+          </optgroup>
+          <optgroup label="--- 8 UNION TERRITORIES ---">
+            <option>Andaman & Nicobar Islands</option>
+            <option>Chandigarh</option>
+            <option>Dadra & Nagar Haveli and Daman & Diu</option>
+            <option>Delhi</option>
+            <option>Jammu & Kashmir</option>
+            <option>Ladakh</option>
+            <option>Lakshadweep</option>
+            <option>Puducherry</option>
+          </optgroup>
         </select>
+
+        <!-- CITY/DISTRICT SELECTOR -->
+        <select style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 15px; outline: none; font-weight: bold; font-size: 14px; background: #f8fafc;">
+          <option>📍 Select City / District / Capital</option>
+          <option disabled>Select State first to load all cities...</option>
+        </select>
+
         <div style="height: 80px; background: linear-gradient(90deg, #d1fae5 0%, #fef08a 50%, #fee2e2 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #333; font-size: 14px;">
           Live Heatmap Engine Standby...
         </div>
       </div>
+      
 
       <!-- 2. Ghost Login -->
       <div class="card" style="border-top: 4px solid #10b981; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
