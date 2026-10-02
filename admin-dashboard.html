@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>God Dashboard - HallWala Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0f172a;
+      --secondary: #4f46e5;
+      --bg: #f1f5f9;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--bg); color: var(--text); display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* TOP HEADER */
+    .admin-header { background: var(--primary); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+    .admin-header h1 { font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+    .admin-profile { background: rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 20px; font-size: 14px; font-weight: 600; }
+
+    /* LAYOUT */
+    .admin-container { display: flex; flex: 1; flex-direction: column; padding: 20px; gap: 20px; max-width: 1200px; margin: 0 auto; width: 100%; }
+
+    /* TABS / NAV */
+    .admin-nav { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; }
+    .nav-btn { padding: 12px 20px; background: white; border: 1px solid var(--border); border-radius: 10px; font-weight: 700; color: var(--muted); cursor: pointer; white-space: nowrap; transition: 0.3s; }
+    .nav-btn.active { background: var(--secondary); color: white; border-color: var(--secondary); }
+
+    /* SCREENS */
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* STATS GRID */
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+    .stat-card { background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    .stat-title { font-size: 13px; color: var(--muted); font-weight: 700; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .stat-value { font-size: 28px; font-weight: 800; color: var(--text); }
+    .stat-value.earn { color: var(--success); }
+
+    /* DATA TABLES */
+    .data-card { background: white; border-radius: 12px; border: 1px solid var(--border); overflow: hidden; margin-bottom: 20px; }
+    .data-header { padding: 16px 20px; border-bottom: 1px solid var(--border); font-weight: 800; font-size: 16px; display: flex; justify-content: space-between; align-items: center; }
+    .data-list { list-style: none; }
+    .data-item { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .data-item:last-child { border-bottom: none; }
+    
+    .item-info h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .item-info p { font-size: 13px; color: var(--muted); }
+    
+    .status-badge { padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+    .status-pending { background: #fef3c7; color: #b45309; }
+    .status-approved { background: #d1fae5; color: #047857; }
+    
+    .action-btns { display: flex; gap: 8px; }
+    .btn-sm { padding: 8px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer; border: none; color: white; }
+    .btn-approve { background: var(--success); }
+    .btn-reject { background: var(--danger); }
+
+    /* FOOTER */
+    .admin-footer { text-align: center; padding: 20px; font-size: 12px; color: var(--muted); margin-top: auto; border-top: 1px solid var(--border); background: white; }
+  </style>
+</head>
+<body>
+
+  <!-- ADMIN HEADER -->
+  <header class="admin-header">
+    <h1>👑 God Dashboard</h1>
+    <div class="admin-profile">Super Admin</div>
+  </header>
+
+  <div class="admin-container">
+    
+    <!-- NAVIGATION TABS -->
+    <div class="admin-nav">
+      <button class="nav-btn active" onclick="switchScreen('overview', this)">📊 Overview</button>
+      <button class="nav-btn" onclick="switchScreen('vendors', this)">🏪 Vendor Approvals</button>
+      <button class="nav-btn" onclick="switchScreen('bookings', this)">📅 Live Bookings</button>
+    </div>
+
+    <!-- SCREEN 1: OVERVIEW -->
+    <div id="screen-overview" class="screen active">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-title">Total Earnings (10%)</div>
+          <div class="stat-value earn">₹ 45,500</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-title">Active Halls</div>
+          <div class="stat-value">124</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-title">Pending Approvals</div>
+          <div class="stat-value" style="color: var(--warning);">5</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-title">Total Bookings</div>
+          <div class="stat-value">312</div>
+        </div>
+      </div>
+
+      <!-- Recent Activity Quick View -->
+      <div class="data-card">
+        <div class="data-header">Recent Activity</div>
+        <ul class="data-list">
+          <li class="data-item">
+            <div class="item-info">
+              <h4>New Vendor Registration</h4>
+              <p>Sunrise Banquet Hall, Ranchi</p>
+            </div>
+            <div class="status-badge status-pending">Pending Review</div>
+          </li>
+          <li class="data-item">
+            <div class="item-info">
+              <h4>Booking Token Paid</h4>
+              <p>₹4,000 paid for Royal Palace, Bokaro</p>
+            </div>
+            <div class="status-badge status-approved">Completed</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SCREEN 2: VENDOR APPROVALS -->
+    <div id="screen-vendors" class="screen">
+      <div class="data-card">
+        <div class="data-header">Pending Vendor Requests</div>
+        <ul class="data-list">
+          <li class="data-item">
+            <div class="item-info">
+              <h4>Sunrise Banquet Hall</h4>
+              <p>📍 Ranchi, Jharkhand | Owner: Rahul Singh</p>
+              <p style="margin-top: 4px; font-size: 12px; color: var(--secondary);">Documents Uploaded: Aadhar, Hall License</p>
+            </div>
+            <div class="action-btns">
+              <button class="btn-sm btn-approve" onclick="alert('Vendor Approved Successfully!')">✅ Approve</button>
+              <button class="btn-sm btn-reject" onclick="alert('Vendor Rejected!')">❌ Reject</button>
+            </div>
+          </li>
+          <li class="data-item">
+            <div class="item-info">
+              <h4>Grand Galaxy Resort</h4>
+              <p>📍 Andheri East, Mumbai | Owner: Amit Patel</p>
+              <p style="margin-top: 4px; font-size: 12px; color: var(--secondary);">Documents Uploaded: GST, Aadhar</p>
+            </div>
+            <div class="action-btns">
+              <button class="btn-sm btn-approve" onclick="alert('Vendor Approved Successfully!')">✅ Approve</button>
+              <button class="btn-sm btn-reject" onclick="alert('Vendor Rejected!')">❌ Reject</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SCREEN 3: LIVE BOOKINGS -->
+    <div id="screen-bookings" class="screen">
+      <div class="data-card">
+        <div class="data-header">Live Bookings & Payments</div>
+        <ul class="data-list">
+          <li class="data-item">
+            <div class="item-info">
+              <h4>Royal Palace Marriage Hall</h4>
+              <p>Booked by: Amit Kumar (9876543210)</p>
+              <p>Event Date: 20 Nov 2026</p>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-weight: 800; color: var(--success); margin-bottom: 4px;">Token: ₹4,000 Paid</div>
+              <div style="font-size: 12px; color: var(--muted);">Razorpay ID: pay_L9x8y7z6</div>
+            </div>
+          </li>
+          <li class="data-item">
+            <div class="item-info">
+              <h4>Krishna Banquet</h4>
+              <p>Booked by: Sneha Sharma (9988776655)</p>
+              <p>Event Date: 25 Nov 2026</p>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-weight: 800; color: var(--success); margin-bottom: 4px;">Token: ₹2,500 Paid</div>
+              <div style="font-size: 12px; color: var(--muted);">Razorpay ID: pay_M2a3b4c5</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ADMIN FOOTER -->
+  <footer class="admin-footer">
+    <div style="margin-bottom: 8px;"><strong>HallWala God Control Center</strong></div>
+    <div>📍 BKC, Bandra East, Mumbai, Maharashtra - 400051</div>
+    <div style="margin-top: 8px;">&copy; 2026 HallWala. All rights reserved.</div>
+  </footer>
+
+  <script>
+    function switchScreen(screenId, btnElement) {
+      // Hide all screens
+      document.querySelectorAll('.screen').forEach(screen => {
+        screen.classList.remove('active');
+      });
+      // Remove active class from all buttons
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      // Show selected screen and highlight button
+      document.getElementById('screen-' + screenId).classList.add('active');
+      btnElement.classList.add('active');
+    }
+  </script>
+</body>
+</html>
