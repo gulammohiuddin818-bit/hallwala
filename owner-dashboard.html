@@ -219,7 +219,7 @@
     </div>
   </div>
 
-  <script>
+    <script>
     // ----------------------------------------------------
     // SCREEN SWITCHING LOGIC
     // ----------------------------------------------------
@@ -233,13 +233,14 @@
     }
 
     // ----------------------------------------------------
-    // REAL INTERACTIVE JAVASCRIPT CALENDAR
+    // REAL INTERACTIVE JAVASCRIPT CALENDAR (1950 - 2100)
     // ----------------------------------------------------
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     
-    // Set Initial Date to November 2026 (as per context)
-    let currentMonth = 10; // 10 = November
-    let currentYear = 2026;
+    // Automatic aaj ka real date, month aur year set karega
+    let today = new Date();
+    let currentMonth = today.getMonth(); 
+    let currentYear = today.getFullYear();
 
     // Dummy Database for Booked Dates (Format: YYYY-MM-DD)
     const bookedDates = ['2026-11-20', '2026-11-25', '2026-12-05'];
@@ -248,7 +249,10 @@
       const mSelect = document.getElementById('monthSelect');
       const ySelect = document.getElementById('yearSelect');
       
-      // Populate Months
+      mSelect.innerHTML = '';
+      ySelect.innerHTML = '';
+
+      // Mahine (Months) load karna
       monthNames.forEach((month, index) => {
         let opt = document.createElement('option');
         opt.value = index;
@@ -256,8 +260,8 @@
         mSelect.appendChild(opt);
       });
 
-      // Populate Years (e.g., 2026 to 2030)
-      for(let y = 2026; y <= 2030; y++) {
+      // Saal (Years) load karna: 1950 se lekar 2100 tak (150 saal)
+      for(let y = 1950; y <= 2100; y++) {
         let opt = document.createElement('option');
         opt.value = y;
         opt.innerText = y;
@@ -272,26 +276,27 @@
       const daysContainer = document.getElementById('calendarDays');
       daysContainer.innerHTML = '';
 
-      // Get first day of month and total days
+      // Mahine ka pehla din aur total din nikalna
       let firstDay = new Date(currentYear, currentMonth, 1).getDay();
       let daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-      // Empty slots before first day
+      // Pehle din se purane khali slots (Empty boxes)
       for (let i = 0; i < firstDay; i++) {
         let emptyDiv = document.createElement('div');
         emptyDiv.className = 'cal-date date-empty';
         daysContainer.appendChild(emptyDiv);
       }
 
-      // Fill days
+      // Calendar ke din bharna (1, 2, 3...)
       for (let day = 1; day <= daysInMonth; day++) {
         let dateDiv = document.createElement('div');
         
-        // Format current date string (YYYY-MM-DD) for checking database
+        // Date ka format banana (e.g. 2026-11-05)
         let mStr = (currentMonth + 1).toString().padStart(2, '0');
         let dStr = day.toString().padStart(2, '0');
         let dateString = `${currentYear}-${mStr}-${dStr}`;
 
+        // Red (Booked) aur Green (Available) ka logic
         if (bookedDates.includes(dateString)) {
           dateDiv.className = 'cal-date date-booked';
           dateDiv.innerText = day;
@@ -320,17 +325,18 @@
     }
 
     function confirmManualBooking(dateStr) {
-      let confirmBook = confirm(`Do you want to manually book ${dateStr} for an offline customer?`);
+      let confirmBook = confirm(`Kya aap sach mein ${dateStr} ko kisi offline customer ke liye book (block) karna chahte hain?`);
       if(confirmBook) {
-        bookedDates.push(dateStr); // Save to JS array (Temporary)
-        renderCalendar(); // Refresh calendar to turn it Red
+        bookedDates.push(dateStr); 
+        renderCalendar(); 
         alert("Date Successfully Booked & Blocked on App!");
       }
     }
 
-    // Initialize Setup
+    // Calendar ko pehli baar load karna
     initCalendarControls();
     renderCalendar();
-  </script>
+    </script>
+  
 </body>
 </html>
