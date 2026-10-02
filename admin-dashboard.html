@@ -94,9 +94,12 @@
       <div class="menu-item" onclick="switchScreen('halls', this)">🏪 Halls Compartment</div>
       <div class="menu-item" onclick="switchScreen('customers', this)">👥 Customers Data</div>
       <div class="menu-item" onclick="switchScreen('finance', this)">💰 Token & Finance</div>
+      <div class="menu-item" onclick="switchScreen('supertools', this)"><span>🚀</span> Super Tools</div>
+      
     </div>
     <div class="sidebar-footer">
-      System v1.0<br>BKC, Mumbai Office
+      System v1.0<br>Registered Office, Jharkhand
+      
     </div>
   </aside>
 
@@ -272,7 +275,77 @@
       </div>
     </div>
   </div>
+  <!-- SCREEN: SUPER TOOLS (GOD LEVEL) -->
+  <div id="screen-supertools" class="screen" style="display: none; padding: 20px;">
+    <h2 style="margin-bottom: 20px; color: #4338ca; font-weight: 800;">🚀 God-Level Super Tools</h2>
+    
+    <!-- GRID FOR TOOLS -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
 
+      <!-- 1. God-Eye Master Calendar -->
+      <div class="card" style="border-top: 4px solid #8b5cf6; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+        <h3 style="margin-bottom: 8px; font-size: 16px;">👁️ God-Eye Master Calendar</h3>
+        <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Pan-India Heatmap: Monitor Bookings across all 28 States, UTs & Cities.</p>
+        <select style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 15px; outline: none; font-weight: bold;">
+          <option>🌍 Select State / UT (All India)</option>
+          <option>Jharkhand</option>
+          <option>Maharashtra</option>
+          <option>Delhi (UT)</option>
+          <option>West Bengal</option>
+          <option>Bihar</option>
+          <!-- Backend will load all 28 States & UTs dynamically -->
+        </select>
+        <div style="height: 80px; background: linear-gradient(90deg, #d1fae5 0%, #fef08a 50%, #fee2e2 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #333; font-size: 14px;">
+          Live Heatmap Engine Standby...
+        </div>
+      </div>
+
+      <!-- 2. Ghost Login -->
+      <div class="card" style="border-top: 4px solid #10b981; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+        <h3 style="margin-bottom: 8px; font-size: 16px;">👻 Ghost Login (Impersonation)</h3>
+        <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Directly access any Vendor or Customer account without password.</p>
+        <input type="text" placeholder="Enter Vendor ID (e.g., VEN-8821)" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 15px; outline: none;">
+        <button style="width: 100%; padding: 12px; background: #10b981; color: white; border: none; border-radius: 8px; font-weight: 800; cursor: pointer;" onclick="alert('Initiating Ghost Mode... Logging into Vendor Dashboard!')">Login as Vendor</button>
+      </div>
+
+      <!-- 3. Dispute & Refund Tribunal -->
+      <div class="card" style="border-top: 4px solid #ef4444; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+        <h3 style="margin-bottom: 8px; font-size: 16px;">⚖️ Dispute & Refund Tribunal</h3>
+        <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Resolve conflicts instantly. Full API control over Razorpay funds.</p>
+        <div style="background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0;">
+          <div style="font-size: 13px; font-weight: 800; color: #0f172a;">Ticket #9921 (Disputed Token: ₹4,000)</div>
+          <div style="font-size: 11px; color: #ef4444; margin-bottom: 10px; margin-top: 4px;">Status: High Priority (Customer vs Vendor)</div>
+          <div style="display: flex; gap: 10px;">
+            <button style="flex: 1; padding: 8px; background: #ef4444; color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 12px; cursor: pointer;" onclick="alert('Action Executed: ₹4,000 Force Refunded to Customer Bank.')">Force Refund</button>
+            <button style="flex: 1; padding: 8px; background: #10b981; color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 12px; cursor: pointer;" onclick="alert('Action Executed: ₹4,000 Released to Vendor Bank.')">Release Fund</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Dynamic Commission & Sponsor Engine -->
+      <div class="card" style="border-top: 4px solid #f59e0b; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+        <h3 style="margin-bottom: 8px; font-size: 16px;">🚀 Sponsor & Commission Engine</h3>
+        <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Rank boost a Hall (Swiggy/Zomato style) & adjust dynamic token splits.</p>
+        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+          <input type="text" placeholder="Hall ID" style="flex: 1; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; outline: none;">
+          <button style="padding: 10px 15px; background: #f59e0b; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;" onclick="alert('Hall Ranked to #1 (SPONSORED TAG ACTIVATED)')">Boost Rank</button>
+        </div>
+        <div style="font-size: 12px; background: #fef3c7; color: #b45309; padding: 8px; border-radius: 6px; font-weight: bold; text-align: center;">
+          Current Platform Fee: Flat ₹1,000
+        </div>
+      </div>
+
+      <!-- 5. Global Broadcast -->
+      <div class="card" style="border-top: 4px solid #3b82f6; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+        <h3 style="margin-bottom: 8px; font-size: 16px;">📢 Global Broadcast (Blast)</h3>
+        <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Send bulk marketing alerts to all Users and Vendors instantly.</p>
+        <textarea placeholder="Type your offer or urgent update here..." style="width: 100%; height: 60px; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 10px; outline: none; font-family: inherit; resize: none;"></textarea>
+        <button style="width: 100%; padding: 12px; background: #3b82f6; color: white; border: none; border-radius: 8px; font-weight: 800; cursor: pointer;" onclick="alert('Blast Sent Successfully to 10,000+ Users via WhatsApp & Email! 🚀')">Blast Message 🚀</button>
+      </div>
+
+    </div>
+  </div>
+  
   <script>
     // Navigation Logic
     function switchScreen(screenId, element) {
