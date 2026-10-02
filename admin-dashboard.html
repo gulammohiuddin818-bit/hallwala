@@ -393,7 +393,6 @@
     </div>
   </div>
   
-  <script>
             <!-- JAVASCRIPT FOR ALL 28 STATES & CITIES -->
   <script>
     const indiaData = {
@@ -435,45 +434,23 @@
       "Uttarakhand": ["Dehradun", "Haridwar", "Almora", "Bageshwar", "Chamoli", "Champawat", "Nainital", "Pauri Garhwal", "Pithoragarh", "Rudraprayag", "Tehri Garhwal", "Udham Singh Nagar", "Uttarkashi"],
       "West Bengal": ["Kolkata", "Howrah", "Darjeeling", "Alipurduar", "Bankura", "Birbhum", "Cooch Behar", "Dakshin Dinajpur", "Hooghly", "Jalpaiguri", "Jhargram", "Kalimpong", "Malda", "Murshidabad", "Nadia", "North 24 Parganas", "Paschim Bardhaman", "Paschim Medinipur", "Purba Bardhaman", "Purba Medinipur", "Purulia", "South 24 Parganas", "Uttar Dinajpur"]
     };
-
-    function initStates() {
-      const stateSelect = document.getElementById('stateSelect');
-      for (let state in indiaData) {
-        let opt = document.createElement('option');
-        opt.value = state;
-        opt.innerText = state;
-        stateSelect.appendChild(opt);
-      }
-    }
-
-    function loadCities() {
-      const stateSelect = document.getElementById('stateSelect');
-      const citySelect = document.getElementById('citySelect');
-      citySelect.innerHTML = '<option value="">All Cities & Districts</option>';
+    function updateCities() {
+      const state = document.getElementById("stateSelect").value;
+      const cityDropdown = document.getElementById("citySelect");
       
-      let selectedState = stateSelect.value;
-      if (selectedState && indiaData[selectedState]) {
-        indiaData[selectedState].forEach(city => {
-          let opt = document.createElement('option');
-          opt.value = city;
-          opt.innerText = city;
-          citySelect.appendChild(opt);
+      cityDropdown.innerHTML = '<option value="">📍 Select City / District / Capital</option>';
+      
+      if (state && indiaData[state]) {
+        indiaData[state].forEach(city => {
+          cityDropdown.innerHTML += `<option value="${city}">${city}</option>`;
         });
+      } else if (state) {
+        cityDropdown.innerHTML += `<option disabled>No data available for ${state}</option>`;
+      } else {
+        cityDropdown.innerHTML += `<option disabled>Select State first to load all cities...</option>`;
       }
     }
-
-    function switchScreen(screenName) {
-      document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
       
-      document.getElementById('screen-' + screenName).classList.add('active');
-      document.getElementById('nav-' + screenName).classList.add('active');
-      window.scrollTo(0, 0);
-    }
-
-    initStates();
-    
-    
     // Navigation Logic
     function switchScreen(screenId, element) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
