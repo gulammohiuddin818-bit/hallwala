@@ -2,268 +2,335 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Vendor Partner Portal - HallWala</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    /* MODULAR VARIABLES FOR EASY UPDATES */
     :root {
-      --sidebar-bg: #1e1b4b; /* Deep Indigo for Owner Dashboard */
-      --primary: #6366f1;
-      --primary-hover: #4f46e5;
+      --primary: #4f46e5;
+      --primary-dark: #4338ca;
       --bg: #f8fafc;
-      --text-main: #0f172a;
-      --text-muted: #64748b;
+      --text: #0f172a;
+      --muted: #64748b;
       --border: #e2e8f0;
       --success: #10b981;
       --danger: #ef4444;
-      --warning: #f59e0b;
     }
-    
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-    body { display: flex; height: 100vh; background-color: var(--bg); color: var(--text-main); overflow: hidden; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding-bottom: 80px; }
 
-    /* SIDEBAR COMPARTMENT */
-    .sidebar { width: 260px; background: var(--sidebar-bg); color: white; display: flex; flex-direction: column; transition: 0.3s; }
-    .sidebar-brand { padding: 24px; font-size: 20px; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 10px; }
-    .sidebar-menu { padding: 20px 10px; display: flex; flex-direction: column; gap: 5px; flex: 1; }
-    .menu-item { padding: 14px 20px; border-radius: 8px; color: #cbd5e1; cursor: pointer; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 12px; transition: 0.2s; }
-    .menu-item:hover, .menu-item.active { background: var(--primary); color: white; }
+    /* MOBILE APP HEADER */
+    .app-header { background: white; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
+    .app-header h1 { font-size: 18px; font-weight: 800; color: var(--primary); }
+    .header-badge { font-size: 12px; font-weight: 700; background: #e0e7ff; color: #3730a3; padding: 4px 10px; border-radius: 20px; }
 
-    /* MAIN CONTENT */
-    .main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-    .top-header { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
-    .header-title { font-size: 20px; font-weight: 700; }
-    .owner-badge { background: #e0e7ff; color: #3730a3; padding: 6px 15px; border-radius: 20px; font-size: 13px; font-weight: 700; }
-
-    .content-scroll { padding: 30px; overflow-y: auto; height: 100%; }
-    .screen { display: none; }
+    /* SCREENS */
+    .screen { display: none; padding: 20px; }
     .screen.active { display: block; }
 
-    /* CARDS & GRIDS */
-    .card { background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+    /* MOBILE CARDS */
+    .card { background: white; padding: 20px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+    .stat-title { font-size: 13px; font-weight: 700; color: var(--muted); margin-bottom: 8px; }
+    .stat-value { font-size: 24px; font-weight: 800; }
+
+    /* REAL CALENDAR DESIGN */
+    .cal-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+    .cal-controls select { padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; font-weight: 700; background: white; outline: none; }
+    .cal-controls button { padding: 8px 12px; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
     
-    /* STATS */
-    .stat-title { font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; }
-    .stat-value { font-size: 26px; font-weight: 800; }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; }
+    .cal-day-header { font-size: 12px; font-weight: 800; color: var(--muted); padding-bottom: 10px; }
+    .cal-date { padding: 12px 5px; border-radius: 8px; font-size: 14px; font-weight: 700; background: #f1f5f9; cursor: pointer; transition: 0.2s; border: 1px solid transparent; }
+    .cal-date:active { transform: scale(0.95); }
     
-    /* FORMS & INPUTS */
+    .date-available { background: #d1fae5; color: #047857; border-color: #a7f3d0; }
+    .date-booked { background: #fee2e2; color: #b91c1c; border-color: #fecaca; opacity: 0.7; }
+    .date-empty { background: transparent; cursor: default; }
+
+    /* FORMS & TABLES */
     .form-group { margin-bottom: 16px; }
-    .form-label { display: block; font-size: 13px; font-weight: 600; color: var(--text-main); margin-bottom: 6px; }
-    .form-input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; outline: none; transition: 0.2s; }
-    .form-input:focus { border-color: var(--primary); }
-    .file-drop { border: 2px dashed var(--border); padding: 30px; text-align: center; border-radius: 8px; cursor: pointer; color: var(--text-muted); font-size: 14px; background: #f8fafc; }
+    .form-label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+    .form-input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; outline: none; }
+    .btn { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: 800; font-size: 15px; cursor: pointer; text-align: center; }
+    .btn-danger { background: var(--danger); width: auto; padding: 8px 12px; font-size: 12px; }
 
-    /* BUTTONS */
-    .btn { padding: 10px 18px; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; color: white; transition: 0.2s; display: inline-block; }
-    .btn-primary { background: var(--primary); }
-    .btn-primary:hover { background: var(--primary-hover); }
-    .btn-danger { background: var(--danger); }
+    .list-item { padding: 15px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .list-item:last-child { border-bottom: none; padding-bottom: 0; }
     
-    /* TABLES & CALENDAR MOCK */
-    .data-row { display: grid; grid-template-columns: 1fr 2fr 1fr 1.5fr; gap: 15px; padding: 16px 0; border-bottom: 1px solid var(--border); align-items: center; font-size: 14px; }
-    .data-row:last-child { border-bottom: none; }
-    .badge { padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
-    .b-success { background: #d1fae5; color: #059669; }
-
     /* TERMS BOX */
-    .terms-box { background: #fee2e2; border: 1px solid #fca5a5; padding: 16px; border-radius: 8px; color: #991b1b; font-size: 13px; line-height: 1.6; font-weight: 500; }
+    .terms-box { background: #fee2e2; border: 1px solid #fca5a5; padding: 15px; border-radius: 12px; color: #991b1b; font-size: 13px; line-height: 1.6; font-weight: 600; }
 
-    /* FOOTER */
-    .admin-footer { text-align: center; padding: 20px; font-size: 12px; color: var(--text-muted); margin-top: auto; border-top: 1px solid var(--border); background: white; }
+    /* BOTTOM APP NAVIGATION */
+    .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 12px 0; box-shadow: 0 -2px 15px rgba(0,0,0,0.05); z-index: 1000; border-top: 1px solid var(--border); }
+    .nav-item { text-align: center; color: var(--muted); cursor: pointer; font-size: 11px; font-weight: 700; flex: 1; }
+    .nav-item.active { color: var(--primary); }
+    .nav-icon { font-size: 20px; display: block; margin-bottom: 4px; }
   </style>
 </head>
 <body>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sidebar-brand">🏪 Vendor Portal</div>
-    <div class="sidebar-menu">
-      <div class="menu-item active" onclick="switchScreen('dashboard', this)">📊 My Dashboard</div>
-      <div class="menu-item" onclick="switchScreen('hall-details', this)">🏢 Hall & Media Editor</div>
-      <div class="menu-item" onclick="switchScreen('calendar', this)">📅 Calendar & Bookings</div>
-      <div class="menu-item" onclick="switchScreen('customers', this)">👥 My Customers</div>
-      <div class="menu-item" onclick="switchScreen('bank', this)">💳 Bank & Terms</div>
+  <!-- APP HEADER -->
+  <header class="app-header">
+    <h1>My Hall</h1>
+    <div class="header-badge">Royal Palace</div>
+  </header>
+
+  <!-- SCREEN 1: DASHBOARD -->
+  <div id="screen-dashboard" class="screen active">
+    <div class="card">
+      <div class="stat-title">Estimated Revenue</div>
+      <div class="stat-value" style="color: var(--success);">₹ 1,25,000</div>
     </div>
-  </aside>
+    
+    <div style="display: flex; gap: 15px; margin-bottom: 16px;">
+      <div class="card" style="flex: 1; margin-bottom: 0;">
+        <div class="stat-title">Bookings</div>
+        <div class="stat-value">3</div>
+      </div>
+      <div class="card" style="flex: 1; margin-bottom: 0;">
+        <div class="stat-title">Inquiries</div>
+        <div class="stat-value" style="color: #f59e0b;">5</div>
+      </div>
+    </div>
 
-  <!-- MAIN CONTENT -->
-  <main class="main-content">
-    <header class="top-header">
-      <div class="header-title" id="page-title">My Dashboard</div>
-      <div class="owner-badge">Royal Palace Marriage Hall</div>
-    </header>
+    <div class="card">
+      <h3 style="margin-bottom: 15px; font-size: 16px;">Recent Updates</h3>
+      <div style="font-size: 13px; line-height: 1.6; padding-bottom: 10px; border-bottom: 1px dashed var(--border);">
+        ✅ <strong>Token Received:</strong> ₹4,000 paid for 20 Nov 2026 booking.
+      </div>
+      <div style="font-size: 13px; line-height: 1.6; padding-top: 10px;">
+        ⚠️ <strong>Reminder:</strong> Upload new hall photos to get more bookings.
+      </div>
+    </div>
+  </div>
 
-    <div class="content-scroll">
+  <!-- SCREEN 2: REAL INTERACTIVE CALENDAR -->
+  <div id="screen-calendar" class="screen">
+    <div class="card">
+      <h3 style="margin-bottom: 10px; font-size: 16px;">Manage Dates (Live)</h3>
+      <p style="font-size: 12px; color: var(--muted); margin-bottom: 15px;">Tap any green date to manually book it for an offline walk-in customer.</p>
       
-      <!-- SCREEN 1: DASHBOARD -->
-      <div id="screen-dashboard" class="screen active">
-        <div class="grid-3">
-          <div class="card">
-            <div class="stat-title">Estimated Revenue</div>
-            <div class="stat-value" style="color: var(--success);">₹ 1,25,000</div>
-          </div>
-          <div class="card">
-            <div class="stat-title">Confirmed Bookings (This Month)</div>
-            <div class="stat-value">3</div>
-          </div>
-          <div class="card">
-            <div class="stat-title">Pending Tokens</div>
-            <div class="stat-value" style="color: var(--warning);">2</div>
-          </div>
+      <!-- Real Calendar Controls -->
+      <div class="cal-controls">
+        <button onclick="changeMonth(-1)">◀ Prev</button>
+        <div style="display: flex; gap: 5px;">
+          <select id="monthSelect" onchange="jumpToDate()"></select>
+          <select id="yearSelect" onchange="jumpToDate()"></select>
         </div>
-
-        <div class="card">
-          <h3 style="margin-bottom: 15px;">Recent Activity</h3>
-          <div style="padding: 15px; background: #f8fafc; border-radius: 8px; border: 1px solid var(--border); font-size: 14px; margin-bottom: 10px;">
-            ✅ Token of ₹4,000 received for 20 Nov Booking (#CUST-8821).
-          </div>
-          <div style="padding: 15px; background: #f8fafc; border-radius: 8px; border: 1px solid var(--border); font-size: 14px;">
-            🔔 New inquiry received for 05 Dec 2026.
-          </div>
-        </div>
+        <button onclick="changeMonth(1)">Next ▶</button>
       </div>
 
-      <!-- SCREEN 2: HALL DETAILS & MEDIA -->
-      <div id="screen-hall-details" class="screen">
-        <div class="card">
-          <h3 style="margin-bottom: 20px;">Edit Hall Details</h3>
-          <div class="grid-2">
-            <div class="form-group">
-              <label class="form-label">Hall Name</label>
-              <input type="text" class="form-input" value="Royal Palace Marriage Hall">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Complete Address</label>
-              <input type="text" class="form-input" value="Sector 4, Bokaro, Jharkhand">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Capacity (No. of Guests)</label>
-              <input type="number" class="form-input" value="500">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Price per Day (₹)</label>
-              <input type="number" class="form-input" value="40000">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Hall Description</label>
-            <textarea class="form-input" rows="3">A premium AC marriage hall with a large dining area and parking space.</textarea>
-          </div>
-          <button class="btn btn-primary">Save Hall Details</button>
-        </div>
+      <!-- Real Calendar Grid -->
+      <div class="cal-grid">
+        <div class="cal-day-header">Sun</div><div class="cal-day-header">Mon</div>
+        <div class="cal-day-header">Tue</div><div class="cal-day-header">Wed</div>
+        <div class="cal-day-header">Thu</div><div class="cal-day-header">Fri</div>
+        <div class="cal-day-header">Sat</div>
+      </div>
+      <div class="cal-grid" id="calendarDays">
+        <!-- JS will inject days here -->
+      </div>
+      
+      <div style="display: flex; justify-content: space-around; margin-top: 20px; font-size: 12px; font-weight: 700;">
+        <span style="color: #047857;">🟢 Available</span>
+        <span style="color: #b91c1c;">🔴 Booked</span>
+      </div>
+    </div>
+  </div>
 
-        <div class="card">
-          <h3 style="margin-bottom: 20px;">Upload Photos & Videos</h3>
-          <div class="file-drop">
-            <p>📸 Drag & Drop your High-Quality Photos/Videos here</p>
-            <p style="font-size: 12px; margin-top: 8px;">(These will be live on HallWala app for customers)</p>
-          </div>
+  <!-- SCREEN 3: PROFILE & EDIT -->
+  <div id="screen-profile" class="screen">
+    <div class="card">
+      <h3 style="margin-bottom: 15px; font-size: 16px;">Edit Hall Details</h3>
+      <div class="form-group">
+        <label class="form-label">Hall Name</label>
+        <input type="text" class="form-input" value="Royal Palace Marriage Hall">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Price per Day (₹)</label>
+        <input type="number" class="form-input" value="40000">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Hall Photos/Videos</label>
+        <div style="border: 2px dashed var(--border); padding: 20px; text-align: center; border-radius: 8px; color: var(--muted); font-size: 13px;">
+          Tap to upload new media
         </div>
       </div>
+      <button class="btn">Update Details</button>
+    </div>
+  </div>
 
-      <!-- SCREEN 3: CALENDAR & BOOKINGS -->
-      <div id="screen-calendar" class="screen">
-        <div class="card">
-          <h3 style="margin-bottom: 15px;">Real-Time Availability Calendar</h3>
-          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Customers will see this live calendar on the app. Blocked dates cannot be booked.</p>
-          
-          <div style="background: #f8fafc; border: 1px solid var(--border); height: 250px; border-radius: 8px; padding: 20px; font-size: 14px;">
-            <div style="margin-bottom: 15px; font-weight: 700;">November 2026:</div>
-            <div style="color: var(--danger); margin-bottom: 8px;">🔴 20 Nov - Booked (Token Paid)</div>
-            <div style="color: var(--danger); margin-bottom: 8px;">🔴 25 Nov - Booked (Token Paid)</div>
-            <div style="color: var(--success); margin-top: 20px; font-weight: 600;">🟢 All other dates are OPEN for booking.</div>
-          </div>
-        </div>
+  <!-- SCREEN 4: CUSTOMERS & BANK (TERMS) -->
+  <div id="screen-customers" class="screen">
+    
+    <!-- Bank & Terms -->
+    <div class="card" style="border-color: #fca5a5;">
+      <h3 style="margin-bottom: 10px; font-size: 16px; color: #991b1b;">⚠️ Platform Terms & Bank</h3>
+      <div class="terms-box" style="margin-bottom: 15px;">
+        <strong>Token & Payment Policy:</strong><br>
+        As per HallWala.in Terms & Conditions, a flat platform fee of <strong>₹1,000</strong> is deducted from the customer's token amount and routed to HallWala.<br><br>
+        The remaining token amount is credited to your bank account. The rest 90% balance payment must be collected as per the standard cancellation policy (e.g., 7 days or 24 hours prior to the event).
       </div>
-
-      <!-- SCREEN 4: CUSTOMERS DATA -->
-      <div id="screen-customers" class="screen">
-        <div class="card">
-          <h3 style="margin-bottom: 20px;">My Customers</h3>
-          <div style="border-bottom: 2px solid var(--border); padding-bottom: 10px; font-weight: 700; font-size: 13px; color: var(--text-muted);" class="data-row">
-            <div>Booking Date</div>
-            <div>Customer Details</div>
-            <div>Status</div>
-            <div>Action</div>
-          </div>
-          
-          <div class="data-row">
-            <div><strong>20 Nov 2026</strong></div>
-            <div><strong>Samma Parveen</strong><br><span style="font-size: 12px; color: var(--text-muted);">#CUST-8821 | Ranchi</span></div>
-            <div><span class="badge b-success">Token Paid</span></div>
-            <div>
-              <button class="btn btn-danger" style="font-size: 12px; padding: 6px 12px;">Block Customer</button>
-            </div>
-          </div>
-          
-          <div class="data-row">
-            <div><strong>05 Dec 2026</strong></div>
-            <div><strong>Abdul Rafey</strong><br><span style="font-size: 12px; color: var(--text-muted);">#CUST-8822 | Bokaro</span></div>
-            <div><span class="badge b-success">Token Paid</span></div>
-            <div>
-              <button class="btn btn-danger" style="font-size: 12px; padding: 6px 12px;">Block Customer</button>
-            </div>
-          </div>
-        </div>
+      <div class="form-group">
+        <label class="form-label">Saved Bank Account</label>
+        <input type="text" class="form-input" value="SBI - XXXXXX1234" readonly>
       </div>
-
-      <!-- SCREEN 5: BANK DETAILS & TERMS -->
-      <div id="screen-bank" class="screen">
-        <div class="card" style="border-color: #fca5a5;">
-          <h3 style="margin-bottom: 15px; color: #991b1b;">⚠️ Important Commercial Terms</h3>
-          <div class="terms-box">
-            <strong>Platform Fee Deduction:</strong><br>
-            As per HallWala terms and conditions, for every booking token paid by a customer, a fixed platform fee of <strong>₹1,000</strong> will automatically be routed to HallWala.in.<br><br>
-            The remaining token amount will be credited to your saved bank account below. The rest 90% balance must be settled by the customer directly at the hall.
-          </div>
-        </div>
-
-        <div class="card">
-          <h3 style="margin-bottom: 20px;">My Bank Details (For Token Payouts)</h3>
-          <div class="grid-2">
-            <div class="form-group">
-              <label class="form-label">Account Holder Name</label>
-              <input type="text" class="form-input" placeholder="e.g. Rahul Singh">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Bank Name</label>
-              <input type="text" class="form-input" placeholder="e.g. State Bank of India">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Account Number</label>
-              <input type="password" class="form-input" placeholder="Enter A/C Number">
-            </div>
-            <div class="form-group">
-              <label class="form-label">IFSC Code</label>
-              <input type="text" class="form-input" placeholder="e.g. SBIN0001234">
-            </div>
-          </div>
-          <button class="btn btn-primary">Save Bank Details</button>
-        </div>
-      </div>
-
     </div>
 
-    <!-- CORPORATE FOOTER -->
-    <footer class="admin-footer">
-      <div>📍 BKC, Bandra East, Mumbai, Maharashtra - 400051</div>
-      <div style="margin-top: 8px;">&copy; 2026 HallWala Partner Network. All rights reserved.</div>
-    </footer>
-  </main>
+    <!-- Customers & Block -->
+    <div class="card">
+      <h3 style="margin-bottom: 15px; font-size: 16px;">My Customers</h3>
+      
+      <div class="list-item">
+        <div>
+          <div style="font-weight: 800; font-size: 14px;">Samma Parveen</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">Booked: 20 Nov 2026</div>
+        </div>
+        <button class="btn-danger" onclick="alert('Customer Blocked!')">Block</button>
+      </div>
+      
+      <div class="list-item">
+        <div>
+          <div style="font-weight: 800; font-size: 14px;">Abdul Rafey</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">Booked: 05 Dec 2026</div>
+        </div>
+        <button class="btn-danger" onclick="alert('Customer Blocked!')">Block</button>
+      </div>
+    </div>
+    
+    <div style="text-align: center; padding: 20px; font-size: 12px; color: var(--muted);">
+      📍 BKC, Bandra East, Mumbai<br>&copy; 2026 HallWala
+    </div>
+  </div>
+
+  <!-- BOTTOM APP NAVIGATION -->
+  <div class="bottom-nav">
+    <div class="nav-item active" onclick="switchScreen('dashboard', this)">
+      <span class="nav-icon">📊</span>Dashboard
+    </div>
+    <div class="nav-item" onclick="switchScreen('calendar', this)">
+      <span class="nav-icon">📅</span>Calendar
+    </div>
+    <div class="nav-item" onclick="switchScreen('profile', this)">
+      <span class="nav-icon">🏢</span>My Hall
+    </div>
+    <div class="nav-item" onclick="switchScreen('customers', this)">
+      <span class="nav-icon">👥</span>Data & Bank
+    </div>
+  </div>
 
   <script>
+    // ----------------------------------------------------
+    // SCREEN SWITCHING LOGIC
+    // ----------------------------------------------------
     function switchScreen(screenId, element) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(m => m.classList.remove('active'));
       
       document.getElementById('screen-' + screenId).classList.add('active');
       element.classList.add('active');
-      
-      document.getElementById('page-title').innerText = element.innerText.replace(/[^\x00-\x7F]/g, "").trim();
+      window.scrollTo(0, 0);
     }
+
+    // ----------------------------------------------------
+    // REAL INTERACTIVE JAVASCRIPT CALENDAR
+    // ----------------------------------------------------
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    
+    // Set Initial Date to November 2026 (as per context)
+    let currentMonth = 10; // 10 = November
+    let currentYear = 2026;
+
+    // Dummy Database for Booked Dates (Format: YYYY-MM-DD)
+    const bookedDates = ['2026-11-20', '2026-11-25', '2026-12-05'];
+
+    function initCalendarControls() {
+      const mSelect = document.getElementById('monthSelect');
+      const ySelect = document.getElementById('yearSelect');
+      
+      // Populate Months
+      monthNames.forEach((month, index) => {
+        let opt = document.createElement('option');
+        opt.value = index;
+        opt.innerText = month;
+        mSelect.appendChild(opt);
+      });
+
+      // Populate Years (e.g., 2026 to 2030)
+      for(let y = 2026; y <= 2030; y++) {
+        let opt = document.createElement('option');
+        opt.value = y;
+        opt.innerText = y;
+        ySelect.appendChild(opt);
+      }
+    }
+
+    function renderCalendar() {
+      document.getElementById('monthSelect').value = currentMonth;
+      document.getElementById('yearSelect').value = currentYear;
+
+      const daysContainer = document.getElementById('calendarDays');
+      daysContainer.innerHTML = '';
+
+      // Get first day of month and total days
+      let firstDay = new Date(currentYear, currentMonth, 1).getDay();
+      let daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+      // Empty slots before first day
+      for (let i = 0; i < firstDay; i++) {
+        let emptyDiv = document.createElement('div');
+        emptyDiv.className = 'cal-date date-empty';
+        daysContainer.appendChild(emptyDiv);
+      }
+
+      // Fill days
+      for (let day = 1; day <= daysInMonth; day++) {
+        let dateDiv = document.createElement('div');
+        
+        // Format current date string (YYYY-MM-DD) for checking database
+        let mStr = (currentMonth + 1).toString().padStart(2, '0');
+        let dStr = day.toString().padStart(2, '0');
+        let dateString = `${currentYear}-${mStr}-${dStr}`;
+
+        if (bookedDates.includes(dateString)) {
+          dateDiv.className = 'cal-date date-booked';
+          dateDiv.innerText = day;
+          dateDiv.onclick = () => alert(`Date: ${dateString} is already Booked!`);
+        } else {
+          dateDiv.className = 'cal-date date-available';
+          dateDiv.innerText = day;
+          dateDiv.onclick = () => confirmManualBooking(dateString);
+        }
+        
+        daysContainer.appendChild(dateDiv);
+      }
+    }
+
+    function changeMonth(direction) {
+      currentMonth += direction;
+      if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+      if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+      renderCalendar();
+    }
+
+    function jumpToDate() {
+      currentMonth = parseInt(document.getElementById('monthSelect').value);
+      currentYear = parseInt(document.getElementById('yearSelect').value);
+      renderCalendar();
+    }
+
+    function confirmManualBooking(dateStr) {
+      let confirmBook = confirm(`Do you want to manually book ${dateStr} for an offline customer?`);
+      if(confirmBook) {
+        bookedDates.push(dateStr); // Save to JS array (Temporary)
+        renderCalendar(); // Refresh calendar to turn it Red
+        alert("Date Successfully Booked & Blocked on App!");
+      }
+    }
+
+    // Initialize Setup
+    initCalendarControls();
+    renderCalendar();
   </script>
 </body>
 </html>
