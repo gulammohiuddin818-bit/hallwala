@@ -394,14 +394,47 @@
   </div>
   
   <script>
-        // 🚀 GOD LEVEL: State & City Database Engine
+            // 🚀 MEGA GOD LEVEL: 28 States & 8 UTs Full Database Engine
     const indiaData = {
-      "Jharkhand": ["Ranchi", "B.S.City (Bokaro)", "Dhanbad", "Jamshedpur", "Hazaribagh", "Deoghar", "Giridih", "Ramgarh", "Palamu", "Dumka", "Gumla", "Godda", "Sahibganj"],
-      "Bihar": ["Patna", "Gaya", "Muzaffarpur", "Bhagalpur", "Purnia", "Darbhanga", "Ara", "Begusarai", "Katihar", "Munger", "Chapra", "Sasaram", "Hajipur"],
-      "West Bengal": ["Kolkata", "Howrah", "Darjeeling", "Siliguri", "Asansol", "Durgapur", "Malda", "Kharagpur", "Haldia", "Bardhaman"],
-      "Maharashtra": ["Mumbai", "Pune", "Nagpur", "Thane", "Nashik", "Aurangabad", "Solapur", "Amravati", "Kolhapur", "Navi Mumbai"],
-      "Delhi": ["New Delhi", "Central Delhi", "South Delhi", "North Delhi", "East Delhi", "West Delhi", "Shahdara", "Dwarka"],
-      "Uttar Pradesh": ["Lucknow", "Kanpur", "Varanasi", "Agra", "Noida", "Ghaziabad", "Meerut", "Prayagraj", "Gorakhpur", "Aligarh"]
+      // --- STATES ---
+      "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Guntur", "Nellore", "Kurnool", "Rajahmundry", "Tirupati", "Kadapa", "Kakinada", "Anantapur"],
+      "Arunachal Pradesh": ["Itanagar", "Tawang", "Ziro", "Pasighat", "Roing", "Bomdila", "Tezu", "Along", "Naharlagun"],
+      "Assam": ["Guwahati", "Silchar", "Dibrugarh", "Jorhat", "Nagaon", "Tinsukia", "Tezpur", "Bongaigaon", "Diphu", "Dhubri"],
+      "Bihar": ["Patna", "Gaya", "Muzaffarpur", "Bhagalpur", "Purnia", "Darbhanga", "Ara", "Begusarai", "Katihar", "Munger", "Chapra", "Sasaram", "Hajipur", "Nalanda", "Samastipur"],
+      "Chhattisgarh": ["Raipur", "Bhilai", "Bilaspur", "Korba", "Rajnandgaon", "Raigarh", "Jagdalpur", "Ambikapur", "Durg", "Mahasamund"],
+      "Goa": ["Panaji", "Margao", "Vasco da Gama", "Mapusa", "Ponda", "Calangute", "Curchorem", "Bicholim"],
+      "Gujarat": ["Ahmedabad", "Surat", "Vadodara", "Rajkot", "Bhavnagar", "Jamnagar", "Junagadh", "Gandhinagar", "Anand", "Bharuch", "Vapi"],
+      "Haryana": ["Faridabad", "Gurugram", "Panipat", "Ambala", "Yamunanagar", "Rohtak", "Hisar", "Karnal", "Sonipat", "Panchkula"],
+      "Himachal Pradesh": ["Shimla", "Dharamshala", "Mandi", "Solan", "Kullu", "Manali", "Dalhousie", "Chamba", "Hamirpur"],
+      "Jharkhand": ["Ranchi", "B.S.City (Bokaro)", "Dhanbad", "Jamshedpur", "Hazaribagh", "Deoghar", "Giridih", "Ramgarh", "Palamu", "Dumka", "Gumla", "Godda", "Sahibganj", "Lohardaga"],
+      "Karnataka": ["Bengaluru", "Mysuru", "Hubballi-Dharwad", "Mangaluru", "Belagavi", "Davangere", "Ballari", "Tumakuru", "Shivamogga", "Udupi"],
+      "Kerala": ["Thiruvananthapuram", "Kochi", "Kozhikode", "Kollam", "Thrissur", "Kannur", "Alappuzha", "Kottayam", "Palakkad", "Malappuram", "Ernakulam"],
+      "Madhya Pradesh": ["Indore", "Bhopal", "Jabalpur", "Gwalior", "Ujjain", "Sagar", "Dewas", "Satna", "Ratlam", "Rewa"],
+      "Maharashtra": ["Mumbai", "Pune", "Nagpur", "Thane", "Nashik", "Aurangabad", "Solapur", "Amravati", "Kolhapur", "Navi Mumbai", "Jalgaon", "Akola", "Latur"],
+      "Manipur": ["Imphal", "Thoubal", "Kakching", "Bishnupur", "Churachandpur", "Senapati", "Ukhrul", "Tamenglong"],
+      "Meghalaya": ["Shillong", "Tura", "Nongstoin", "Jowai", "Baghmara", "Williamnagar"],
+      "Mizoram": ["Aizawl", "Lunglei", "Saiha", "Champhai", "Kolasib", "Serchhip"],
+      "Nagaland": ["Kohima", "Dimapur", "Mokokchung", "Tuensang", "Wokha", "Zunheboto", "Phek"],
+      "Odisha": ["Bhubaneswar", "Cuttack", "Rourkela", "Brahmapur", "Sambalpur", "Puri", "Balasore", "Bhadrak", "Baripada", "Jharsuguda"],
+      "Punjab": ["Ludhiana", "Amritsar", "Jalandhar", "Patiala", "Bathinda", "Mohali", "Pathankot", "Moga", "Hoshiarpur", "Firozpur"],
+      "Rajasthan": ["Jaipur", "Jodhpur", "Kota", "Bikaner", "Ajmer", "Udaipur", "Bhilwara", "Alwar", "Sikar", "Pali"],
+      "Sikkim": ["Gangtok", "Namchi", "Gyalshing", "Mangan", "Singtam", "Rangpo"],
+      "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Tiruchirappalli", "Salem", "Tirunelveli", "Vellore", "Erode", "Thoothukudi", "Dindigul"],
+      "Telangana": ["Hyderabad", "Warangal", "Nizamabad", "Karimnagar", "Ramagundam", "Khammam", "Mahbubnagar", "Nalgonda"],
+      "Tripura": ["Agartala", "Udaipur", "Dharmanagar", "Kailashahar", "Belonia", "Khowai", "Ambassa"],
+      "Uttar Pradesh": ["Lucknow", "Kanpur", "Varanasi", "Agra", "Noida", "Ghaziabad", "Meerut", "Prayagraj", "Gorakhpur", "Aligarh", "Bareilly", "Moradabad", "Saharanpur", "Ayodhya"],
+      "Uttarakhand": ["Dehradun", "Haridwar", "Roorkee", "Haldwani", "Rudrapur", "Kashipur", "Rishikesh", "Nainital"],
+      "West Bengal": ["Kolkata", "Howrah", "Darjeeling", "Siliguri", "Asansol", "Durgapur", "Malda", "Kharagpur", "Haldia", "Bardhaman", "Murshidabad"],
+      
+      // --- UNION TERRITORIES ---
+      "Andaman & Nicobar Islands": ["Port Blair", "Garacharma", "Bambooflat"],
+      "Chandigarh": ["Chandigarh"],
+      "Dadra & Nagar Haveli and Daman & Diu": ["Daman", "Diu", "Silvassa", "Amli"],
+      "Delhi": ["New Delhi", "Central Delhi", "South Delhi", "North Delhi", "East Delhi", "West Delhi", "Shahdara", "Dwarka", "Rohini", "Karol Bagh", "Connaught Place"],
+      "Jammu & Kashmir": ["Srinagar", "Jammu", "Anantnag", "Baramulla", "Kathua", "Udhampur", "Kupwara", "Sopore", "Bandipora"],
+      "Ladakh": ["Leh", "Kargil"],
+      "Lakshadweep": ["Kavaratti", "Agatti", "Andrott", "Minicoy"],
+      "Puducherry": ["Puducherry", "Ozhukarai", "Karaikal", "Mahe", "Yanam"]
     };
 
     function updateCities() {
@@ -415,11 +448,12 @@
           cityDropdown.innerHTML += `<option value="${city}">${city}</option>`;
         });
       } else if (state) {
-        cityDropdown.innerHTML += `<option disabled>Loading data for ${state}...</option>`;
+        cityDropdown.innerHTML += `<option disabled>No data available for ${state}</option>`;
       } else {
         cityDropdown.innerHTML += `<option disabled>Select State first to load all cities...</option>`;
       }
     }
+    
     
     // Navigation Logic
     function switchScreen(screenId, element) {
