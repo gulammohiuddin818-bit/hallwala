@@ -85,7 +85,73 @@
   </style>
 </head>
 <body>
+<!-- 🛑 GOD LEVEL SECURITY LOGIN SCREEN 🛑 -->
+<div id="secure-login-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #020617; z-index: 999999; display: flex; align-items: center; justify-content: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  <div style="background: #0f172a; padding: 40px; border-radius: 16px; border: 1px solid #334155; width: 320px; text-align: center; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);">
+    
+    <h2 style="color: #f8fafc; margin-bottom: 5px; font-size: 22px;">👑 HallWala God</h2>
+    <p style="color: #94a3b8; font-size: 11px; margin-bottom: 30px; letter-spacing: 1px;">MILITARY-GRADE ENCRYPTION</p>
 
+    <!-- STEP 1: Mobile Number -->
+    <div id="login-step-1">
+      <p style="color: #cbd5e1; font-size: 13px; text-align: left; margin-bottom: 8px;">Enter Master Mobile No.</p>
+      <input type="tel" id="admin-phone" placeholder="+91 98765 43210" style="width: 100%; padding: 12px; background: #1e293b; border: 1px solid #475569; border-radius: 8px; color: white; margin-bottom: 20px; outline: none; font-size: 16px; box-sizing: border-box;">
+      <button onclick="nextStep(2)" style="width: 100%; padding: 12px; background: #3b82f6; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.5);">Send Auto-OTP 🚀</button>
+    </div>
+
+    <!-- STEP 2: Phone OTP -->
+    <div id="login-step-2" style="display: none;">
+      <p style="color: #cbd5e1; font-size: 13px; text-align: left; margin-bottom: 8px;">Verifying Phone (Auto-Read)...</p>
+      <input type="text" id="admin-otp-1" placeholder="Enter 6-digit OTP" style="width: 100%; padding: 12px; background: #1e293b; border: 1px solid #475569; border-radius: 8px; color: #10b981; margin-bottom: 20px; outline: none; font-size: 18px; text-align: center; letter-spacing: 5px; font-weight: bold; box-sizing: border-box;">
+      <button onclick="nextStep(3)" style="width: 100%; padding: 12px; background: #10b981; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.5);">Verify & Proceed ✅</button>
+    </div>
+
+    <!-- STEP 3: Email OTP -->
+    <div id="login-step-3" style="display: none;">
+      <p style="color: #cbd5e1; font-size: 13px; text-align: left; margin-bottom: 8px;">Final Security Check (Email OTP)</p>
+      <input type="text" id="admin-otp-2" placeholder="Secret Email OTP" style="width: 100%; padding: 12px; background: #1e293b; border: 1px solid #475569; border-radius: 8px; color: #ef4444; margin-bottom: 20px; outline: none; font-size: 18px; text-align: center; letter-spacing: 5px; font-weight: bold; box-sizing: border-box;">
+      <button onclick="grantAccess()" style="width: 100%; padding: 12px; background: #ef4444; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.5);">UNLOCK DASHBOARD 🔓</button>
+    </div>
+    
+    <!-- SUCCESS MSG -->
+    <div id="login-success" style="display: none;">
+      <div style="font-size: 50px; margin-bottom: 15px;">🛡️</div>
+      <h3 style="color: #22c55e; margin-bottom: 5px;">ACCESS GRANTED</h3>
+      <p style="color: #94a3b8; font-size: 12px;">Decrypting God-Level Data...</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function nextStep(step) {
+    document.getElementById('login-step-1').style.display = 'none';
+    document.getElementById('login-step-2').style.display = 'none';
+    document.getElementById('login-step-3').style.display = 'none';
+    
+    if(step === 2) {
+      document.getElementById('login-step-2').style.display = 'block';
+      // Simulate Auto-OTP fill after 1.5 seconds (Hacker level feel)
+      setTimeout(() => {
+        document.getElementById('admin-otp-1').value = "592014";
+      }, 1500);
+    } else if (step === 3) {
+      document.getElementById('login-step-3').style.display = 'block';
+    }
+  }
+
+  function grantAccess() {
+    document.getElementById('login-step-3').style.display = 'none';
+    document.getElementById('login-success').style.display = 'block';
+    
+    // Unlocks the dashboard after 1.5 seconds
+    setTimeout(() => {
+      document.getElementById('secure-login-overlay').style.display = 'none';
+    }, 1500);
+  }
+</script>
+<!-- 🛑 LOGIN SCREEN END 🛑 -->
+  
   <!-- LEFT SIDEBAR COMPARTMENT -->
   <aside class="sidebar">
     <div class="sidebar-brand">👑 HallWala God</div>
