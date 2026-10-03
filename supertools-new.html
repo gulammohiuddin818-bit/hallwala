@@ -185,5 +185,16 @@
 
   </div>
 
+    <!-- TAB SWITCHER JAVASCRIPT -->
+    <script>
+      function switchTab(tabId) {
+        document.querySelectorAll('.screen').forEach(screen => screen.style.display = 'none');
+        document.querySelectorAll('.sidebar-menu li').forEach(menu => menu.classList.remove('active'));
+        document.getElementById('screen-' + tabId).style.display = 'block';
+        event.currentTarget.classList.add('active');
+      }
+    </script>
+  
+  
 </body>
 </html>
