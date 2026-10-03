@@ -24,8 +24,54 @@
       <div class="card" style="border-top: 4px solid #6366f1;">
         <h3 style="font-size: 16px; color: #1e293b; margin: 0 0 5px 0;">👁️ God-Eye Master Calendar</h3>
         <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Pan-India Heatmap: Monitor Bookings across 28 States, 8 UTs & 4000+ Cities.</p>
-        <select><option>Jharkhand</option></select>
-        <select><option>Select City (e.g., Bokaro, Ranchi)</option></select>
+        
+        <!-- FULL STATE SELECTOR -->
+        <select>
+          <option value="">🌍 Select State / UT...</option>
+          <optgroup label="--- 28 STATES ---">
+            <option>Andhra Pradesh</option>
+            <option>Arunachal Pradesh</option>
+            <option>Assam</option>
+            <option>Bihar</option>
+            <option>Chhattisgarh</option>
+            <option>Goa</option>
+            <option>Gujarat</option>
+            <option>Haryana</option>
+            <option>Himachal Pradesh</option>
+            <option>Jharkhand</option>
+            <option>Karnataka</option>
+            <option>Kerala</option>
+            <option>Madhya Pradesh</option>
+            <option>Maharashtra</option>
+            <option>Manipur</option>
+            <option>Meghalaya</option>
+            <option>Mizoram</option>
+            <option>Nagaland</option>
+            <option>Odisha</option>
+            <option>Punjab</option>
+            <option>Rajasthan</option>
+            <option>Sikkim</option>
+            <option>Tamil Nadu</option>
+            <option>Telangana</option>
+            <option>Tripura</option>
+            <option>Uttar Pradesh</option>
+            <option>Uttarakhand</option>
+            <option>West Bengal</option>
+          </optgroup>
+          <optgroup label="--- 8 UNION TERRITORIES ---">
+            <option>Andaman & Nicobar Islands</option>
+            <option>Chandigarh</option>
+            <option>Dadra & Nagar Haveli and Daman & Diu</option>
+            <option>Delhi</option>
+            <option>Jammu & Kashmir</option>
+            <option>Ladakh</option>
+            <option>Lakshadweep</option>
+            <option>Puducherry</option>
+          </optgroup>
+        </select>
+        
+        <select><option>📍 Select City / District</option></select>
+        
         <button style="background: linear-gradient(90deg, #10b981, #f59e0b);">Live Heatmap Engine Standby...</button>
       </div>
 
@@ -51,18 +97,18 @@
         </div>
       </div>
 
-      <!-- Tool 4: Sponsor & Commission Engine -->
+      <!-- Tool 4: Dynamic Commission -->
       <div class="card" style="border-top: 4px solid #f59e0b;">
-        <h3 style="font-size: 16px; color: #1e293b; margin: 0 0 5px 0;">🚀 Sponsor & Rank Booster</h3>
-        <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Rank boost a Hall (Swiggy/Zomato style) to the top position.</p>
+        <h3 style="font-size: 16px; color: #1e293b; margin: 0 0 5px 0;">🚀 Dynamic Commission</h3>
+        <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Override Platform Fee.</p>
         <input type="text" placeholder="Hall ID (e.g., HAL-101)">
-        <button style="background: #f59e0b; margin-bottom: 10px;">Boost Rank To #1</button>
+        <button style="background: #f59e0b; margin-bottom: 10px;">Set Custom %</button>
       </div>
 
       <!-- Tool 5: Global Broadcast -->
       <div class="card" style="border-top: 4px solid #3b82f6;">
-        <h3 style="font-size: 16px; color: #1e293b; margin: 0 0 5px 0;">📢 Global Broadcast (Blast)</h3>
-        <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Send bulk marketing alerts to all Users and Vendors instantly.</p>
+        <h3 style="font-size: 16px; color: #1e293b; margin: 0 0 5px 0;">📢 Global Broadcast</h3>
+        <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Send bulk alerts to all Users.</p>
         <textarea rows="2" placeholder="Type your offer or urgent update here..."></textarea>
         <button style="background: #3b82f6;">Blast Message 🚀</button>
       </div>
@@ -70,10 +116,19 @@
       <!-- Tool 6: Stealth Shadow Ban -->
       <div class="card" style="border-top: 4px solid #475569;">
         <h3 style="font-size: 16px; color: #1e293b; margin: 0 0 5px 0;">🥷 Stealth Shadow Ban</h3>
-        <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Secretly freeze an account. They won't know they are banned.</p>
+        <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Secretly freeze an account.</p>
         <input type="text" placeholder="Enter User/Vendor ID">
         <select><option>Shadow Ban (Zero Impressions)</option></select>
         <button style="background: #0f172a;">Execute Ban 🔨</button>
+      </div>
+      
+       <!-- Tool 7: Algorithm Manipulator -->
+      <div class="card" style="border-top: 4px solid #8b5cf6;">
+        <h3 style="font-size: 16px; color: #1e293b; margin: 0 0 5px 0;">⚙️ Algorithm Manipulator</h3>
+        <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Force Rank #1</p>
+        <input type="text" placeholder="Enter Vendor ID">
+        <select><option>🚀 Force Rank #1</option></select>
+        <button style="background: #8b5cf6;">Apply Rank Override</button>
       </div>
     </div>
 
@@ -81,11 +136,50 @@
     <div class="card" style="background: #fef2f2; border: 2px solid #ef4444; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
       <div style="flex: 1; min-width: 250px;">
         <h3 style="font-size: 18px; color: #991b1b; margin: 0 0 5px 0;">🛑 Master Kill Switch (Emergency)</h3>
-        <p style="font-size: 12px; color: #7f1d1d; margin: 0;">Instantly disable all bookings, payments, and app access for a specific City or State during riots, curfews, or platform crashes.</p>
+        <p style="font-size: 12px; color: #7f1d1d; margin: 0;">Instantly disable all bookings during riots or crashes.</p>
       </div>
       <div style="display: flex; gap: 10px; width: auto; align-items: center;">
         <input type="text" placeholder="Type 'ALL INDIA'" style="margin: 0; width: 150px; border-color: #f87171;">
         <button style="background: #dc2626; width: auto; padding: 12px 20px;">INITIATE LOCKDOWN 🚨</button>
+      </div>
+    </div>
+
+    <!-- GOD-LEVEL TOOLKIT MANUAL (DESCRIPTION) -->
+    <div class="card" style="border-top: 4px solid #0f172a; margin-bottom: 30px;">
+      <h3 style="margin-bottom: 15px; font-size: 18px; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;">📖 God-Level Toolkit Manual</h3>
+      
+      <div style="display: grid; grid-template-columns: 1fr; gap: 15px; font-size: 13px; line-height: 1.5; color: #334155;">
+        
+        <div>
+          <strong style="color: #0f172a; font-size: 14px;">1. God-Eye Master Calendar:</strong><br>
+          पूरे भारत (28 राज्य और 8 केंद्र शासित प्रदेश) के 4000+ शहरों में चल रही हर एक हॉल बुकिंग का लाइव डेटा एक सिंगल स्क्रीन पर देखें।
+        </div>
+        
+        <div>
+          <strong style="color: #0f172a; font-size: 14px;">2. Ghost Login (Impersonation):</strong><br>
+          पासवर्ड की ज़रूरत के बिना किसी भी वेंडर या कस्टमर के अकाउंट में सीधे 'Admin Authority' के साथ लॉग capइन करें और उनके डैशबोर्ड को कंट्रोल करें।
+        </div>
+        
+        <div>
+          <strong style="color: #0f172a; font-size: 14px;">3. Dispute & Refund Tribunal:</strong><br>
+          कस्टमर और वेंडर के बीच विवाद होने पर Razorpay API को ओवरराइड करके ज़बरदस्ती रिफंड करें या वेंडर का पैसा होल्ड/रिलीज़ करें।
+        </div>
+        
+        <div>
+          <strong style="color: #0f172a; font-size: 14px;">4. Dynamic Commission & Sponsor Engine:</strong><br>
+          Zomato/Swiggy की तरह किसी भी हॉल से ज़्यादा पैसे (Sponsored Amount) लेकर उसे शहर में #1 रैंक पर दिखाएं। हर हॉल के लिए अलग कमीशन % सेट करें।
+        </div>
+        
+        <div>
+          <strong style="color: #0f172a; font-size: 14px;">5. Stealth Shadow Ban & Algorithm Manipulator:</strong><br>
+          गड़बड़ी करने वाले वेंडर को बिना बताए 'Shadow Ban' करें (उसका हॉल ऐप पर किसी को नहीं दिखेगा)। Algorithm को कंट्रोल करके मनचाहे हॉल को टॉप या बॉटम में धकेलें।
+        </div>
+
+        <div style="background: #fef2f2; padding: 10px; border-left: 3px solid #ef4444; border-radius: 4px;">
+          <strong style="color: #991b1b; font-size: 14px;">🛑 6. The Master Kill Switch:</strong><br>
+          किसी शहर में दंगा, कर्फ्यू या सर्वर क्रैश होने पर 1 क्लिक में उस शहर/राज्य या पूरे भारत में नई बुकिंग्स को पूरी तरह ब्लॉक (Lockdown) कर दें।
+        </div>
+
       </div>
     </div>
 
