@@ -177,9 +177,9 @@
     </header>
 
     <div class="content-scroll">
-      
-      
-        <!-- 📊 1. ANALYTICS & REPORTS SCREEN -->
+
+
+<!-- 📊 1. ANALYTICS & REPORTS SCREEN -->
     <div id="screen-analytics" class="screen">
       <h2 style="margin-bottom: 20px; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">📊 God-Level Analytics & Revenue</h2>
       
@@ -221,7 +221,6 @@
         </div>
       </div>
     </div>
-      
       
 
       <!-- SCREEN 2: HALLS COMPARTMENT -->
@@ -266,9 +265,8 @@
         </div>
       </div>
 
-    
-         <!-- 👥 3. CUSTOMERS DATA SCREEN -->
-    <div id="screen-customers" class="screen" style="display: none;">
+      <!-- 👥 3. CUSTOMERS DATA SCREEN -->
+    <div id="screen-customers" class="screen"
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">
         <h2 style="color: #0f172a; margin: 0;">👥 God-Eye Customer DB</h2>
         <input type="text" placeholder="🔍 Search Name, Phone, or ID..." style="padding: 10px 15px; border: 1px solid #cbd5e1; border-radius: 8px; outline: none; width: 300px; font-size: 13px; font-weight: bold;">
@@ -306,12 +304,24 @@
                 <button style="background: #10b981; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold;">Remove Ban</button>
               </td>
             </tr>
+            <tr style="transition: 0.3s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='white'">
+              <td style="padding: 15px; font-weight: bold; color: #3b82f6;">#CUST-1023</td>
+              <td style="padding: 15px;"><strong style="color: #1e293b;">Priya Verma</strong><br><span style="color: #64748b; font-size: 12px;">priya.v@email.com</span></td>
+              <td style="padding: 15px; font-weight: bold; color: #64748b;">5 Bookings</td>
+              <td style="padding: 15px;"><span style="background: #dcfce7; color: #166534; padding: 5px 10px; border-radius: 6px; font-size: 11px; font-weight: 900;">ACTIVE</span></td>
+              <td style="padding: 15px; text-align: right;">
+                <button style="background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; margin-right: 5px;">View Profile</button>
+                <button style="background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold;">Ban User</button>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
     </div>
+      
+      
 
-    <!-- 💰 4. TOKEN & FINANCE SCREEN -->
+          <!-- 💰 4. TOKEN & FINANCE SCREEN -->
     <div id="screen-finance" class="screen" style="display: none;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">
         <h2 style="color: #0f172a; margin: 0;">💰 Finance & Razorpay Engine</h2>
@@ -323,14 +333,17 @@
         <div class="card" style="padding: 20px; background: white; border-radius: 12px; border-top: 4px solid #6366f1; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
           <p style="font-size: 12px; color: #64748b; font-weight: bold; margin-bottom: 5px;">TOTAL TOKENS PROCESSED</p>
           <h3 style="font-size: 32px; color: #6366f1; margin: 0;">₹ 12,50,000</h3>
+          <p style="font-size: 12px; color: #4f46e5; font-weight: bold; margin-top: 5px;">Via Razorpay Route</p>
         </div>
         <div class="card" style="padding: 20px; background: white; border-radius: 12px; border-top: 4px solid #10b981; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
           <p style="font-size: 12px; color: #64748b; font-weight: bold; margin-bottom: 5px;">ADMIN NET PROFIT</p>
           <h3 style="font-size: 32px; color: #10b981; margin: 0;">₹ 4,85,000</h3>
+          <p style="font-size: 12px; color: #059669; font-weight: bold; margin-top: 5px;">Pure Commission</p>
         </div>
         <div class="card" style="padding: 20px; background: white; border-radius: 12px; border-top: 4px solid #ef4444; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
           <p style="font-size: 12px; color: #64748b; font-weight: bold; margin-bottom: 5px;">PENDING VENDOR PAYOUTS</p>
           <h3 style="font-size: 32px; color: #ef4444; margin: 0;">₹ 1,12,000</h3>
+          <p style="font-size: 12px; color: #dc2626; font-weight: bold; margin-top: 5px;">Settle within 24 Hrs</p>
         </div>
       </div>
 
@@ -340,12 +353,15 @@
         <!-- Commission Setup -->
         <div class="card" style="background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); padding: 25px; border: 1px solid #e2e8f0;">
           <h3 style="margin-bottom: 10px; font-size: 16px; color: #1e293b;">⚙️ Master Commission Setup</h3>
-          <p style="font-size: 12px; color: #64748b; margin-bottom: 20px;">Set global rules for Token splits.</p>
+          <p style="font-size: 12px; color: #64748b; margin-bottom: 20px;">Set global rules for Token splits. How much goes to Admin vs Vendor.</p>
           
           <label style="font-size: 13px; font-weight: bold; color: #334155; display: block; margin-bottom: 5px;">Flat Cut per Booking (₹)</label>
           <input type="number" value="1000" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 15px; outline: none; font-size: 16px; font-weight: bold; color: #0f172a; box-sizing: border-box;">
           
-          <button style="width: 100%; padding: 14px; background: #3b82f6; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px;">Update Rules 🔒</button>
+          <label style="font-size: 13px; font-weight: bold; color: #334155; display: block; margin-bottom: 5px;">Or Percentage Cut (%)</label>
+          <input type="number" placeholder="e.g. 15%" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 20px; outline: none; font-size: 14px; box-sizing: border-box;">
+          
+          <button style="width: 100%; padding: 14px; background: #3b82f6; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(59,130,246,0.3); font-size: 14px;">Update Financial Rules 🔒</button>
         </div>
 
         <!-- Recent Transactions -->
@@ -355,29 +371,33 @@
             <thead style="background: #f8fafc; color: #475569;">
               <tr>
                 <th style="padding: 12px 20px;">TXN ID & Amount</th>
-                <th style="padding: 12px 20px;">Split</th>
+                <th style="padding: 12px 20px;">Split (Admin/Vendor)</th>
                 <th style="padding: 12px 20px; text-align: right;">Status</th>
               </tr>
             </thead>
             <tbody>
               <tr style="border-bottom: 1px solid #f1f5f9;">
                 <td style="padding: 15px 20px;"><strong style="color: #3b82f6; display: block;">#rzp_9xA2</strong><span style="font-weight: bold; font-size: 14px;">₹ 5,000</span></td>
-                <td style="padding: 15px 20px;"><span style="color:#10b981; font-weight:bold;">₹ 1,000</span> / ₹ 4,000</td>
+                <td style="padding: 15px 20px;"><span style="color:#10b981; font-weight:bold;">₹ 1,000</span> / <span style="color:#64748b;">₹ 4,000</span></td>
                 <td style="padding: 15px 20px; text-align: right;"><span style="background: #dcfce7; color: #166534; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: 900;">SUCCESS</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f1f5f9;">
+                <td style="padding: 15px 20px;"><strong style="color: #3b82f6; display: block;">#rzp_3bY7</strong><span style="font-weight: bold; font-size: 14px;">₹ 10,000</span></td>
+                <td style="padding: 15px 20px;"><span style="color:#10b981; font-weight:bold;">₹ 1,000</span> / <span style="color:#64748b;">₹ 9,000</span></td>
+                <td style="padding: 15px 20px; text-align: right;"><span style="background: #dcfce7; color: #166534; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: 900;">SUCCESS</span></td>
+              </tr>
+              <tr>
+                <td style="padding: 15px 20px;"><strong style="color: #3b82f6; display: block;">#rzp_1cZ0</strong><span style="font-weight: bold; font-size: 14px;">₹ 5,000</span></td>
+                <td style="padding: 15px 20px;"><span style="color:#ef4444; font-weight:bold;">Refunded</span></td>
+                <td style="padding: 15px 20px; text-align: right;"><span style="background: #fee2e2; color: #991b1b; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: 900;">REFUNDED</span></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
     </div>
-      
 
-
-    
-        
-      
-      
-  </main>
+    </main>
 
   <!-- MODAL FOR DETAILED HALL VIEW (Calendar, Photos, Live Location) -->
   <div class="modal-overlay" id="hallModal">
@@ -392,6 +412,22 @@
           <div style="background: #e2e8f0; height: 150px; border-radius: 8px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; color: var(--text-muted);">[Photo Gallery Slider]</div>
           <div style="background: #e2e8f0; height: 150px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-muted);">[Live Google Map Location]</div>
         </div>
+        <div>
+          <h4 style="margin-bottom: 10px;">📅 Real-Time Availability Calendar</h4>
+          <div style="background: #f8fafc; border: 1px solid var(--border); height: 250px; border-radius: 8px; padding: 15px; font-size: 14px;">
+            <div style="margin-bottom: 10px;"><strong>November 2026 Bookings:</strong></div>
+            <div style="color: var(--danger); margin-bottom: 5px;">🔴 20 Nov - Booked (#CUST-8821)</div>
+            <div style="color: var(--danger); margin-bottom: 5px;">🔴 25 Nov - Booked (#CUST-8744)</div>
+            <div style="color: var(--success); margin-top: 15px;">🟢 All other dates available</div>
+          </div>
+          <div style="margin-top: 20px; display: flex; gap: 10px;">
+            <button class="btn btn-sponsor">Make Sponsored</button>
+            <button class="btn btn-danger">Blacklist Hall</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- SCREEN: SUPER TOOLS (GOD LEVEL) -->
   <div id="screen-supertools" class="screen" style="padding: 20px;">
     
@@ -597,8 +633,7 @@
       
     </div>
   </div>
-  
-            <!-- JAVASCRIPT FOR ALL 28 STATES & CITIES -->
+  <!-- JAVASCRIPT FOR ALL 28 STATES & CITIES -->
   <script>
     const indiaData = {
       // PURE CLEAN INDIA MASTER DATA: ALL CAPITALS, CITIES & DISTRICTS (NO TAGS)
