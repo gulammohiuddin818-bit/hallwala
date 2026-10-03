@@ -249,6 +249,27 @@
 
   <!-- JAVASCRIPT FOR ALL 28 STATES & CITIES -->
 
+      <!-- TAB SWITCHER JAVASCRIPT -->
+    <script>
+      function switchTab(tabId) {
+        var screens = document.querySelectorAll('.screen');
+        for (var i = 0; i < screens.length; i++) {
+          screens[i].style.display = 'none';
+        }
+        
+        var menus = document.querySelectorAll('.sidebar-menu li');
+        for (var i = 0; i < menus.length; i++) {
+          menus[i].classList.remove('active');
+        }
+        
+        var activeScreen = document.getElementById('screen-' + tabId);
+        if (activeScreen) {
+          activeScreen.style.display = 'block';
+        }
+        
+        event.currentTarget.classList.add('active');
+      }
+    </script>
   
 </body>
 </html>
