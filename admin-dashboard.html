@@ -354,124 +354,123 @@
       </div>
     </div>
   </div>
-  <!-- SCREEN: SUPER TOOLS (GOD LEVEL) -->
-  <div id="screen-supertools" class="screen" style="padding: 20px;">
-    
-    <h2 style="margin-bottom: 20px; color: #4338ca; font-weight: 800;">🚀 God-Level Super Tools</h2>
-    
-    <!-- GRID FOR TOOLS -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
 
-      <!-- 1. God-Eye Master Calendar -->
-      <div class="card" style="border-top: 4px solid #8b5cf6; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-        <h3 style="margin-bottom: 8px; font-size: 16px;">👁️ God-Eye Master Calendar</h3>
-        <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Pan-India Heatmap: Monitor Bookings across 28 States, 8 UTs & 4000+ Cities.</p>
-        
-        <!-- STATE SELECTOR -->
-        <select id="stateSelect" onchange="updateCities()" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 10px; outline: none; font-weight: bold; font-size: 14px;">
-          
-          <option value="">🌍 Select State / UT (All India)</option>
-          <optgroup label="--- 28 STATES ---">
-            <option>Andhra Pradesh</option>
-            <option>Arunachal Pradesh</option>
-            <option>Assam</option>
-            <option>Bihar</option>
-            <option>Chhattisgarh</option>
-            <option>Goa</option>
-            <option>Gujarat</option>
-            <option>Haryana</option>
-            <option>Himachal Pradesh</option>
-            <option>Jharkhand</option>
-            <option>Karnataka</option>
-            <option>Kerala</option>
-            <option>Madhya Pradesh</option>
-            <option>Maharashtra</option>
-            <option>Manipur</option>
-            <option>Meghalaya</option>
-            <option>Mizoram</option>
-            <option>Nagaland</option>
-            <option>Odisha</option>
-            <option>Punjab</option>
-            <option>Rajasthan</option>
-            <option>Sikkim</option>
-            <option>Tamil Nadu</option>
-            <option>Telangana</option>
-            <option>Tripura</option>
-            <option>Uttar Pradesh</option>
-            <option>Uttarakhand</option>
-            <option>West Bengal</option>
-          </optgroup>
-          <optgroup label="--- 8 UNION TERRITORIES ---">
-            <option>Andaman & Nicobar Islands</option>
-            <option>Chandigarh</option>
-            <option>Dadra & Nagar Haveli and Daman & Diu</option>
-            <option>Delhi</option>
-            <option>Jammu & Kashmir</option>
-            <option>Ladakh</option>
-            <option>Lakshadweep</option>
-            <option>Puducherry</option>
-          </optgroup>
-        </select>
-
-        <!-- CITY/DISTRICT SELECTOR -->
-        <select id="citySelect" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 15px; outline: none; font-weight: bold; font-size: 14px; background: #f8fafc;">
-          
-          <option>📍 Select City / District / Capital</option>
-          <option disabled>Select State first to load all cities...</option>
-        </select>
-
-        <div style="height: 80px; background: linear-gradient(90deg, #d1fae5 0%, #fef08a 50%, #fee2e2 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #333; font-size: 14px;">
-          Live Heatmap Engine Standby...
-        </div>
-      </div>
+      <!-- 🚀 5. SUPER TOOLS SCREEN -->
+    <div id="screen-super-tools" class="screen" style="display: none;">
+      <h2 style="margin-bottom: 20px; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">🚀 God-Level Super Tools</h2>
       
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin-bottom: 30px;">
+        
+        <!-- Tool 1: Master Calendar -->
+        <div class="card" style="background: white; border-radius: 12px; padding: 20px; border-top: 4px solid #6366f1; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+          <h3 style="font-size: 16px; color: #1e293b; margin-bottom: 5px;">👁️ God-Eye Master Calendar</h3>
+          <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Pan-India Heatmap: Monitor Bookings across 28 States, 8 UTs & 4000+ Cities.</p>
+          <select style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 10px;">
+            <option>Uttar Pradesh</option>
+          </select>
+          <select style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 15px;">
+            <option>Select City / District / Capital</option>
+          </select>
+          <button style="width: 100%; padding: 12px; background: linear-gradient(90deg, #10b981, #f59e0b); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Live Heatmap Engine Standby...</button>
+        </div>
 
-      <!-- 2. Ghost Login -->
-      <div class="card" style="border-top: 4px solid #10b981; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-        <h3 style="margin-bottom: 8px; font-size: 16px;">👻 Ghost Login (Impersonation)</h3>
-        <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Directly access any Vendor or Customer account without password.</p>
-        <input type="text" placeholder="Enter Vendor ID (e.g., VEN-8821)" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 15px; outline: none;">
-        <button style="width: 100%; padding: 12px; background: #10b981; color: white; border: none; border-radius: 8px; font-weight: 800; cursor: pointer;" onclick="alert('Initiating Ghost Mode... Logging into Vendor Dashboard!')">Login as Vendor</button>
-      </div>
+        <!-- Tool 2: Ghost Login -->
+        <div class="card" style="background: white; border-radius: 12px; padding: 20px; border-top: 4px solid #10b981; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+          <h3 style="font-size: 16px; color: #1e293b; margin-bottom: 5px;">🔐 Ghost Login (Impersonation)</h3>
+          <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Directly access any Vendor or Customer account without password.</p>
+          <input type="text" placeholder="Enter Vendor ID (e.g., VEN-9821)" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 15px; box-sizing: border-box;">
+          <button style="width: 100%; padding: 12px; background: #10b981; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Login as Vendor</button>
+        </div>
 
-      <!-- 3. Dispute & Refund Tribunal -->
-      <div class="card" style="border-top: 4px solid #ef4444; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-        <h3 style="margin-bottom: 8px; font-size: 16px;">⚖️ Dispute & Refund Tribunal</h3>
-        <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Resolve conflicts instantly. Full API control over Razorpay funds.</p>
-        <div style="background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0;">
-          <div style="font-size: 13px; font-weight: 800; color: #0f172a;">Ticket #9921 (Disputed Token: ₹4,000)</div>
-          <div style="font-size: 11px; color: #ef4444; margin-bottom: 10px; margin-top: 4px;">Status: High Priority (Customer vs Vendor)</div>
+        <!-- Tool 3: Dispute & Refund Tribunal -->
+        <div class="card" style="background: white; border-radius: 12px; padding: 20px; border-top: 4px solid #ef4444; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+          <h3 style="font-size: 16px; color: #1e293b; margin-bottom: 5px;">⚖️ Dispute & Refund Tribunal</h3>
+          <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Resolve conflicts instantly. Full API control over Razorpay funds.</p>
+          <div style="background: #f8fafc; padding: 10px; border-radius: 8px; margin-bottom: 15px; font-size: 13px;">
+            <strong>Ticket #9921 (Disputed Token: ₹4,000)</strong><br>
+            <span style="color: #ef4444; font-size: 11px; font-weight: bold;">Status: High Priority (Customer vs Vendor)</span>
+          </div>
           <div style="display: flex; gap: 10px;">
-            <button style="flex: 1; padding: 8px; background: #ef4444; color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 12px; cursor: pointer;" onclick="alert('Action Executed: ₹4,000 Force Refunded to Customer Bank.')">Force Refund</button>
-            <button style="flex: 1; padding: 8px; background: #10b981; color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 12px; cursor: pointer;" onclick="alert('Action Executed: ₹4,000 Released to Vendor Bank.')">Release Fund</button>
+            <button style="flex: 1; padding: 10px; background: #ef4444; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Force Refund</button>
+            <button style="flex: 1; padding: 10px; background: #10b981; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Release Fund</button>
           </div>
         </div>
+
+        <!-- Tool 4: Sponsor & Commission Engine -->
+        <div class="card" style="background: white; border-radius: 12px; padding: 20px; border-top: 4px solid #f59e0b; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+          <h3 style="font-size: 16px; color: #1e293b; margin-bottom: 5px;">🚀 Sponsor & Commission Engine</h3>
+          <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Rank boost a Hall (Swiggy/Zomato style) & adjust dynamic token splits.</p>
+          <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+            <input type="text" placeholder="Hall ID" style="flex: 1; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px;">
+            <button style="padding: 10px 20px; background: #f59e0b; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Boost Rank</button>
+          </div>
+          <div style="background: #fef3c7; padding: 8px; border-radius: 6px; font-size: 12px; color: #92400e; font-weight: bold; text-align: center;">Current Platform Fee: Flat ₹1,000</div>
+        </div>
+
+        <!-- Tool 5: Global Broadcast -->
+        <div class="card" style="background: white; border-radius: 12px; padding: 20px; border-top: 4px solid #3b82f6; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+          <h3 style="font-size: 16px; color: #1e293b; margin-bottom: 5px;">📢 Global Broadcast (Blast)</h3>
+          <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Send bulk marketing alerts to all Users and Vendors instantly.</p>
+          <textarea placeholder="Type your offer or urgent update here..." style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 15px; height: 50px; box-sizing: border-box;"></textarea>
+          <button style="width: 100%; padding: 12px; background: #3b82f6; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Blast Message 🚀</button>
+        </div>
+
+        <!-- Tool 6: Stealth Shadow Ban -->
+        <div class="card" style="background: white; border-radius: 12px; padding: 20px; border-top: 4px solid #475569; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+          <h3 style="font-size: 16px; color: #1e293b; margin-bottom: 5px;">🥷 Stealth Shadow Ban</h3>
+          <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Secretly freeze a Vendor/Customer account. They won't know they are banned.</p>
+          <input type="text" placeholder="Enter User/Vendor ID" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 10px; box-sizing: border-box;">
+          <select style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 15px;">
+            <option>Shadow Ban (Zero Impressions)</option>
+          </select>
+          <button style="width: 100%; padding: 12px; background: #0f172a; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Execute Ban 🔨</button>
+        </div>
+
+        <!-- Tool 7: Algorithm Manipulator -->
+        <div class="card" style="background: white; border-radius: 12px; padding: 20px; border-top: 4px solid #a855f7; box-shadow: 0 4px 15px rgba(0,0,0,0.05); grid-column: 1 / -1;">
+          <h3 style="font-size: 16px; color: #1e293b; margin-bottom: 5px;">🎛️ Algorithm Manipulator</h3>
+          <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Manually override the AI. Push bad vendors to the bottom, boost good ones.</p>
+          <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+            <input type="text" placeholder="Vendor Hall ID" style="flex: 1; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px;">
+            <select style="flex: 1; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px;">
+              <option>🚀 Force Rank #1 (City Level)</option>
+            </select>
+          </div>
+          <button style="width: 100%; padding: 12px; background: #a855f7; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Inject Algorithm 🧬</button>
+        </div>
+
       </div>
 
-      <!-- 4. Dynamic Commission & Sponsor Engine -->
-      <div class="card" style="border-top: 4px solid #f59e0b; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-        <h3 style="margin-bottom: 8px; font-size: 16px;">🚀 Sponsor & Commission Engine</h3>
-        <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Rank boost a Hall (Swiggy/Zomato style) & adjust dynamic token splits.</p>
-        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-          <input type="text" placeholder="Hall ID" style="flex: 1; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; outline: none;">
-          <button style="padding: 10px 15px; background: #f59e0b; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;" onclick="alert('Hall Ranked to #1 (SPONSORED TAG ACTIVATED)')">Boost Rank</button>
+      <!-- Master Kill Switch -->
+      <div class="card" style="background: #fef2f2; border: 2px solid #ef4444; border-radius: 12px; padding: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+        <div>
+          <h3 style="font-size: 16px; color: #991b1b; margin-bottom: 5px;">🛑 Master Kill Switch (Emergency)</h3>
+          <p style="font-size: 12px; color: #7f1d1d;">Instantly disable all bookings, payments, and app access for a specific City or State during riots, curfews, or platform crashes.</p>
         </div>
-        <div style="font-size: 12px; background: #fef3c7; color: #b45309; padding: 8px; border-radius: 6px; font-weight: bold; text-align: center;">
-          Current Platform Fee: Flat ₹1,000
+        <div style="display: flex; gap: 10px;">
+          <input type="text" placeholder="Type State or 'ALL INDIA'" style="padding: 10px; border: 1px solid #f87171; border-radius: 8px; outline: none; font-size: 12px;">
+          <button style="padding: 10px 20px; background: #dc2626; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">INITIATE LOCKDOWN 🚨</button>
         </div>
       </div>
 
-      <!-- 5. Global Broadcast -->
-      <div class="card" style="border-top: 4px solid #3b82f6; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-        <h3 style="margin-bottom: 8px; font-size: 16px;">📢 Global Broadcast (Blast)</h3>
-        <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Send bulk marketing alerts to all Users and Vendors instantly.</p>
-        <textarea placeholder="Type your offer or urgent update here..." style="width: 100%; height: 60px; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 10px; outline: none; font-family: inherit; resize: none;"></textarea>
-        <button style="width: 100%; padding: 12px; background: #3b82f6; color: white; border: none; border-radius: 8px; font-weight: 800; cursor: pointer;" onclick="alert('Blast Sent Successfully to 10,000+ Users via WhatsApp & Email! 🚀')">Blast Message 🚀</button>
+      <!-- Toolkit Manual -->
+      <div class="card" style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        <h3 style="font-size: 16px; color: #1e293b; margin-bottom: 15px; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;">📖 God-Level Toolkit Manual</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; font-size: 12px; color: #475569;">
+          <div><strong>👁️ God-Eye Master Calendar:</strong> पूरे राज्य (28 राज्य और 8 केंद्र शासित प्रदेश) के 4000+ शहरों की लाइव खुफिया और हेटमैप पर नजर रखने का मास्टर टूल।</div>
+          <div><strong>🔐 Ghost Login:</strong> पासवर्ड की जरूरत के बिना किसी भी वेंडर या कस्टमर के अकाउंट में सीधे लॉगिन करें। अकाउंट का पूरा कंट्रोल आपके हाथ में है।</div>
+          <div><strong>⚖️ Dispute & Refund Tribunal:</strong> विवादों को पल भर में न्याय दें (Razorpay) की सहायता करके ग्राहकों और वेंडरों का पैसा रिफंड या रिलीज करें।</div>
+          <div><strong>🚀 Sponsor & Commission Engine:</strong> हॉल को स्वैग जैसी तर्ज पर सबसे ऊपर प्रमोट करें या डायनेमिक टोकन स्प्लिट्स सेट करें।</div>
+          <div><strong>📢 Global Broadcast:</strong> एक क्लिक में पूरे भारत के सभी वेंडरों और यूजर्स के डैशबोर्ड पर ऑफर्स और मार्केटिंग अलर्ट्स का तुरंत प्रसारण करें।</div>
+          <div><strong>🥷 Stealth Shadow Ban:</strong> वेंडर या कस्टमर को बिना किसी को बताए चुपके से बैन करें। वे कभी नहीं जान पाएंगे कि वे बैन हैं।</div>
+          <div><strong>🎛️ Algorithm Manipulator:</strong> प्लेटफॉर्म के AI को अपने हिसाब से चलाएं। खराब वेंडरों को नीचे करें और अच्छे वेंडरों को प्रमोट करके नंबर 1 पर लाएं।</div>
+          <div><strong>🛑 Master Kill Switch:</strong> इमरजेंसी सिस्टम! दंगे, कर्फ्यू या प्लेटफ़ॉर्म क्रैश होने पर किसी भी शहर या राज्य के बुकिंग्स और पेमेंट्स को तुरंत बंद करें।</div>
+        </div>
       </div>
 
     </div>
-  </div>
-
+  
+  
   <!-- JAVASCRIPT FOR ALL 28 STATES & CITIES -->
   <script>
     const indiaData = {
