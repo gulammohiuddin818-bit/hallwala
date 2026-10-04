@@ -75,105 +75,136 @@
     <div class="header-badge">Royal Palace</div>
   </header>
 
-          <!-- SCREEN 1: DASHBOARD -->
+           <!-- SCREEN 1: DASHBOARD (ULTRA-MODERN PRO) -->
         <div id="screen-dashboard" class="screen active">
           
-          <div class="card">
-            <div class="stat-title">Estimated Revenue</div>
-            <div class="stat-value" style="color: var(--success)">₹1,25,000</div>
-          </div>
-
-          <div style="display: flex; gap: 15px; margin-bottom: 20px;">
-            <div class="card" style="flex: 1; margin-bottom: 0;">
-              <div class="stat-title">Bookings</div>
-              <div class="stat-value">3</div>
+          <!-- 1. REAL REVENUE (PREMIUM DARK CARD) -->
+          <div style="background: linear-gradient(135deg, #0f172a, #1e293b); border-radius: 12px; padding: 20px; color: white; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(15,23,42,0.3); position: relative; overflow: hidden;">
+            <!-- Decorative circle -->
+            <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.05); border-radius: 50%;"></div>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; position: relative; z-index: 1;">
+              <span style="font-size: 13px; color: #94a3b8; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Real Net Revenue</span>
+              <select style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; padding: 4px 8px; font-size: 11px; outline: none; cursor: pointer;">
+                <option style="color: black;">All Time</option>
+                <option style="color: black;">Last 24 Hours</option>
+                <option style="color: black;">Last 7 Days</option>
+                <option style="color: black;">Last 1 Month</option>
+                <option style="color: black;">Last 1 Year</option>
+              </select>
             </div>
-            <div class="card" style="flex: 1; margin-bottom: 0;">
-              <div class="stat-title">Inquiries</div>
-              <div class="stat-value" style="color: #f59e0b;">5</div>
+            <div style="font-size: 32px; font-weight: 800; display: flex; align-items: baseline; gap: 5px; position: relative; z-index: 1;">
+              <span style="color: #10b981;">₹</span>1,25,000
             </div>
-          </div>
-
-          <div class="card">
-            <h3 style="margin-bottom: 15px; font-size: 16px;">Recent Updates</h3>
-            <div style="font-size: 13px; line-height: 1.5; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--border);">
-              ✅ <strong>Token Received:</strong> ₹4,000 paid for 20 Nov 2026 booking.
-            </div>
-            <div style="font-size: 13px; line-height: 1.5;">
-              ⚠️ <strong>Reminder:</strong> Upload new hall photos to get more bookings.
+            <div style="font-size: 11px; color: #10b981; margin-top: 5px; display: flex; align-items: center; gap: 4px; position: relative; z-index: 1;">
+              📈 +12% growth from last month
             </div>
           </div>
 
-          <!-- 🚀 BOOST MY HALL (PREMIUM CARD) -->
-          <div style="background: linear-gradient(135deg, #fef3c7, #fef08a); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid #fde047;">
-            <h3 style="margin: 0 0 8px 0; font-size: 16px; color: #854d0e; display: flex; align-items: center; gap: 8px;">
+          <!-- 2. QUICK STATS GRID -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+            <div class="card" style="margin-bottom: 0; border-bottom: 3px solid #3b82f6; padding: 15px;">
+              <div style="font-size: 12px; color: #64748b; font-weight: bold;">Total Bookings</div>
+              <div style="font-size: 24px; font-weight: bold; color: #0f172a; margin-top: 5px;">12</div>
+            </div>
+            <div class="card" style="margin-bottom: 0; border-bottom: 3px solid #f59e0b; padding: 15px;">
+              <div style="font-size: 12px; color: #64748b; font-weight: bold;">Profile Views</div>
+              <div style="font-size: 24px; font-weight: bold; color: #0f172a; margin-top: 5px;">348</div>
+            </div>
+          </div>
+
+          <!-- 🚀 3. BOOST MY HALL (SPONSORED) -->
+          <div style="background: linear-gradient(135deg, #fef3c7, #fef08a); border-radius: 12px; padding: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid #fde047;">
+            <h3 style="margin: 0 0 8px 0; font-size: 15px; color: #854d0e; display: flex; align-items: center; gap: 8px;">
               🚀 Boost My Hall (Sponsored)
             </h3>
-            <p style="font-size: 13px; color: #a16207; margin-top: 0; margin-bottom: 15px;">
+            <p style="font-size: 12px; color: #a16207; margin-top: 0; margin-bottom: 12px;">
               Get 5x more bookings! Rank #1 in your city search results for the next 24 hours.
             </p>
             <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-weight: bold; font-size: 18px; color: #713f12;">₹500 / day</span>
-              <button style="background: #ca8a04; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 5px rgba(202, 138, 4, 0.4);">
+              <span style="font-weight: bold; font-size: 16px; color: #713f12;">₹500 / day</span>
+              <button style="background: #ca8a04; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; font-size: 12px; cursor: pointer; box-shadow: 0 2px 5px rgba(202, 138, 4, 0.4);">
                 Activate Boost ⚡
               </button>
             </div>
           </div>
 
-          <!-- 🤝 LIVE OFFERS & NEGOTIATION (SMART SYSTEM) -->
-          <div class="card" style="margin-bottom: 20px; border-top: 4px solid #8b5cf6;">
-            <h3 style="margin: 0 0 15px 0; font-size: 16px; color: #1e293b; display: flex; align-items: center; gap: 8px;">
-              🤝 Live Negotiation (No Calling)
-            </h3>
+          <!-- 📅 4. RECENT & UPCOMING BOOKINGS LIST -->
+          <div class="card" style="margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+              <h3 style="margin: 0; font-size: 16px; color: #1e293b;">📅 Confirmed Bookings</h3>
+              <span style="font-size: 11px; color: #3b82f6; font-weight: bold; cursor: pointer;">View All</span>
+            </div>
             
-            <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 12px; background: #f8fafc;">
+            <!-- Booking Item 1 -->
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid #f1f5f9; margin-bottom: 12px;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <strong style="color: #0f172a; font-size: 14px;">20 Nov 2026</strong>
+                  <span style="font-size: 9px; background: #dcfce3; color: #166534; padding: 2px 6px; border-radius: 10px; font-weight: bold;">Token Paid</span>
+                </div>
+                <div style="font-size: 12px; color: #64748b; margin-top: 4px;">Customer: Samma Parveen • Marriage</div>
+              </div>
+              <button style="background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer;">Details</button>
+            </div>
+
+            <!-- Booking Item 2 -->
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <strong style="color: #0f172a; font-size: 14px;">05 Dec 2026</strong>
+                  <span style="font-size: 9px; background: #dcfce3; color: #166534; padding: 2px 6px; border-radius: 10px; font-weight: bold;">Token Paid</span>
+                </div>
+                <div style="font-size: 12px; color: #64748b; margin-top: 4px;">Customer: Abdul Rafey • Reception</div>
+              </div>
+              <button style="background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer;">Details</button>
+            </div>
+          </div>
+
+          <!-- 🤝 5. INQUIRIES & NEGOTIATION CENTER -->
+          <div class="card" style="margin-bottom: 20px; border-top: 4px solid #8b5cf6;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+              <h3 style="margin: 0; font-size: 16px; color: #1e293b; display: flex; align-items: center; gap: 8px;">
+                🤝 Negotiation Queue
+              </h3>
+              <span style="font-size: 11px; background: #ef4444; color: white; padding: 2px 6px; border-radius: 10px; font-weight: bold;">2 Pending</span>
+            </div>
+            
+            <!-- Offer Card 1 -->
+            <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 15px; background: #f8fafc; position: relative;">
               <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
                 <div>
                   <strong style="color: #0f172a; font-size: 14px;">Aman ***</strong> 
                   <span style="font-size: 10px; background: #e2e8f0; padding: 2px 6px; border-radius: 4px; color: #475569; margin-left: 5px;">🔒 Hidden</span>
-                  <p style="font-size: 12px; color: #64748b; margin: 4px 0;">Event: 25 Nov 2026 (Marriage)</p>
-                  <p style="font-size: 11px; color: #64748b; margin: 0;">Hall Price: <del>₹60,000</del></p>
+                  <p style="font-size: 12px; color: #64748b; margin: 4px 0;">Date: 25 Nov 2026</p>
                 </div>
                 <div style="text-align: right; background: #d1fae5; padding: 5px 10px; border-radius: 6px; border: 1px dashed #10b981;">
-                  <p style="font-size: 10px; color: #047857; margin: 0; font-weight: bold;">Customer's Offer</p>
+                  <p style="font-size: 10px; color: #047857; margin: 0; font-weight: bold;">Offer Received</p>
                   <strong style="color: #059669; font-size: 18px;">₹50,000</strong>
                 </div>
               </div>
               
-              <p style="font-size: 12px; color: #334155; margin-bottom: 8px; font-weight: bold;">Your Response:</p>
-              
-              <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
-                <button style="background: #e0e7ff; color: #4338ca; border: 1px solid #a5b4fc; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer;">
-                  Send ₹52,000
-                </button>
-                <button style="background: #e0e7ff; color: #4338ca; border: 1px solid #a5b4fc; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer;">
-                  Send ₹55,000
-                </button>
-                <button style="background: #e0e7ff; color: #4338ca; border: 1px solid #a5b4fc; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer;">
-                  Send ₹57,000
-                </button>
+              <p style="font-size: 11px; color: #334155; margin-bottom: 8px; font-weight: bold;">Counter Offer Options:</p>
+              <div style="display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap;">
+                <button style="background: #e0e7ff; color: #4338ca; border: 1px solid #a5b4fc; padding: 6px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; cursor: pointer;">Send ₹52k</button>
+                <button style="background: #e0e7ff; color: #4338ca; border: 1px solid #a5b4fc; padding: 6px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; cursor: pointer;">Send ₹55k</button>
+                <button style="background: #e0e7ff; color: #4338ca; border: 1px solid #a5b4fc; padding: 6px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; cursor: pointer;">Send ₹57k</button>
               </div>
 
               <div style="display: flex; gap: 8px;">
-                <button style="flex: 1; background: #10b981; color: white; border: none; padding: 10px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(16,185,129,0.2);">
-                  ✅ Accept ₹50,000
+                <button style="flex: 1; background: #10b981; color: white; border: none; padding: 10px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px;">
+                  ✅ Accept 
                 </button>
-                <button style="flex: 1; background: #ef4444; color: white; border: none; padding: 10px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(239,68,68,0.2);">
-                  ❌ Reject Offer
+                <button style="flex: 1; background: #ef4444; color: white; border: none; padding: 10px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px;">
+                  ❌ Reject
                 </button>
-              </div>
-              
-              <div style="margin-top: 12px; padding-top: 10px; border-top: 1px dashed #cbd5e1;">
-                <p style="font-size: 11px; color: #b45309; margin: 0; line-height: 1.4;">
-                  <strong>⚠️ Token Policy:</strong> Deal accept hone par customer 10% (₹5,000) token pay karega. Jisme se <strong>₹1,000 HallWala ki platform fee</strong> hogi, aur baaki <strong>₹4,000 turant aapke bank mein</strong> bhej diye jayenge. Mobile numbers payment ke baad hi unlock honge.
-                </p>
               </div>
             </div>
           </div>
 
         </div>
   
-      
+            
           
   
   <!-- SCREEN 2: REAL INTERACTIVE CALENDAR -->
