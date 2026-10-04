@@ -2,201 +2,229 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Customer Dashboard - HallWala</title>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HallWala - Ultra-Modern Customer App</title>
   <style>
-    :root {
-      --primary: #4f46e5;
-      --primary-dark: #4338ca;
-      --bg: #f8fafc;
-      --text: #0f172a;
-      --muted: #64748b;
-      --border: #e2e8f0;
-      --success: #10b981;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding-bottom: 90px; }
-
-    /* TOP HEADER */
-    .top-header { background: white; padding: 16px 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
-    .top-header h1 { font-size: 22px; font-weight: 800; color: #db2777; }
-
-    /* SCREENS */
-    .screen { display: none; }
-    .screen.active { display: block; }
-    .main-wrap { padding: 20px; }
-
-    /* SEARCH HERO SECTION */
-    .hero-search { background: linear-gradient(135deg, #1e3a8a, #4338ca); padding: 30px 20px; text-align: center; color: white; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; margin-bottom: 20px; }
-    .hero-search h2 { font-size: 20px; font-weight: 800; margin-bottom: 20px; line-height: 1.4; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: #f8fafc; color: #0f172a; padding-bottom: 90px; }
     
-    .search-box { background: white; padding: 15px; border-radius: 12px; display: flex; flex-direction: column; gap: 12px; }
-    .search-box select, .search-box input { width: 100%; padding: 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; color: var(--text); outline: none; }
-    .search-box select:focus, .search-box input:focus { border-color: var(--primary); }
+    /* Top Header */
+    .app-header { background: #ffffff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; }
+    .logo { font-size: 22px; font-weight: 900; background: linear-gradient(135deg, #6366f1, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    
+    /* Hero Search Section */
+    .hero-section { background: linear-gradient(135deg, #1e1b4b, #312e81, #4338ca); padding: 30px 20px; color: white; border-radius: 0 0 24px 24px; box-shadow: 0 10px 25px rgba(49,46,129,0.3); }
+    .search-box { background: white; padding: 15px; border-radius: 16px; margin-top: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); display: flex; flex-direction: column; gap: 10px; }
+    .search-input { padding: 12px 15px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 14px; outline: none; background: #f8fafc; color: #0f172a; font-weight: 500; }
+    .search-btn { background: linear-gradient(135deg, #6366f1, #4f46e5); color: white; border: none; padding: 14px; border-radius: 10px; font-weight: bold; font-size: 15px; cursor: pointer; transition: 0.3s; }
+    .search-btn:active { transform: scale(0.98); }
 
-    /* HALL CARDS */
-    .hall-card { background: white; border-radius: 16px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid var(--border); }
-    .hall-img { width: 100%; height: 180px; background-color: #e2e8f0; object-fit: cover; }
-    .hall-details { padding: 16px; }
-    .hall-title { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
-    .hall-loc { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
-    .hall-price { font-size: 18px; font-weight: 800; color: var(--primary); margin-bottom: 16px; }
-    .btn-book { width: 100%; padding: 12px; background: var(--primary); color: white; text-align: center; border: none; border-radius: 8px; font-weight: 700; font-size: 15px; cursor: pointer; }
+    /* Categories */
+    .categories { display: flex; gap: 10px; overflow-x: auto; padding: 15px 20px; scrollbar-width: none; }
+    .categories::-webkit-scrollbar { display: none; }
+    .cat-chip { background: white; border: 1px solid #e2e8f0; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: bold; white-space: nowrap; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    .cat-chip.active { background: #1e293b; color: white; border-color: #1e293b; }
 
-    /* FOOTER DESIGN */
-    .site-footer { background-color: #0f172a; color: #cbd5e1; padding: 40px 20px 100px 20px; margin-top: 30px; }
-    .footer-grid { max-width: 1150px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; }
-    .footer-brand { font-size: 22px; font-weight: 800; color: white; margin-bottom: 12px; background: linear-gradient(135deg, #4f46e5, #f43f5e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .footer-heading { font-size: 15px; font-weight: 800; color: white; margin-bottom: 16px; }
-    .footer-links { list-style: none; padding: 0; }
-    .footer-links li { margin-bottom: 12px; }
-    .footer-links a { color: #94a3b8; text-decoration: none; font-size: 13px; font-weight: 600; }
-    .footer-contact { font-size: 13px; color: #94a3b8; margin-bottom: 10px; display: flex; gap: 8px; font-weight: 600; }
-    .footer-bottom { text-align: center; border-top: 1px solid #1e293b; margin-top: 40px; padding-top: 20px; font-size: 13px; color: #64748b; }
+    /* Hall Cards */
+    .container { padding: 0 20px; }
+    .section-title { font-size: 18px; font-weight: 800; margin: 20px 0 12px 0; display: flex; justify-content: space-between; align-items: center; }
+    
+    .hall-card { background: white; border-radius: 16px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; transition: 0.3s; position: relative; }
+    .hall-img-container { height: 180px; position: relative; background: #cbd5e1; }
+    .hall-img-container img { width: 100%; height: 100%; object-fit: cover; }
+    .fav-btn { position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.9); border: none; width: 35px; height: 35px; border-radius: 50%; font-size: 18px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+    .rating-badge { position: absolute; bottom: 12px; left: 12px; background: rgba(15,23,42,0.8); backdrop-filter: blur(4px); color: white; padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: bold; }
+    
+    .hall-details { padding: 15px; }
+    .hall-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
+    .hall-location { font-size: 12px; color: #64748b; margin-bottom: 12px; display: flex; align-items: center; gap: 4px; }
+    
+    .hall-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed #e2e8f0; padding-top: 12px; }
+    .hall-price { font-size: 16px; font-weight: 900; color: #047857; }
+    .book-now-btn { background: #0f172a; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; font-size: 13px; cursor: pointer; }
 
-    /* BOTTOM NAV */
-    .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 12px 0; box-shadow: 0 -2px 15px rgba(0,0,0,0.05); z-index: 1000; border-top: 1px solid var(--border); }
-    .nav-item { text-align: center; color: var(--muted); cursor: pointer; font-size: 12px; font-weight: 600; flex: 1; }
-    .nav-item.active { color: var(--primary); }
-    .nav-icon { font-size: 20px; display: block; margin-bottom: 4px; }
+    /* Bottom Nav */
+    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-around; padding: 12px 0; z-index: 100; box-shadow: 0 -4px 15px rgba(0,0,0,0.03); }
+    .nav-item { text-align: center; color: #64748b; font-size: 11px; cursor: pointer; font-weight: 600; }
+    .nav-item.active { color: #6366f1; }
+    .nav-icon { font-size: 20px; display: block; margin-bottom: 2px; }
+
+    /* Screens Switching */
+    .screen { display: none; }
+    .screen.active { display: block; animation: fadeIn 0.3s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Modal Popup */
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 1000; }
+    .modal-box { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; width: 90%; max-width: 350px; padding: 25px; border-radius: 20px; z-index: 1001; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <div class="top-header">
-    <h1>HallWala</h1>
-  </div>
+  <!-- APP HEADER -->
+  <header class="app-header">
+    <div class="logo">HallWala</div>
+    <div style="display: flex; gap: 10px; align-items: center;">
+      <span style="font-size: 12px; font-weight: bold; background: #e0e7ff; color: #4338ca; padding: 6px 12px; border-radius: 8px;">⚡ Live Portal</span>
+    </div>
+  </header>
 
-  <!-- SCREEN 1: HOME (SEARCH & HALLS) -->
+  <!-- SCREEN 1: HOME & SEARCH -->
   <div id="screen-home" class="screen active">
-    <div class="hero-search">
-      <h2>Find the Best Marriage Halls in Your City</h2>
+    
+    <!-- Hero Banner -->
+    <div class="hero-section">
+      <h1 style="font-size: 22px; font-weight: 900; line-height: 1.3;">Find & Book Luxury Marriage Halls</h1>
+      <p style="font-size: 12px; opacity: 0.8; margin-top: 5px;">Direct negotiation with owners. Zero brokerage fees.</p>
+      
+      <!-- Smart Search Box with Dynamic India Data -->
       <div class="search-box">
-        <select id="stateSelect" onchange="loadCities()">
-          <option value="">Select State</option>
+        <select id="stateSelect" class="search-input" onchange="loadDistricts()">
+          <option value="">-- Select State --</option>
         </select>
-        <select id="citySelect">
-          <option value="">All Cities & Districts</option>
+        <select id="districtSelect" class="search-input">
+          <option value="">-- Select City / District --</option>
         </select>
-        <input type="text" id="searchInput" placeholder="Search by locality or hall name...">
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search by locality or hall name...">
+        <button class="search-btn" onclick="executeSearch()">Explore Available Halls</button>
       </div>
     </div>
 
-    <div class="main-wrap">
-      <h3 style="margin-bottom: 15px;">Recommended Halls</h3>
-      <div id="hallsContainer">
-        <!-- Dummy Hall Card -->
-        <div class="hall-card">
-          <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=500" class="hall-img" alt="Hall">
-          <div class="hall-details">
-            <div class="hall-title">Royal Palace Marriage Hall</div>
-            <div class="hall-loc">📍 Sector 4, Bokaro</div>
-            <div class="hall-price">₹40,000 / day</div>
-            <button class="btn-book" onclick="switchScreen('bookings')">Check Availability</button>
+    <!-- Category Chips -->
+    <div class="categories">
+      <div class="cat-chip active" onclick="filterCat('all', this)">💍 All Halls</div>
+      <div class="cat-chip" onclick="filterCat('luxury', this)">🏛️ Luxury Banquets</div>
+      <div class="cat-chip" onclick="filterCat('ac', this)">❄ AC Lawns</div>
+      <div class="cat-chip" onclick="filterCat('catering', this)">🍽️ Catering</div>
+      <div class="cat-chip" onclick="filterCat('parking', this)">🅿️ Parking</div>
+    </div>
+
+    <!-- Recommended Halls Feed -->
+    <div class="container">
+      <div class="section-title">
+        <span>🔥 Trending Halls</span>
+        <span style="font-size: 12px; color: #6366f1; font-weight: bold;">See All</span>
+      </div>
+
+      <!-- Hall Card 1: Royal Palace -->
+      <div class="hall-card" data-name="Royal Palace Marriage Hall" data-location="Islampur Bokaro">
+        <div class="hall-img-container">
+          <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" alt="Hall">
+          <button class="fav-btn" onclick="this.innerText = this.innerText === '❤️' ? '🤍' : '❤️'">❤️</button>
+          <div class="rating-badge">⭐ 4.8 (124 reviews)</div>
+        </div>
+        <div class="hall-details">
+          <div class="hall-title">Royal Palace Marriage Hall</div>
+          <div class="hall-location">📍 Main Road, Islampur, Bokaro • 1.2 km away</div>
+          <div class="hall-footer">
+            <div>
+              <span style="font-size: 11px; color: #64748b; display: block;">Starting from</span>
+              <span class="hall-price">₹40,000 <span style="font-size: 11px; color: #64748b; font-weight: normal;">/ day</span></span>
+            </div>
+            <button class="book-now-btn" onclick="openOfferModal('Royal Palace', '40000')">Make Offer</button>
           </div>
         </div>
       </div>
+
+      <!-- Hall Card 2: Grand Milestone -->
+      <div class="hall-card" data-name="Grand Milestone Banquet" data-location="Sector 4 Bokaro">
+        <div class="hall-img-container">
+          <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=600&q=80" alt="Hall">
+          <button class="fav-btn" onclick="this.innerText = this.innerText === '❤️' ? '🤍' : '❤️'">🤍</button>
+          <div class="rating-badge">⭐ 4.6 (98 reviews)</div>
+        </div>
+        <div class="hall-details">
+          <div class="hall-title">Grand Milestone Banquet</div>
+          <div class="hall-location">📍 Sector 4, City Centre, Bokaro • 3.5 km away</div>
+          <div class="hall-footer">
+            <div>
+              <span style="font-size: 11px; color: #64748b; display: block;">Starting from</span>
+              <span class="hall-price">₹55,000 <span style="font-size: 11px; color: #64748b; font-weight: normal;">/ day</span></span>
+            </div>
+            <button class="book-now-btn" onclick="openOfferModal('Grand Milestone', '55000')">Make Offer</button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <!-- SCREEN 2: BOOKINGS & RAZORPAY -->
-  <div id="screen-bookings" class="screen main-wrap">
-    <h2 style="margin-bottom: 16px;">My Bookings & Offers</h2>
-    <div style="background: white; border: 1.5px solid var(--success); border-radius: 16px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; border-bottom: 1px dashed var(--border); padding-bottom: 12px;">
-        <div>
-          <h3 style="font-size: 18px; font-weight: 800;">Royal Palace Marriage Hall</h3>
-          <p style="font-size: 13px; color: var(--muted);">📍 Sector 4, Bokaro</p>
+  <!-- SCREEN 2: LIVE BOOKINGS & OFFER TRACKER -->
+  <div id="screen-bookings" class="screen">
+    <div class="container" style="padding-top: 20px;">
+      <h2 style="font-size: 18px; margin-bottom: 15px; font-weight: 800;">My Active Offers & Bookings</h2>
+      
+      <div style="background: white; border-radius: 16px; padding: 15px; border: 1px solid #e2e8f0; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <strong style="font-size: 15px;">Royal Palace Marriage Hall</strong>
+          <span style="font-size: 11px; background: #ecfdf5; color: #047857; padding: 4px 8px; border-radius: 6px; font-weight: bold;">Owner Accepted ✅</span>
         </div>
-        <div style="background: #d1fae5; color: var(--success); padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 800;">
-          Owner Accepted ✅
+        <p style="font-size: 12px; color: #64748b; margin-bottom: 10px;">📅 Date: 20 Nov 2026 • Final Deal: <strong>₹40,000</strong></p>
+        
+        <div style="background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 12px;">
+          <span style="font-size: 11px; color: #475569; display: block; margin-bottom: 4px;">Secure Booking Step:</span>
+          <p style="font-size: 12px; font-weight: bold; color: #1e293b;">Pay 10% Token (₹4,000) to lock this date permanently.</p>
         </div>
-      </div>
 
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-        <div>
-          <p style="font-size: 12px; color: var(--muted); font-weight: 700;">Booking Date</p>
-          <p style="font-size: 15px; font-weight: 800; color: var(--primary);">20 November 2026</p>
-        </div>
-        <div style="text-align: right;">
-          <p style="font-size: 12px; color: var(--muted); font-weight: 700;">Final Deal Amount</p>
-          <p style="font-size: 16px; font-weight: 800;">₹40,000</p>
-        </div>
-      </div>
-
-      <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 14px; text-align: center;">
-        <p style="font-size: 12px; font-weight: 700; color: var(--primary-dark); margin-bottom: 8px;">Lock this date by paying the 10% Token Amount</p>
-        <button onclick="startRazorpayPayment(4000)" style="width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 800; cursor: pointer;">
-          💳 Pay Token: ₹4,000
+        <button onclick="alert('🔒 Redirecting to Razorpay Secure Gateway for Token Payment...')" style="width: 100%; background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer;">
+          💳 Pay Token ₹4,000 Now
         </button>
       </div>
     </div>
   </div>
 
   <!-- SCREEN 3: ACCOUNT -->
-  <div id="screen-account" class="screen main-wrap">
-    <h2 style="margin-bottom: 20px;">My Profile</h2>
-    <div style="background: white; padding: 20px; border-radius: 16px; border: 1px solid var(--border);">
-      <p style="font-size: 14px; color: var(--muted); margin-bottom: 8px;">Full Name</p>
-      <input type="text" id="accName" value="Gulam Mohiuddin" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 16px;">
-      
-      <p style="font-size: 14px; color: var(--muted); margin-bottom: 8px;">Mobile Number</p>
-      <input type="text" id="accPhone" value="9876543210" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px;">
+  <div id="screen-account" class="screen">
+    <div class="container" style="padding-top: 20px;">
+      <h2 style="font-size: 18px; margin-bottom: 15px; font-weight: 800;">My Profile</h2>
+      <div style="background: white; border-radius: 16px; padding: 20px; border: 1px solid #e2e8f0; text-align: center;">
+        <div style="width: 70px; height: 70px; background: #e0e7ff; color: #4338ca; font-size: 28px; font-weight: bold; display: flex; align-items: center; justify-content: center; border-radius: 50%; margin: 0 auto 12px auto;">GM</div>
+        <h3 style="font-size: 16px; font-weight: 800;">Gulam Mohiuddin</h3>
+        <p style="font-size: 13px; color: #64748b; margin-top: 4px;">📞 +91 98765 43210</p>
+        <div style="margin-top: 20px; border-top: 1px solid #e2e8f0; padding-top: 15px; text-align: left;">
+          <p style="font-size: 13px; font-weight: bold; padding: 10px 0; border-bottom: 1px solid #f1f5f9; cursor: pointer;">❤️ Saved Favorites (2 Halls)</p>
+          <p style="font-size: 13px; font-weight: bold; padding: 10px 0; border-bottom: 1px solid #f1f5f9; cursor: pointer;">📜 Terms & Conditions & Policies</p>
+          <p style="font-size: 13px; font-weight: bold; padding: 10px 0; color: #ef4444; cursor: pointer;">🚪 Logout</p>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- PROFESSIONAL FOOTER WITH MUMBAI CORPORATE ADDRESS -->
-  <footer class="site-footer">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-brand">HallWala</div>
-        <p style="font-size: 13px; line-height: 1.6;">India's most trusted platform for booking marriage halls, banquets, and event spaces. Transparent, secure, and hassle-free.</p>
-      </div>
-      <div>
-        <div class="footer-heading">Platform Links</div>
-        <ul class="footer-links">
-          <li><a href="index.html">Home / Sign In</a></li>
-          <li><a href="customer-dashboard.html">Search Halls</a></li>
-          <li><a href="owner-dashboard.html">Vendor Portal</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="footer-heading">Legal & Policies</div>
-        <ul class="footer-links">
-          <li><a href="legal.html">Terms & Conditions</a></li>
-          <li><a href="legal.html">Privacy Policy</a></li>
-          <li><a href="legal.html">Refund & Cancellations</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="footer-heading">Contact Support</div>
-        <div class="footer-contact"><span>📧</span> support@hallwala.in</div>
-<div class="footer-contact" style="line-height: 1.6;"><span>📍</span> <strong>Registered Office:</strong><br>Vill - Hesabatu West, PO - Makhdumpur,<br>District - B.S.City, Jharkhand - 827010</div>
-        
-      </div>
+  <!-- BOTTOM APP NAVIGATION -->
+  <nav class="bottom-nav">
+    <div class="nav-item active" onclick="switchTab('home', this)">
+      <span class="nav-icon">🏠</span> Home
     </div>
-    <div class="footer-bottom">&copy; 2026 HallWala. All rights reserved.</div>
-  </footer>
+    <div class="nav-item" onclick="switchTab('bookings', this)">
+      <span class="nav-icon">📅</span> Bookings
+    </div>
+    <div class="nav-item" onclick="switchTab('account', this)">
+      <span class="nav-icon">👤</span> Account
+    </div>
+  </nav>
 
-  <!-- BOTTOM NAVIGATION -->
-  <div class="bottom-nav">
-    <div class="nav-item active" id="nav-home" onclick="switchScreen('home')">
-      <span class="nav-icon">🏠</span><span>Home</span>
-    </div>
-    <div class="nav-item" id="nav-bookings" onclick="switchScreen('bookings')">
-      <span class="nav-icon">📅</span><span>Bookings</span>
-    </div>
-    <div class="nav-item" id="nav-account" onclick="switchScreen('account')">
-      <span class="nav-icon">👤</span><span>Account</span>
-    </div>
+  <!-- OFFER MODAL POPUP -->
+  <div id="modalOverlay" class="modal-overlay" onclick="closeOfferModal()"></div>
+  <div id="offerModal" class="modal-box">
+    <h3 id="modalTitle" style="font-size: 16px; font-weight: 800; margin-bottom: 8px;">Make an Offer</h3>
+    <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Negotiate directly with the hall owner for your event date.</p>
+    
+    <label style="font-size: 12px; font-weight: bold; color: #334155; display: block; margin-bottom: 5px;">Your Proposed Price (₹)</label>
+    <input type="number" id="offerPriceInput" value="38000" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; font-weight: bold; margin-bottom: 15px; outline: none;">
+    
+    <button onclick="submitOffer()" style="width: 100%; background: #6366f1; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-bottom: 8px;">
+      🚀 Send Offer to Owner
+    </button>
+    <button onclick="closeOfferModal()" style="width: 100%; background: #f1f5f9; color: #475569; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer;">
+      Cancel
+    </button>
   </div>
 
-  <!-- JAVASCRIPT FOR ALL 28 STATES & CITIES -->
+
+   <!-- JAVASCRIPT: INDIA MASTER DATA & INTERACTIVITY -->
   <script>
+    // 🇮🇳 PURE CLEAN INDIA MASTER DATA: ALL CAPITALS, CITIES & DISTRICTS (NO TAGS)
     const indiaData = {
-      // PURE CLEAN INDIA MASTER DATA: ALL CAPITALS, CITIES & DISTRICTS (NO TAGS)
       "Andaman and Nicobar": ["Port Blair", "Nicobar", "North and Middle Andaman", "South Andaman"],
       "Andhra Pradesh": ["Amaravati", "Visakhapatnam", "Alluri Sitharama Raju", "Anakapalli", "Ananthapuramu", "Annamayya", "Bapatla", "Chittoor", "Dr. B.R. Ambedkar Konaseema", "East Godavari", "Eluru", "Guntur", "Kakinada", "Krishna", "Kurnool", "Nandyal", "NTR", "Palnadu", "Parvathipuram Manyam", "Prakasam", "Sri Potti Sriramulu Nellore", "Sri Sathya Sai", "Srikakulam", "Tirupati", "Vizianagaram", "West Godavari", "YSR Kadapa"],
       "Arunachal Pradesh": ["Itanagar", "Anjaw", "Changlang", "Dibang Valley", "East Kameng", "East Siang", "Kamle", "Kra Daadi", "Kurung Kumey", "Lepa Rada", "Lohit", "Longding", "Lower Dibang Valley", "Lower Siang", "Lower Subansiri", "Namsai", "Pakke Kessang", "Papum Pare", "Shi Yomi", "Siang", "Tawang", "Tirap", "Upper Siang", "Upper Subansiri", "West Kameng", "West Siang"],
@@ -235,67 +263,85 @@
       "West Bengal": ["Kolkata", "Howrah", "Darjeeling", "Alipurduar", "Bankura", "Birbhum", "Cooch Behar", "Dakshin Dinajpur", "Hooghly", "Jalpaiguri", "Jhargram", "Kalimpong", "Malda", "Murshidabad", "Nadia", "North 24 Parganas", "Paschim Bardhaman", "Paschim Medinipur", "Purba Bardhaman", "Purba Medinipur", "Purulia", "South 24 Parganas", "Uttar Dinajpur"]
     };
 
-    function initStates() {
-      const stateSelect = document.getElementById('stateSelect');
+    // Load States on startup
+    window.onload = function() {
+      const stateSelect = document.getElementById("stateSelect");
       for (let state in indiaData) {
-        let opt = document.createElement('option');
+        let opt = document.createElement("option");
         opt.value = state;
         opt.innerText = state;
         stateSelect.appendChild(opt);
       }
-    }
+      // Default set to Jharkhand for immediate local testing
+      stateSelect.value = "Jharkhand";
+      loadDistricts();
+      document.getElementById("districtSelect").value = "Bokaro";
+    };
 
-    function loadCities() {
-      const stateSelect = document.getElementById('stateSelect');
-      const citySelect = document.getElementById('citySelect');
-      citySelect.innerHTML = '<option value="">All Cities & Districts</option>';
+    // Load Districts dynamically based on State
+    function loadDistricts() {
+      const state = document.getElementById("stateSelect").value;
+      const districtSelect = document.getElementById("districtSelect");
+      districtSelect.innerHTML = '<option value="">-- Select City / District --</option>';
       
-      let selectedState = stateSelect.value;
-      if (selectedState && indiaData[selectedState]) {
-        indiaData[selectedState].forEach(city => {
-          let opt = document.createElement('option');
-          opt.value = city;
-          opt.innerText = city;
-          citySelect.appendChild(opt);
+      if (indiaData[state]) {
+        indiaData[state].forEach(district => {
+          let opt = document.createElement("option");
+          opt.value = district;
+          opt.innerText = district;
+          districtSelect.appendChild(opt);
         });
       }
     }
 
-    function switchScreen(screenName) {
-      document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    // Tab Switching Logic
+    function switchTab(tabId, element) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
       
-      document.getElementById('screen-' + screenName).classList.add('active');
-      document.getElementById('nav-' + screenName).classList.add('active');
-      window.scrollTo(0, 0);
+      document.getElementById('screen-' + tabId).classList.add('active');
+      element.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    initStates();
-  </script>
+    // Search Execution
+    function executeSearch() {
+      const state = document.getElementById("stateSelect").value;
+      const district = document.getElementById("districtSelect").value;
+      const query = document.getElementById("searchInput").value;
+      
+      let alertMsg = '⚡ Searching verified luxury halls...';
+      if(district) alertMsg += `\nLocation: ${district}, ${state}`;
+      if(query) alertMsg += `\nKeyword: ${query}`;
+      
+      alert(alertMsg);
+    }
 
-  <!-- RAZORPAY INTEGRATION SCRIPT -->
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <script>
-    function startRazorpayPayment(amount) {
-      var options = {
-          "key": "rzp_test_dummy_key_here",
-          "amount": amount * 100, 
-          "currency": "INR",
-          "name": "HallWala Platform",
-          "description": "10% Token Booking Amount",
-          "image": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
-          "handler": function (response){
-              alert("🎉 Payment Successful!\nPayment ID: " + response.razorpay_payment_id + "\n\n₹" + amount + " ka Token pay ho gaya hai.");
-          },
-          "prefill": {
-              "name": document.getElementById('accName').value || "Customer",
-              "contact": document.getElementById('accPhone').value || "9876543210"
-          },
-          "theme": { "color": "#4f46e5" }
-      };
-      var rzp1 = new Razorpay(options);
-      rzp1.open();
+    // Modal Control
+    function openOfferModal(hallName, defaultPrice) {
+      document.getElementById('modalTitle').innerText = 'Make Offer for ' + hallName;
+      document.getElementById('offerPriceInput').value = parseInt(defaultPrice) - 2000;
+      document.getElementById('modalOverlay').style.display = 'block';
+      document.getElementById('offerModal').style.display = 'block';
+    }
+
+    function closeOfferModal() {
+      document.getElementById('modalOverlay').style.display = 'none';
+      document.getElementById('offerModal').style.display = 'none';
+    }
+
+    function submitOffer() {
+      closeOfferModal();
+      alert('🎉 Offer Sent Successfully! The owner has been notified via live push notification. Check the "Bookings" tab for updates.');
+    }
+
+    // Category Filter
+    function filterCat(category, element) {
+      document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+      element.classList.add('active');
     }
   </script>
 </body>
 </html>
+
+
