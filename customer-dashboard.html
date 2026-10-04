@@ -57,6 +57,26 @@
     /* Modal Popup */
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 1000; }
     .modal-box { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; width: 90%; max-width: 350px; padding: 25px; border-radius: 20px; z-index: 1001; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+ 
+      /* ⚡ ULTRA-MODERN PREMIUM CSS ⚡ */
+    body { background: #f0f4f8; }
+    
+    /* Glassmorphism Search Card */
+    .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 15px 35px rgba(30, 41, 59, 0.15); border-radius: 20px; padding: 20px; }
+    
+    /* 3D Hover Effect on Hall Cards */
+    .hall-card { transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    .hall-card:active { transform: translateY(2px) scale(0.98); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    
+    /* Pulse Animation for Booking Button */
+    .btn-pulse { animation: pulseGlow 2s infinite; background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; }
+    @keyframes pulseGlow { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); } 70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
+
+    /* Animated Heart Button */
+    .fav-btn { transition: transform 0.2s; }
+    .fav-btn:active { transform: scale(1.5); }
+      
+  
   </style>
 </head>
 <body>
@@ -166,7 +186,31 @@
           <p style="font-size: 12px; font-weight: bold; color: #1e293b;">Pay 10% Token (₹4,000) to lock this date permanently.</p>
         </div>
 
-        <button onclick="alert('🔒 Redirecting to Razorpay Secure Gateway for Token Payment...')" style="width: 100%; background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer;">
+                <!-- 🚦 LIVE TRACKING PROGRESS BAR -->
+        <div style="margin: 15px 0; display: flex; align-items: center; justify-content: space-between; position: relative;">
+          <!-- Connecting Line -->
+          <div style="position: absolute; top: 12px; left: 10px; right: 10px; height: 3px; background: #e2e8f0; z-index: 1;"></div>
+          <div style="position: absolute; top: 12px; left: 10px; width: 50%; height: 3px; background: #10b981; z-index: 2;"></div>
+          
+          <!-- Step 1: Offer Sent -->
+          <div style="text-align: center; position: relative; z-index: 3;">
+            <div style="width: 25px; height: 25px; background: #10b981; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; margin: 0 auto 5px auto; box-shadow: 0 0 10px rgba(16,185,129,0.4);">✓</div>
+            <span style="font-size: 10px; color: #10b981; font-weight: bold;">Offer Sent</span>
+          </div>
+          <!-- Step 2: Accepted -->
+          <div style="text-align: center; position: relative; z-index: 3;">
+            <div style="width: 25px; height: 25px; background: #10b981; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; margin: 0 auto 5px auto; box-shadow: 0 0 10px rgba(16,185,129,0.4);">✓</div>
+            <span style="font-size: 10px; color: #10b981; font-weight: bold;">Accepted</span>
+          </div>
+          <!-- Step 3: Token Pending -->
+          <div style="text-align: center; position: relative; z-index: 3;">
+            <div style="width: 25px; height: 25px; background: white; border: 2px solid #cbd5e1; color: #64748b; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; margin: 0 auto 5px auto;">3</div>
+            <span style="font-size: 10px; color: #64748b; font-weight: bold;">Pay Token</span>
+          </div>
+        </div>
+        
+
+        <button class="btn-pulse" onclick="alert('🔒 Redirecting to Razorpay Secure Gateway for Token Payment...')" style="width: 100%; background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer;">
           💳 Pay Token ₹4,000 Now
         </button>
       </div>
@@ -203,22 +247,58 @@
     </div>
   </nav>
 
-  <!-- OFFER MODAL POPUP -->
-  <div id="modalOverlay" class="modal-overlay" onclick="closeOfferModal()"></div>
-  <div id="offerModal" class="modal-box">
-    <h3 id="modalTitle" style="font-size: 16px; font-weight: 800; margin-bottom: 8px;">Make an Offer</h3>
-    <p style="font-size: 12px; color: #64748b; margin-bottom: 15px;">Negotiate directly with the hall owner for your event date.</p>
+    <!-- 🚀 ULTRA-MODERN BOTTOM ACTION SHEET (MAKE OFFER) -->
+  <div id="modalOverlay" class="modal-overlay" onclick="closeOfferModal()" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15,23,42,0.7); backdrop-filter: blur(5px); z-index: 1000; transition: 0.3s;"></div>
+  
+  <div id="offerModal" style="display: none; position: fixed; bottom: -100%; left: 0; right: 0; background: white; padding: 25px 20px 35px 20px; border-radius: 24px 24px 0 0; z-index: 1001; transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 -10px 40px rgba(0,0,0,0.2);">
     
-    <label style="font-size: 12px; font-weight: bold; color: #334155; display: block; margin-bottom: 5px;">Your Proposed Price (₹)</label>
-    <input type="number" id="offerPriceInput" value="38000" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; font-weight: bold; margin-bottom: 15px; outline: none;">
+    <!-- Swipe Indicator -->
+    <div style="width: 40px; height: 5px; background: #cbd5e1; border-radius: 10px; margin: 0 auto 20px auto;"></div>
     
-    <button onclick="submitOffer()" style="width: 100%; background: #6366f1; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-bottom: 8px;">
-      🚀 Send Offer to Owner
-    </button>
-    <button onclick="closeOfferModal()" style="width: 100%; background: #f1f5f9; color: #475569; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer;">
-      Cancel
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+      <div>
+        <h3 id="modalTitle" style="font-size: 18px; font-weight: 900; color: #0f172a; margin-bottom: 4px;">Make an Offer</h3>
+        <p style="font-size: 12px; color: #64748b;">Vendor usually replies within 5 mins ⚡</p>
+      </div>
+      <div style="background: #f1f5f9; padding: 10px; border-radius: 12px; font-size: 20px;">🤝</div>
+    </div>
+    
+    <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 16px; margin-bottom: 20px; position: relative;">
+      <label style="font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 1px;">Your Best Price</label>
+      <div style="display: flex; align-items: center; margin-top: 5px;">
+        <span style="font-size: 24px; font-weight: 900; color: #0f172a; margin-right: 5px;">₹</span>
+        <input type="number" id="offerPriceInput" value="38000" style="width: 100%; border: none; background: transparent; font-size: 28px; font-weight: 900; color: #4f46e5; outline: none; padding: 0;">
+      </div>
+    </div>
+    
+    <button onclick="submitOffer()" class="btn-pulse" style="width: 100%; border-radius: 14px; padding: 16px; font-size: 16px; font-weight: bold; cursor: pointer;">
+      Send Offer Instantly 🚀
     </button>
   </div>
+
+  <script>
+    // New Slide-up Modal Logic
+    function openOfferModal(hallName, defaultPrice) {
+      document.getElementById('modalTitle').innerText = hallName;
+      document.getElementById('offerPriceInput').value = parseInt(defaultPrice) - 2000;
+      
+      document.getElementById('modalOverlay').style.display = 'block';
+      document.getElementById('offerModal').style.display = 'block';
+      // Slight delay to allow display:block to render before sliding up
+      setTimeout(() => {
+        document.getElementById('offerModal').style.bottom = '0';
+      }, 10);
+    }
+
+    function closeOfferModal() {
+      document.getElementById('offerModal').style.bottom = '-100%';
+      setTimeout(() => {
+        document.getElementById('modalOverlay').style.display = 'none';
+        document.getElementById('offerModal').style.display = 'none';
+      }, 300); // Wait for slide down animation
+    }
+  </script>
+  
 
 
    <!-- JAVASCRIPT: INDIA MASTER DATA & INTERACTIVITY -->
