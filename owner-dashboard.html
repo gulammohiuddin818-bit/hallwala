@@ -123,6 +123,21 @@
             </div>
           </div>
 
+                      <!-- 📈 Real Visual Graph (Mini Line Chart) -->
+            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 1;">
+              <div style="display: flex; align-items: flex-end; justify-content: space-between; height: 40px; gap: 4px;">
+                <!-- Graph Bars (Last 7 Days) -->
+                <div style="width: 12%; background: rgba(16,185,129,0.3); height: 40%; border-radius: 2px 2px 0 0; position: relative;"><div style="position: absolute; top: -15px; font-size: 8px; width: 100%; text-align: center; color: #94a3b8;">Mon</div></div>
+                <div style="width: 12%; background: rgba(16,185,129,0.5); height: 60%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 12%; background: rgba(16,185,129,0.4); height: 50%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 12%; background: rgba(16,185,129,0.8); height: 90%; border-radius: 2px 2px 0 0;"><div style="position: absolute; top: -15px; font-size: 8px; width: 100%; text-align: center; color: #94a3b8;">Thu</div></div>
+                <div style="width: 12%; background: rgba(16,185,129,0.3); height: 30%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 12%; background: rgba(16,185,129,0.7); height: 75%; border-radius: 2px 2px 0 0;"></div>
+                <div style="width: 12%; background: #10b981; height: 100%; border-radius: 2px 2px 0 0; position: relative;"><div style="position: absolute; top: -15px; font-size: 8px; width: 100%; text-align: center; color: #10b981; font-weight: bold;">Sun</div></div>
+              </div>
+            </div>
+          
+
           <!-- 2. QUICK STATS GRID -->
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
             <div class="card" style="margin-bottom: 0; border-bottom: 3px solid #3b82f6; padding: 15px;">
@@ -224,6 +239,35 @@
             </div>
           </div>
 
+          <!-- ⭐ 6. CUSTOMER REVIEWS & RATINGS -->
+          <div class="card" style="margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+              <h3 style="margin: 0; font-size: 16px; color: #1e293b; display: flex; align-items: center; gap: 8px;">
+                ⭐ Public Reviews
+              </h3>
+              <span style="font-size: 14px; font-weight: bold; color: #0f172a;">4.8 <span style="font-size: 10px; color: #f59e0b;">★★★★★</span></span>
+            </div>
+            
+            <!-- Review 1 -->
+            <div style="border-bottom: 1px solid #f1f5f9; padding-bottom: 12px; margin-bottom: 12px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                <strong style="font-size: 13px; color: #334155;">Md. Ali Imam</strong>
+                <span style="font-size: 10px; color: #f59e0b;">★★★★★</span>
+              </div>
+              <p style="margin: 0; font-size: 11px; color: #64748b; font-style: italic;">"Best marriage hall in Islampur. AC was working perfectly and parking space is huge!"</p>
+            </div>
+
+            <!-- Review 2 -->
+            <div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                <strong style="font-size: 13px; color: #334155;">Nagma Praween</strong>
+                <span style="font-size: 10px; color: #f59e0b;">★★★★☆</span>
+              </div>
+              <p style="margin: 0; font-size: 11px; color: #64748b; font-style: italic;">"Good decoration and catering. Highly recommended for family functions."</p>
+            </div>
+          </div>
+          
+          
         </div>
   
             
@@ -514,6 +558,29 @@
             </div>
           </div>
 
+
+                    <!-- 👨‍💼 STAFF & MANAGER ACCESS CONTROL -->
+          <div class="card" style="margin-bottom: 20px; border-left: 4px solid #f59e0b;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <h3 style="margin: 0; font-size: 15px; color: #b45309; display: flex; align-items: center; gap: 8px;">
+                👨‍💼 Manager / Staff Access
+              </h3>
+              <label style="position: relative; display: inline-block; width: 34px; height: 20px;">
+                <input type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
+                <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #10b981; border-radius: 20px; transition: .4s;"></span>
+                <span style="position: absolute; content: ''; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: .4s; transform: translateX(14px);"></span>
+              </label>
+            </div>
+            <p style="font-size: 11px; color: #64748b; margin-bottom: 12px;">
+              Allow your staff to view only 'Calendar' & 'Bookings'. <strong>'Revenue' & 'Bank Details' will remain locked</strong> with your Master Password.
+            </p>
+            <div style="display: flex; gap: 10px;">
+              <input type="text" placeholder="Manager Mobile Number" value="9876543210" style="flex: 1; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 12px; background: #f8fafc;">
+              <button style="background: #334155; color: white; border: none; padding: 0 15px; border-radius: 6px; font-weight: bold; font-size: 11px; cursor: pointer;">Update</button>
+            </div>
+          </div>
+          
+          
           <!-- 3. 📍 LOCATION & GOOGLE MAPS -->
           <div class="card" style="margin-bottom: 20px;">
             <h3 style="margin-bottom: 15px; font-size: 16px; color: #1e293b;">📍 Search Location & Maps</h3>
