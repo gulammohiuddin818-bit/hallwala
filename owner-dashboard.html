@@ -65,15 +65,37 @@
     .nav-item { text-align: center; color: var(--muted); cursor: pointer; font-size: 11px; font-weight: 700; flex: 1; }
     .nav-item.active { color: var(--primary); }
     .nav-icon { font-size: 20px; display: block; margin-bottom: 4px; }
+
+    /* 🔥 PREMIUM UI ANIMATIONS 🔥 */
+    .fade-in { animation: fadeIn 0.4s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    
+    .pulse-badge { animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } 70% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
+    
+    /* Success Pop-up Modal */
+    .success-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 999; }
+    .success-modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); z-index: 1000; text-align: center; border-top: 6px solid #10b981; width: 80%; max-width: 300px; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    @keyframes popIn { 0% { opacity: 0; transform: translate(-50%, -40%) scale(0.8); } 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+    
+    
   </style>
 </head>
 <body>
 
-  <!-- APP HEADER -->
-  <header class="app-header">
-    <h1>My Hall</h1>
-    <div class="header-badge">Royal Palace</div>
-  </header>
+      <!-- 🔔 APP HEADER WITH NOTIFICATION BELL -->
+    <header class="app-header" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <h1 style="margin: 0; font-size: 20px;">My Hall</h1>
+        <div class="header-badge">Royal Palace</div>
+      </div>
+      <!-- Pulse Notification Bell -->
+      <div style="position: relative; cursor: pointer;" onclick="alert('🔔 Live Update: Your Profile views increased by 24% today!')">
+        <span style="font-size: 22px;">🔔</span>
+        <span class="pulse-badge" style="position: absolute; top: 0; right: 0; background: #ef4444; width: 10px; height: 10px; border-radius: 50%; border: 2px solid white;"></span>
+      </div>
+    </header>
+  
 
            <!-- SCREEN 1: DASHBOARD (ULTRA-MODERN PRO) -->
         <div id="screen-dashboard" class="screen active">
@@ -711,6 +733,64 @@
     initCalendarControls();
     renderCalendar();
     </script>
+
+    <!-- 🎉 SUCCESS CELEBRATION POP-UP -->
+    <div id="successOverlay" class="success-overlay"></div>
+    <div id="successModal" class="success-modal">
+      <div style="font-size: 50px; margin-bottom: 10px;">💸</div>
+      <h2 style="margin: 0 0 10px 0; color: #10b981; font-size: 22px;">Deal Locked!</h2>
+      <p style="font-size: 13px; color: #475569; margin-bottom: 20px; line-height: 1.5;">
+        Customer ko <strong>₹5,000</strong> ka Token Payment link bhej diya gaya hai. Payment hote hi WhatsApp unlock ho jayega!
+      </p>
+      <div style="background: #f1f5f9; padding: 10px; border-radius: 8px; font-size: 12px; color: #64748b; margin-bottom: 20px;">
+        ⏳ Waiting for customer payment...
+      </div>
+      <button onclick="closeSuccessModal()" style="width: 100%; background: #0f172a; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer;">
+        Got it, Thanks!
+      </button>
+    </div>
+
+    <script>
+      // 🌟 MAGIC SCRIPT FOR ANIMATIONS & POP-UP
+      
+      // 1. Smooth Page Transition
+      function switchScreen(screenId, element) {
+        document.querySelectorAll('.screen').forEach(s => {
+          s.classList.remove('active');
+          s.classList.remove('fade-in'); // Reset animation
+        });
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        
+        let targetScreen = document.getElementById('screen-' + screenId);
+        targetScreen.classList.add('active');
+        targetScreen.classList.add('fade-in'); // Add smooth slide animation
+        
+        element.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // 2. Celebration Pop-up Logic
+      function showSuccessModal() {
+        document.getElementById('successOverlay').style.display = 'block';
+        document.getElementById('successModal').style.display = 'block';
+      }
+      
+      function closeSuccessModal() {
+        document.getElementById('successOverlay').style.display = 'none';
+        document.getElementById('successModal').style.display = 'none';
+      }
+
+      // Override the Accept button to show Pop-up
+      setTimeout(() => {
+        let acceptBtns = document.querySelectorAll('button');
+        acceptBtns.forEach(btn => {
+          if(btn.innerText.includes('Accept')) {
+            btn.setAttribute('onclick', 'showSuccessModal()');
+          }
+        });
+      }, 1000);
+    </script>
+  
   
 </body>
 </html>
