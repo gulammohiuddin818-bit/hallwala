@@ -427,40 +427,6 @@
   </script>
   
   
-    // Bulletproof Slide-up Modal Logic
-    function openOfferModal(hallName, defaultPrice) {
-      document.getElementById('modalTitle').innerText = hallName;
-      document.getElementById('offerPriceInput').value = parseInt(defaultPrice) - 2000;
-      
-      const overlay = document.getElementById('modalOverlay');
-      const modal = document.getElementById('offerModal');
-      
-      overlay.style.display = 'block';
-      modal.style.display = 'block';
-      
-      // Force mobile browsers to render before sliding
-      void modal.offsetWidth; 
-      
-      modal.style.transform = 'translateY(0)';
-    }
-
-    function closeOfferModal() {
-      const modal = document.getElementById('offerModal');
-      modal.style.transform = 'translateY(100%)';
-      
-      setTimeout(() => {
-        document.getElementById('modalOverlay').style.display = 'none';
-        modal.style.display = 'none';
-      }, 300);
-    }
-
-    function submitOffer() {
-      closeOfferModal();
-      setTimeout(() => {
-        alert('🎉 Offer Sent Successfully! The owner has been notified via live push notification. Check the "Bookings" tab for updates.');
-      }, 350);
-    }
-  </script>
   
 
    <!-- JAVASCRIPT: INDIA MASTER DATA & INTERACTIVITY -->
