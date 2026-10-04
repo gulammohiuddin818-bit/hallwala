@@ -312,31 +312,6 @@
     }
   </script>
   
-  
-  <script>
-    // New Slide-up Modal Logic
-    function openOfferModal(hallName, defaultPrice) {
-      document.getElementById('modalTitle').innerText = hallName;
-      document.getElementById('offerPriceInput').value = parseInt(defaultPrice) - 2000;
-      
-      document.getElementById('modalOverlay').style.display = 'block';
-      document.getElementById('offerModal').style.display = 'block';
-      // Slight delay to allow display:block to render before sliding up
-      setTimeout(() => {
-        document.getElementById('offerModal').style.bottom = '0';
-      }, 10);
-    }
-
-    function closeOfferModal() {
-      document.getElementById('offerModal').style.bottom = '-100%';
-      setTimeout(() => {
-        document.getElementById('modalOverlay').style.display = 'none';
-        document.getElementById('offerModal').style.display = 'none';
-      }, 300); // Wait for slide down animation
-    }
-  </script>
-  
-
 
    <!-- JAVASCRIPT: INDIA MASTER DATA & INTERACTIVITY -->
   <script>
