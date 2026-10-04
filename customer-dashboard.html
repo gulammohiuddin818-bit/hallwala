@@ -110,14 +110,94 @@
       </div>
     </div>
 
-    <!-- Category Chips -->
-    <div class="categories">
-      <div class="cat-chip active" onclick="filterCat('all', this)">💍 All Halls</div>
-      <div class="cat-chip" onclick="filterCat('luxury', this)">🏛️ Luxury Banquets</div>
-      <div class="cat-chip" onclick="filterCat('ac', this)">❄ AC Lawns</div>
-      <div class="cat-chip" onclick="filterCat('catering', this)">🍽️ Catering</div>
-      <div class="cat-chip" onclick="filterCat('parking', this)">🅿️ Parking</div>
+        <!-- 🔥 ULTRA-MODERN CATEGORY FILTER -->
+    <div style="margin: 20px 0; overflow-x: auto; white-space: nowrap; padding-bottom: 10px; scrollbar-width: none; -ms-overflow-style: none;">
+      <style>
+        /* Hide scrollbar for smooth Swiggy-like feel */
+        div::-webkit-scrollbar { display: none; }
+        
+        .cat-chip {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 10px 20px;
+          border-radius: 30px;
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
+          color: #64748b;
+          font-size: 14px;
+          font-weight: 800;
+          cursor: pointer;
+          margin-right: 12px;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        
+        .cat-chip.active {
+          background: linear-gradient(135deg, #4f46e5, #3b82f6); /* Premium Blue Gradient */
+          color: white;
+          border-color: transparent;
+          box-shadow: 0 8px 18px rgba(79, 70, 229, 0.3);
+          transform: translateY(-2px);
+        }
+        
+        .cat-icon {
+          font-size: 18px;
+          background: #f1f5f9;
+          padding: 5px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: 0.3s;
+        }
+        
+        .cat-chip.active .cat-icon {
+          background: rgba(255, 255, 255, 0.25);
+          box-shadow: 0 0 10px rgba(255,255,255,0.2);
+        }
+      </style>
+
+      <div class="cat-chip active" onclick="selectCategory(this, 'All Venues')">
+        <span class="cat-icon">✨</span> All Venues
+      </div>
+      <div class="cat-chip" onclick="selectCategory(this, 'Weddings')">
+        <span class="cat-icon">💍</span> Weddings
+      </div>
+      <div class="cat-chip" onclick="selectCategory(this, 'Birthdays')">
+        <span class="cat-icon">🎂</span> Birthdays
+      </div>
+      <div class="cat-chip" onclick="selectCategory(this, 'Corporate')">
+        <span class="cat-icon">💼</span> Corporate
+      </div>
+      <div class="cat-chip" onclick="selectCategory(this, 'Haldi & Mehendi')">
+        <span class="cat-icon">🎉</span> Haldi & Mehendi
+      </div>
+      <div class="cat-chip" onclick="selectCategory(this, 'Anniversary')">
+        <span class="cat-icon">🥂</span> Anniversary
+      </div>
     </div>
+    
+    <script>
+      function selectCategory(element, categoryName) {
+        // 1. Remove 'active' class from all chips
+        document.querySelectorAll('.cat-chip').forEach(chip => {
+          chip.classList.remove('active');
+        });
+        
+        // 2. Add 'active' class to the clicked chip
+        element.classList.add('active');
+        
+        // 3. Haptic Feedback (Vibration) on Mobile 📱
+        if (navigator.vibrate) {
+            navigator.vibrate(50);
+        }
+        
+        // 4. Show a cool alert (Later we will connect this to actually filter the halls below)
+        alert('🔥 Scanning premium ' + categoryName + ' venues around you...');
+      }
+    </script>
+    
 
     <!-- Recommended Halls Feed -->
     <div class="container">
