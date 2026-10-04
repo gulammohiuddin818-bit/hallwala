@@ -409,24 +409,6 @@
       alert(alertMsg);
     }
 
-    // Modal Control
-    function openOfferModal(hallName, defaultPrice) {
-      document.getElementById('modalTitle').innerText = 'Make Offer for ' + hallName;
-      document.getElementById('offerPriceInput').value = parseInt(defaultPrice) - 2000;
-      document.getElementById('modalOverlay').style.display = 'block';
-      document.getElementById('offerModal').style.display = 'block';
-    }
-
-    function closeOfferModal() {
-      document.getElementById('modalOverlay').style.display = 'none';
-      document.getElementById('offerModal').style.display = 'none';
-    }
-
-    function submitOffer() {
-      closeOfferModal();
-      alert('🎉 Offer Sent Successfully! The owner has been notified via live push notification. Check the "Bookings" tab for updates.');
-    }
-
     // Category Filter
     function filterCat(category, element) {
       document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
