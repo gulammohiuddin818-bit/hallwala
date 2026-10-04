@@ -354,49 +354,145 @@
         </div>
   
 
-  <!-- SCREEN 4: CUSTOMERS & BANK (TERMS) -->
-  <div id="screen-customers" class="screen">
-    
-    <!-- Bank & Terms -->
-    <div class="card" style="border-color: #fca5a5;">
-      <h3 style="margin-bottom: 10px; font-size: 16px; color: #991b1b;">⚠️ Platform Terms & Bank</h3>
-      <div class="terms-box" style="margin-bottom: 15px;">
-        <strong>Token & Payment Policy:</strong><br>
-        As per HallWala.in Terms & Conditions, a flat platform fee of <strong>₹1,000</strong> is deducted from the customer's token amount and routed to HallWala.<br><br>
-        The remaining token amount is credited to your bank account. The rest 90% balance payment must be collected as per the standard cancellation policy (e.g., 7 days or 24 hours prior to the event).
-      </div>
-      <div class="form-group">
-        <label class="form-label">Saved Bank Account</label>
-        <input type="text" class="form-input" value="SBI - XXXXXX1234" readonly>
-      </div>
-    </div>
+          <!-- SCREEN 4: ACCOUNT, KYC & BANK (ULTRA-MODERN) -->
+        <div id="screen-customers" class="screen">
+          
+          <!-- 1. 🚀 PLATFORM FEE & VALUE HIGHLIGHT (Top Priority) -->
+          <div style="background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 12px; padding: 20px; color: white; margin-bottom: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.15); border-left: 4px solid #10b981;">
+            <h3 style="margin: 0 0 10px 0; font-size: 16px; display: flex; align-items: center; gap: 8px; color: #f8fafc;">
+              💎 HallWala Partnership Value
+            </h3>
+            <p style="font-size: 13px; color: #cbd5e1; margin-bottom: 12px; line-height: 1.5;">
+              Customer द्वारा दिए गए 10% Token Amount (₹5,000) में से <strong>₹1,000 HallWala Platform Fee</strong> होती है। बाकि ₹4,000 तुरंत आपके बैंक में भेजे जाते हैं। 
+            </p>
+            <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 8px; font-size: 11px; color: #94a3b8; line-height: 1.5;">
+              <strong>यह ₹1,000 सिर्फ फीस नहीं है, इसमें शामिल है:</strong><br>
+              ✅ आपकी प्रॉपर्टी का Google & Social Media Advertisement<br>
+              ✅ 24/7 Server, App Maintenance & Tech Support<br>
+              ✅ Secure Payment Gateway Charges<br>
+              ✅ Dedicated Customer Support Team
+            </div>
+          </div>
 
-    <!-- Customers & Block -->
-    <div class="card">
-      <h3 style="margin-bottom: 15px; font-size: 16px;">My Customers</h3>
-      
-      <div class="list-item">
-        <div>
-          <div style="font-weight: 800; font-size: 14px;">Samma Parveen</div>
-          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">Booked: 20 Nov 2026</div>
+          <!-- 2. 👤 VENDOR KYC & PROFILE -->
+          <div class="card" style="margin-bottom: 20px; border-top: 4px solid #3b82f6;">
+            <h3 style="margin-bottom: 20px; font-size: 16px; color: #1e293b;">👤 Vendor KYC & Profile</h3>
+            
+            <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 20px;">
+              <div style="width: 80px; height: 80px; background: #e2e8f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; border: 3px solid #3b82f6; cursor: pointer;">
+                👨🏽‍💼
+              </div>
+              <span style="font-size: 11px; color: #3b82f6; margin-top: 8px; font-weight: bold; cursor: pointer;">Change Photo</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+              <div>
+                <label style="display: block; font-size: 11px; color: #64748b; margin-bottom: 5px;">Full Name</label>
+                <input type="text" value="Gulam Mohiuddin" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; box-sizing: border-box; background: #f8fafc;">
+              </div>
+              <div>
+                <label style="display: block; font-size: 11px; color: #64748b; margin-bottom: 5px;">Gender</label>
+                <select style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; box-sizing: border-box; background: #f8fafc;">
+                  <option>Male</option>
+                  <option>Female</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div>
+                <label style="display: block; font-size: 11px; color: #64748b; margin-bottom: 5px;">PAN Card No.</label>
+                <input type="text" placeholder="ABCDE1234F" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; box-sizing: border-box; text-transform: uppercase;">
+              </div>
+              <div>
+                <label style="display: block; font-size: 11px; color: #64748b; margin-bottom: 5px;">Aadhaar Number</label>
+                <input type="password" placeholder="[Aadhaar Redacted]" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; box-sizing: border-box; letter-spacing: 2px;">
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. 📍 LOCATION & GOOGLE MAPS -->
+          <div class="card" style="margin-bottom: 20px;">
+            <h3 style="margin-bottom: 15px; font-size: 16px; color: #1e293b;">📍 Search Location & Maps</h3>
+            
+            <!-- Fake Google Map Area -->
+            <div style="height: 120px; background: #e2e8f0; border-radius: 8px; margin-bottom: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid #cbd5e1; position: relative; overflow: hidden;">
+              <div style="font-size: 24px; z-index: 1;">📍</div>
+              <p style="margin: 5px 0 0 0; font-size: 12px; color: #334155; font-weight: bold; z-index: 1;">Tap to Pin on Google Maps</p>
+              <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: repeating-linear-gradient(45deg, #f1f5f9, #f1f5f9 10px, #e2e8f0 10px, #e2e8f0 20px); opacity: 0.5;"></div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+              <div>
+                <label style="display: block; font-size: 11px; color: #64748b; margin-bottom: 5px;">District</label>
+                <input type="text" value="Bokaro" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; box-sizing: border-box;">
+              </div>
+              <div>
+                <label style="display: block; font-size: 11px; color: #64748b; margin-bottom: 5px;">State</label>
+                <input type="text" value="Jharkhand" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; box-sizing: border-box;">
+              </div>
+            </div>
+            <div>
+              <label style="display: block; font-size: 11px; color: #64748b; margin-bottom: 5px;">Full Hall Address</label>
+              <textarea rows="2" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; box-sizing: border-box; resize: none;">Main Road, Islampur, Near Market</textarea>
+            </div>
+          </div>
+
+          <!-- 4. 🏦 BANK ACCOUNTS (MULTIPLE) -->
+          <div class="card" style="margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+              <h3 style="margin: 0; font-size: 16px; color: #1e293b;">🏦 Payment & Bank Setup</h3>
+              <button style="background: #3b82f6; color: white; border: none; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer;">+ Add Bank</button>
+            </div>
+
+            <!-- Primary Account -->
+            <div style="border: 2px solid #10b981; border-radius: 8px; padding: 12px; margin-bottom: 10px; background: #ecfdf5; position: relative;">
+              <span style="position: absolute; top: -10px; right: 10px; background: #10b981; color: white; font-size: 9px; padding: 3px 8px; border-radius: 10px; font-weight: bold;">PRIMARY (VERIFIED)</span>
+              <strong style="display: block; font-size: 14px; color: #064e3b; margin-bottom: 4px;">State Bank of India</strong>
+              <p style="margin: 0; font-size: 12px; color: #047857;">A/c: XXXXXXXX1234 • IFSC: SBIN000XXXX</p>
+            </div>
+
+            <!-- Secondary Account -->
+            <div style="border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; background: #f8fafc; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <strong style="display: block; font-size: 13px; color: #475569; margin-bottom: 4px;">HDFC Bank</strong>
+                <p style="margin: 0; font-size: 11px; color: #64748b;">A/c: XXXXXXXX9876</p>
+              </div>
+              <button style="background: white; border: 1px solid #cbd5e1; color: #475569; padding: 4px 8px; border-radius: 4px; font-size: 10px; cursor: pointer;">Make Primary</button>
+            </div>
+            
+            <p style="font-size: 10px; color: #64748b; margin-top: 10px; line-height: 1.4;">
+              *Token (4000) तुरंत प्राइमरी अकाउंट में आएगा। बाकि का 90% पेमेंट कैंसलेशन पालिसी (e.g. 7 days / 24 hrs prior) के हिसाब से इसी बैंक में सेटल होगा।
+            </p>
+          </div>
+
+          <!-- 5. ⚖️ LEGAL, AGREEMENT & SUPPORT -->
+          <div class="card" style="margin-bottom: 30px; border-left: 4px solid #ef4444;">
+            <h3 style="margin-bottom: 12px; font-size: 15px; color: #b91c1c;">⚖️ HallWala Indemnity Agreement</h3>
+            
+            <div style="background: #fef2f2; padding: 12px; border-radius: 8px; border: 1px solid #fecaca; margin-bottom: 15px;">
+              <p style="font-size: 11px; color: #7f1d1d; margin: 0; line-height: 1.6; text-align: justify;">
+                <strong>Disclaimer of Liability:</strong> HallWala सिर्फ एक Technology Marketplace (Platform) है जो Customers और Hall Vendors को जोड़ता है। इवेंट के दौरान किसी भी प्रकार की तोड़-फोड़, एक्सीडेंट, सर्विस में कमी, या कस्टमर और वेंडर के बीच किसी भी लड़ाई-झगड़े (Dispute) के लिए <strong>HallWala Management या App किसी भी रूप से ज़िम्मेदार नहीं होगा।</strong> कोई भी कानूनी विवाद (Legal issue) सीधा कस्टमर और वेंडर के बीच का माना जाएगा।
+              </p>
+            </div>
+
+            <!-- Buttons -->
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <button style="width: 100%; background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; padding: 12px; border-radius: 6px; font-size: 12px; font-weight: bold; text-align: left; display: flex; justify-content: space-between; cursor: pointer;">
+                📄 Detailed Terms & Conditions <span>▶</span>
+              </button>
+              <button style="width: 100%; background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; padding: 12px; border-radius: 6px; font-size: 12px; font-weight: bold; text-align: left; display: flex; justify-content: space-between; cursor: pointer;">
+                📞 Contact 24/7 Vendor Support <span>▶</span>
+              </button>
+            </div>
+            
+            <!-- Final Save -->
+            <button style="width: 100%; background: #0f172a; color: white; border: none; padding: 15px; border-radius: 8px; font-weight: bold; font-size: 14px; margin-top: 20px; cursor: pointer; box-shadow: 0 4px 10px rgba(15,23,42,0.3);">
+              Verify KYC & Update Profile
+            </button>
+          </div>
+
         </div>
-        <button class="btn-danger" onclick="alert('Customer Blocked!')">Block</button>
-      </div>
-      
-      <div class="list-item">
-        <div>
-          <div style="font-weight: 800; font-size: 14px;">Abdul Rafey</div>
-          <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">Booked: 05 Dec 2026</div>
-        </div>
-        <button class="btn-danger" onclick="alert('Customer Blocked!')">Block</button>
-      </div>
-    </div>
-    
-    <div style="text-align: center; padding: 20px; font-size: 12px; color: var(--muted);">
-📍 Registered Office: Vill - Hesabatu West, PO - Makhdumpur, Dist - B.S.City, Jharkhand - 827010<br>&copy; 2026 HallWala
-      
-    </div>
-  </div>
+  
+
 
   <!-- BOTTOM APP NAVIGATION -->
   <div class="bottom-nav">
