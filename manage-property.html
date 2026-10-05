@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HallWala - Add Property</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f3f4f6; }
+        /* Toggle Switch CSS */
+        .toggle-checkbox:checked { right: 0; border-color: #3b82f6; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #3b82f6; }
+    </style>
+</head>
+<body class="pb-24 text-gray-800">
+
+    <!-- Top Sticky Header -->
+    <header class="sticky top-0 z-50 bg-white shadow-sm px-4 py-3 flex justify-between items-center">
+        <button class="text-blue-600 font-bold"><i class="fas fa-arrow-left"></i> Back</button>
+        <h1 class="text-lg font-bold text-gray-800">Add Property Details</h1>
+        <button class="text-gray-500 hover:text-blue-600"><i class="fas fa-save"></i> Save</button>
+    </header>
+
+    <main class="max-w-3xl mx-auto p-4 space-y-6">
+
+        <!-- Card 1: Venue Categories -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+            <h2 class="font-bold text-lg mb-4 text-indigo-900"><i class="fas fa-building mr-2"></i> Facilities Available (Select Multiple)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <label class="flex items-center space-x-3 p-3 border rounded-lg hover:bg-blue-50 cursor-pointer">
+                    <input type="checkbox" value="hall" class="category-check w-5 h-5 text-blue-600" onchange="togglePricing()">
+                    <span class="font-medium text-gray-700">🎪 Party Hall / Banquet</span>
+                </label>
+                <label class="flex items-center space-x-3 p-3 border rounded-lg hover:bg-blue-50 cursor-pointer">
+                    <input type="checkbox" value="lawn" class="category-check w-5 h-5 text-blue-600" onchange="togglePricing()">
+                    <span class="font-medium text-gray-700">🌳 Open Lawn / Garden</span>
+                </label>
+                <label class="flex items-center space-x-3 p-3 border rounded-lg hover:bg-blue-50 cursor-pointer">
+                    <input type="checkbox" value="hotel" class="category-check w-5 h-5 text-blue-600" onchange="togglePricing()">
+                    <span class="font-medium text-gray-700">🏨 Hotel Banquets</span>
+                </label>
+                <label class="flex items-center space-x-3 p-3 border rounded-lg hover:bg-blue-50 cursor-pointer">
+                    <input type="checkbox" value="rooftop" class="category-check w-5 h-5 text-blue-600" onchange="togglePricing()">
+                    <span class="font-medium text-gray-700">🌆 Rooftop / Terrace</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Card 2: Smart Pricing & Capacity (Hidden initially) -->
+        <div id="pricingSection" class="hidden bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+            <h2 class="font-bold text-lg mb-4 text-indigo-900"><i class="fas fa-tags mr-2"></i> Pricing & Capacity</h2>
+            
+            <div id="price-hall" class="hidden mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h3 class="font-bold text-blue-800 mb-2">🎪 Party Hall Details</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-gray-600">Max Capacity</label>
+                        <input type="number" placeholder="e.g. 500" class="w-full mt-1 p-2 border rounded focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-600">Base Rent (₹)</label>
+                        <input type="number" placeholder="e.g. 25000" class="w-full mt-1 p-2 border rounded focus:outline-none focus:border-blue-500">
+                    </div>
+                </div>
+            </div>
+
+            <div id="price-lawn" class="hidden mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h3 class="font-bold text-green-700 mb-2">🌳 Open Lawn Details</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-gray-600">Max Capacity</label>
+                        <input type="number" placeholder="e.g. 1000" class="w-full mt-1 p-2 border rounded focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-600">Base Rent (₹)</label>
+                        <input type="number" placeholder="e.g. 40000" class="w-full mt-1 p-2 border rounded focus:outline-none focus:border-blue-500">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Combo Offer -->
+            <div id="combo-offer" class="hidden mt-4 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                <h3 class="font-bold text-yellow-800 mb-2">✨ Combo Booking (Hall + Lawn)</h3>
+                <label class="block text-sm text-gray-700 font-medium">Combo Rent Price (₹)</label>
+                <input type="number" placeholder="e.g. 55000" class="w-full mt-1 p-2 border rounded focus:outline-none focus:border-yellow-500">
+            </div>
+        </div>
+
+        <!-- Card 3: Offers & Discounts -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="font-bold text-lg text-indigo-900"><i class="fas fa-gift mr-2"></i> Run a Promo Offer?</h2>
+                <!-- Toggle Switch -->
+                <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+                    <input type="checkbox" name="toggle" id="offerToggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" onchange="toggleOffers()"/>
+                    <label for="offerToggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                </div>
+            </div>
+            
+            <div id="offerDetails" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4 pt-3 border-t">
+                <div>
+                    <label class="block text-sm text-gray-600">Promo Code Name</label>
+                    <input type="text" placeholder="e.g. WEDDING26" class="w-full mt-1 p-2 border rounded uppercase focus:outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-600">Discount Amount (₹)</label>
+                    <input type="number" placeholder="e.g. 5000" class="w-full mt-1 p-2 border rounded focus:outline-none focus:border-blue-500">
+                </div>
+                <div class="md:col-span-2">
+                    <label class="flex items-center space-x-2 text-sm text-gray-700">
+                        <input type="checkbox" class="w-4 h-4 text-blue-600" checked>
+                        <span>Highlight this offer on my HallWala profile banner</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 4: Catering & Food Policy -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+            <h2 class="font-bold text-lg mb-4 text-indigo-900"><i class="fas fa-utensils mr-2"></i> Catering & Food Policy</h2>
+            <div class="flex space-x-4 mb-4">
+                <label class="flex items-center space-x-2 cursor-pointer">
+                    <input type="radio" name="catering" value="rent" class="w-4 h-4 text-blue-600" onchange="toggleCatering()" checked>
+                    <span>Only Venue Rent</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer">
+                    <input type="radio" name="catering" value="plate" class="w-4 h-4 text-blue-600" onchange="toggleCatering()">
+                    <span>Per Plate System</span>
+                </label>
+            </div>
+
+            <div id="perPlateDetails" class="hidden p-4 bg-green-50 rounded-lg border border-green-200 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm text-gray-600 text-green-700 font-bold">🟢 Veg Plate (₹)</label>
+                    <input type="number" placeholder="e.g. 800" class="w-full mt-1 p-2 border rounded focus:outline-none focus:border-green-500">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-600 text-red-600 font-bold">🔴 Non-Veg Plate (₹)</label>
+                    <input type="number" placeholder="e.g. 1100" class="w-full mt-1 p-2 border rounded focus:outline-none focus:border-red-500">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-600 font-bold">Min. Guest Guarantee</label>
+                    <input type="number" placeholder="e.g. 200" class="w-full mt-1 p-2 border rounded focus:outline-none focus:border-blue-500">
+                </div>
+                <div class="flex items-end pb-2">
+                    <label class="flex items-center space-x-2 text-sm text-gray-700">
+                        <input type="checkbox" class="w-4 h-4 text-blue-600">
+                        <span class="font-bold">Hall Rent included in plate</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 5: Media & Virtual Tour -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+            <h2 class="font-bold text-lg mb-4 text-indigo-900"><i class="fas fa-camera mr-2"></i> Media & Virtual Tour</h2>
+            
+            <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center mb-4 cursor-pointer hover:bg-gray-50">
+                <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                <p class="text-gray-600 font-medium">Tap to upload Cover Photo & Gallery</p>
+                <p class="text-xs text-gray-400">Max 10 Photos (JPG, PNG)</p>
+            </div>
+
+            <div>
+                <label class="block text-sm text-gray-700 font-bold mb-1"><i class="fab fa-youtube text-red-600 mr-1"></i> YouTube Video Tour Link</label>
+                <input type="url" placeholder="Paste YouTube link here..." class="w-full p-2 border rounded focus:outline-none focus:border-blue-500">
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Bottom Sticky Action Bar -->
+    <div class="fixed bottom-0 w-full bg-white border-t p-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] flex justify-center z-50">
+        <button class="w-full max-w-3xl bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-200">
+            <i class="fas fa-rocket mr-2"></i> SAVE & PUBLISH HALL
+        </button>
+    </div>
+
+    <!-- JavaScript for Smart UI Toggles -->
+    <script>
+        function togglePricing() {
+            const checks = document.querySelectorAll('.category-check:checked');
+            const pricingSection = document.getElementById('pricingSection');
+            const priceHall = document.getElementById('price-hall');
+            const priceLawn = document.getElementById('price-lawn');
+            const comboOffer = document.getElementById('combo-offer');
+            
+            let hasHall = false;
+            let hasLawn = false;
+
+            // Check what is selected
+            checks.forEach(check => {
+                if(check.value === 'hall' || check.value === 'hotel' || check.value === 'rooftop') hasHall = true;
+                if(check.value === 'lawn') hasLawn = true;
+            });
+
+            // Show/Hide Main Pricing Section
+            if (checks.length > 0) {
+                pricingSection.classList.remove('hidden');
+            } else {
+                pricingSection.classList.add('hidden');
+            }
+
+            // Show specific divs
+            hasHall ? priceHall.classList.remove('hidden') : priceHall.classList.add('hidden');
+            hasLawn ? priceLawn.classList.remove('hidden') : priceLawn.classList.add('hidden');
+
+            // Show combo offer only if both Hall and Lawn are selected
+            if (hasHall && hasLawn) {
+                comboOffer.classList.remove('hidden');
+            } else {
+                comboOffer.classList.add('hidden');
+            }
+        }
+
+        function toggleOffers() {
+            const toggleBtn = document.getElementById('offerToggle');
+            const offerDetails = document.getElementById('offerDetails');
+            
+            if (toggleBtn.checked) {
+                offerDetails.classList.remove('hidden');
+            } else {
+                offerDetails.classList.add('hidden');
+            }
+        }
+
+        function toggleCatering() {
+            const cateringOption = document.querySelector('input[name="catering"]:checked').value;
+            const perPlateDetails = document.getElementById('perPlateDetails');
+            
+            if (cateringOption === 'plate') {
+                perPlateDetails.classList.remove('hidden');
+            } else {
+                perPlateDetails.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
