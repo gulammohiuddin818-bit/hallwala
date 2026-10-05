@@ -178,25 +178,35 @@
       </div>
     </div>
     
-    <script>
+        <script>
       function selectCategory(element, categoryName) {
         // 1. Remove 'active' class from all chips
         document.querySelectorAll('.cat-chip').forEach(chip => {
           chip.classList.remove('active');
         });
         
-        // 2. Add 'active' class to the clicked chip
+        // 2. Add 'active' class to clicked chip
         element.classList.add('active');
         
-        // 3. Haptic Feedback (Vibration) on Mobile 📱
-        if (navigator.vibrate) {
-            navigator.vibrate(50);
-        }
+        if (navigator.vibrate) navigator.vibrate(50); // Haptic Feedback
         
-        // 4. Show a cool alert (Later we will connect this to actually filter the halls below)
-        alert('🔥 Scanning premium ' + categoryName + ' venues around you...');
+        // 3. 🪄 Asli Filter ka Jaadu
+        const allCards = document.querySelectorAll('.hall-card');
+        allCards.forEach(card => {
+          if (categoryName === 'All Venues') {
+            card.style.display = 'block';
+          } else {
+            const cardCat = card.getAttribute('data-category') || '';
+            if (cardCat.includes(categoryName)) {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
+          }
+        });
       }
-    </script>
+        </script>
+    
     
 
     <!-- Recommended Halls Feed -->
@@ -207,7 +217,7 @@
       </div>
 
       <!-- Hall Card 1: Royal Palace -->
-      <div class="hall-card" data-name="Royal Palace Marriage Hall" data-location="Islampur Bokaro">
+      <div class="hall-card" data-name="Royal Palace Marriage Hall" data-location="Islampur Bokaro"> data-category="Weddings"
         <div class="hall-img-container">
           <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" alt="Hall">
           <button class="fav-btn" onclick="this.innerText = this.innerText === '❤️' ? '🤍' : '❤️'">❤️</button>
@@ -227,7 +237,7 @@
       </div>
 
       <!-- Hall Card 2: Grand Milestone -->
-      <div class="hall-card" data-name="Grand Milestone Banquet" data-location="Sector 4 Bokaro">
+      <div class="hall-card" data-name="Grand Milestone Banquet" data-location="Sector 4 Bokaro"> data-category="Birthdays"
         <div class="hall-img-container">
           <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=600&q=80" alt="Hall">
           <button class="fav-btn" onclick="this.innerText = this.innerText === '❤️' ? '🤍' : '❤️'">🤍</button>
