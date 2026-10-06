@@ -236,7 +236,8 @@
               <span style="font-size: 11px; color: #64748b; display: block;">Starting from</span>
               <span class="hall-price">₹40,000 <span style="font-size: 11px; color: #64748b; font-weight: normal;">/ day</span></span>
             </div>
-            <button class="book-now-btn" onclick="openOfferModal('Royal Palace', '40000')">Make Offer</button>
+            <button class="book-now-btn" onclick="openOfferModal('Royal Palace', '40000', 'fixed')" style="background: #1e293b;">🔒 Book at ₹40,000</button>
+            
           </div>
         </div>
       </div>
@@ -256,7 +257,8 @@
               <span style="font-size: 11px; color: #64748b; display: block;">Starting from</span>
               <span class="hall-price">₹55,000 <span style="font-size: 11px; color: #64748b; font-weight: normal;">/ day</span></span>
             </div>
-            <button class="book-now-btn" onclick="openOfferModal('Grand Milestone', '55000')">Make Offer</button>
+            <button class="book-now-btn" onclick="openOfferModal('Grand Milestone', '55000', 'negotiable')">Make Offer</button>
+            
           </div>
         </div>
       </div>
@@ -582,21 +584,40 @@
     }
 
     // --- 🚀 MODAL LOGIC ---
-    function openOfferModal(hallName, defaultPrice) {
-      document.getElementById('modalTitle').innerText = hallName;
-      document.getElementById('offerPriceInput').value = parseInt(defaultPrice) - 2000;
-      
-      initCalendar(); // Start calendar fresh every time
-      
+        function openOfferModal(hallName, defaultPrice, rateType) {
+      // 1. Modal में नाम और अमाउंट सेट करना
+      document.getElementById('modalTitle').innerText = 'Make an offer for ' + hallName;
+      let inputField = document.getElementById('offerPriceInput'); // सही ID
+      inputField.value = defaultPrice;
+
+      // 2. Calendar लोड करना
+      initCalendar(); 
+
+      // 3. Modal को स्क्रीन पर दिखाना
       const overlay = document.getElementById('modalOverlay');
       const modal = document.getElementById('offerModal');
-      
       overlay.style.display = 'block';
       modal.style.display = 'block';
-      
       void modal.offsetWidth; // Force render
       modal.style.transform = 'translateY(0)';
-    }
+
+      // 4. 🔒 FIXED RATE vs 🤝 NEGOTIABLE (मोल-भाव) का असली जादू
+      if (rateType === 'fixed') {
+        inputField.setAttribute('readonly', 'true'); // बॉक्स लॉक हो जाएगा
+        inputField.style.backgroundColor = '#f1f5f9'; // कलर धुंधला
+        inputField.style.color = '#ef4444'; // अमाउंट लाल रंग में दिखेगा
+        inputField.style.fontWeight = '900';
+        
+        // कस्टमर को अलर्ट दिखाएँ
+        setTimeout(() => alert("🔒 This venue has a STRICT FIXED RATE. Bargaining is not allowed."), 300);
+      } else {
+        inputField.removeAttribute('readonly'); // बॉक्स टाइप करने के लिए खुल जाएगा
+        inputField.style.backgroundColor = '#ffffff';
+        inputField.style.color = '#000000';
+        inputField.style.fontWeight = 'normal';
+      }
+        }
+    
 
     function closeOfferModal() {
       const modal = document.getElementById('offerModal');
