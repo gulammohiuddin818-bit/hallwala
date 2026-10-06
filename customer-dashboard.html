@@ -158,24 +158,29 @@
         }
       </style>
 
+            <!-- 🌟 Vendor-Synced Filter Chips -->
       <div class="cat-chip active" onclick="selectCategory(this, 'All Venues')">
         <span class="cat-icon">✨</span> All Venues
+      </div>
+      <div class="cat-chip" onclick="selectCategory(this, 'Banquet')">
+        <span class="cat-icon">🎪</span> Party Halls / Banquets
+      </div>
+      <div class="cat-chip" onclick="selectCategory(this, 'Lawn')">
+        <span class="cat-icon">🌳</span> Open Lawns / Gardens
+      </div>
+      <div class="cat-chip" onclick="selectCategory(this, 'Hotel')">
+        <span class="cat-icon">🏨</span> Hotel Banquets
+      </div>
+      <div class="cat-chip" onclick="selectCategory(this, 'Rooftop')">
+        <span class="cat-icon">🌃</span> Rooftop / Terrace
       </div>
       <div class="cat-chip" onclick="selectCategory(this, 'Weddings')">
         <span class="cat-icon">💍</span> Weddings
       </div>
-      <div class="cat-chip" onclick="selectCategory(this, 'Birthdays')">
-        <span class="cat-icon">🎂</span> Birthdays
-      </div>
       <div class="cat-chip" onclick="selectCategory(this, 'Corporate')">
         <span class="cat-icon">💼</span> Corporate
       </div>
-      <div class="cat-chip" onclick="selectCategory(this, 'Haldi & Mehendi')">
-        <span class="cat-icon">🎉</span> Haldi & Mehendi
-      </div>
-      <div class="cat-chip" onclick="selectCategory(this, 'Anniversary')">
-        <span class="cat-icon">🥂</span> Anniversary
-      </div>
+      
     </div>
     
         <script>
@@ -217,7 +222,7 @@
       </div>
 
       <!-- Hall Card 1: Royal Palace -->
-      <div class="hall-card" data-name="Royal Palace" data-category="Weddings, Anniversary">
+      <div class="hall-card" data-name="Royal Palace" data-category="Banquet, Weddings">
         <div class="hall-img-container">
           <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80" alt="Hall">
           <button class="fav-btn" onclick="this.innerText = this.innerText === '❤️' ? '🤍' : '❤️'">❤️</button>
@@ -237,7 +242,7 @@
       </div>
 
       <!-- Hall Card 2: Grand Milestone -->
-      <div class="hall-card" data-name="Grand Milestone" data-category="Birthdays, Corporate"> 
+      <div class="hall-card" data-name="Grand Milestone" data-category="Lawn, Corporate">
        <div class="hall-img-container">
           <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=600&q=80" alt="Hall">
           <button class="fav-btn" onclick="this.innerText = this.innerText === '❤️' ? '🤍' : '❤️'">🤍</button>
