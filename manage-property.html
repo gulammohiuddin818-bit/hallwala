@@ -116,6 +116,40 @@
             </div>
         </div>
 
+    <!-- 🔒 Fixed Rate Toggle (No Bargaining) -->
+    <div style="background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+      <div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 18px;">🔒</span>
+          <h3 style="margin: 0; font-size: 15px; font-weight: 800; color: #1e293b;">Strict Fixed Rate</h3>
+        </div>
+        <p style="margin: 5px 0 0 26px; font-size: 11px; color: #64748b;">Turn ON to disable customer bargaining</p>
+      </div>
+      
+      <!-- Custom Toggle Switch -->
+      <label style="position: relative; display: inline-block; width: 44px; height: 24px;">
+        <input type="checkbox" id="fixedRateToggle" style="opacity: 0; width: 0; height: 0;" onchange="alert(this.checked ? '🔒 Fixed Rate ON: Customers cannot bargain anymore!' : '🤝 Negotiable ON: Customers can make custom offers.')">
+        <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .4s; border-radius: 34px;" id="fixedToggleBg"></span>
+        <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2);" id="fixedToggleBtn"></span>
+      </label>
+    </div>
+
+    <!-- Toggle Animation Script -->
+    <script>
+      document.getElementById('fixedRateToggle').addEventListener('change', function() {
+        const bg = document.getElementById('fixedToggleBg');
+        const btn = document.getElementById('fixedToggleBtn');
+        if(this.checked) {
+          bg.style.backgroundColor = '#ef4444'; // Red color when ON (Fixed)
+          btn.style.transform = 'translateX(20px)';
+        } else {
+          bg.style.backgroundColor = '#cbd5e1'; // Grey color when OFF (Negotiable)
+          btn.style.transform = 'translateX(0)';
+        }
+      });
+    </script>
+        
+        
         <!-- Card 4: Catering & Food Policy -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
             <h2 class="font-bold text-lg mb-4 text-indigo-900"><i class="fas fa-utensils mr-2"></i> Catering & Food Policy</h2>
