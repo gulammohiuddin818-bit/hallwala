@@ -629,18 +629,43 @@
       }, 300);
     }
 
-    function submitOffer() {
-      const selectedDate = document.getElementById('selectedDateInput').value;
-      if (!selectedDate) {
-        alert("⚠️ Please select an available (Green) date from the calendar first!");
+        function submitOffer() {
+      const selectedDate = document.getElementById('selectedDateText').innerText;
+      
+      // 1. अगर कस्टमर ने डेट सेलेक्ट नहीं की है
+      if (!selectedDate || selectedDate === 'None') {
+        alert('❌ Error: Please select an Event Date first!');
         return;
       }
       
-      closeOfferModal();
-      setTimeout(() => {
-        alert(`🎉 Offer Sent Successfully for Date: ${selectedDate}! The owner has been notified. Check the "Bookings" tab for updates.`);
-      }, 350);
-    }
+      const hallName = document.getElementById('modalTitle').innerText.replace('Make an offer for ', '');
+      const inputField = document.getElementById('offerPriceInput');
+      const offerAmount = parseInt(inputField.value);
+      
+      // 2. 🛡️ SECURITY LOCKS 🛡️
+      if (!offerAmount || isNaN(offerAmount)) {
+        alert('❌ Error: Please enter a valid offer amount!');
+        return;
+      }
+      
+      if (offerAmount < 1000) {
+        alert('😂 Bhai, ₹' + offerAmount + ' mein toh chai-pani bhi nahi hoga. Kam se kam ek reasonable amount daalo!');
+        inputField.value = ''; // डिब्बा खाली कर दो
+        return;
+      }
+      
+      if (offerAmount > 500000) {
+        alert('🙏 Itna zyada paisa nahi chahiye bhai! Please enter a realistic amount under ₹5 Lakhs.');
+        inputField.value = ''; // डिब्बा खाली कर दो
+        return;
+      }
+
+      // 3. अगर सब सही है, तो बुकिंग सेंड करो
+      alert('🎉 Offer of ₹' + offerAmount + ' Sent Successfully for ' + hallName + ' on Date: ' + selectedDate + '!\n\nThe owner has been notified. Check the "Bookings" tab for updates.');
+      
+      closeOfferModal(); // Modal बंद कर दो
+        }
+    
   </script>
   
   
