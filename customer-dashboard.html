@@ -314,6 +314,107 @@
     </div>
   </div>
 
+    <!-- ========================================== -->
+    <!-- ⏳ CARD 2: PENDING OFFER (Awaiting Reply) -->
+    <!-- ========================================== -->
+    <div style="background: white; border-radius: 16px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #f8fafc; position: relative; overflow: hidden;">
+      
+      <!-- Top Animated-like border -->
+      <div style="position: absolute; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, #f59e0b, #fef3c7, #f59e0b); width: 100%;"></div>
+      
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+        <h3 style="margin: 0; font-size: 16px; font-weight: 800; color: #1e293b;">Grand Milestone Banquet</h3>
+        <span style="background: #fef3c7; color: #d97706; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 800; display: flex; align-items: center; gap: 4px;">⏳ Awaiting Reply</span>
+      </div>
+      
+      <div style="font-size: 12px; color: #64748b; margin-bottom: 15px; font-weight: 500;">
+        📅 Date: 16 Oct 2026 • <span style="color: #1e293b; font-weight: 700;">Your Offer: ₹48,000</span>
+      </div>
+      
+      <!-- Status Instruction Box -->
+      <div style="background: #f8fafc; border-radius: 10px; padding: 12px 15px; margin-bottom: 20px; border: 1px dashed #cbd5e1;">
+        <p style="margin: 0; font-size: 12px; color: #475569;">
+          <span style="font-weight: 700; color: #1e293b; display: block; margin-bottom: 2px;">Secure Booking Step:</span>
+          The owner is reviewing your offer. Please wait for their approval.
+        </p>
+      </div>
+      
+      <!-- 🟢 Progress Tracker (Pending State) -->
+      <div style="display: flex; justify-content: space-between; align-items: center; position: relative; margin-bottom: 25px; padding: 0 10px;">
+        <div style="position: absolute; top: 12px; left: 20px; right: 20px; height: 2px; background: #e2e8f0; z-index: 1;"></div>
+        <div style="position: absolute; top: 12px; left: 20px; width: 30%; height: 2px; background: #10b981; z-index: 1;"></div>
+        
+        <div style="position: relative; z-index: 2; text-align: center; background: white; padding: 0 5px;">
+          <div style="width: 24px; height: 24px; border-radius: 50%; background: #10b981; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; margin: 0 auto 5px; box-shadow: 0 2px 5px rgba(16,185,129,0.3);">✓</div>
+          <div style="font-size: 10px; color: #10b981; font-weight: 700;">Offer Sent</div>
+        </div>
+        
+        <div style="position: relative; z-index: 2; text-align: center; background: white; padding: 0 5px;">
+          <div style="width: 24px; height: 24px; border-radius: 50%; background: #fef3c7; border: 2px solid #f59e0b; color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; margin: 0 auto 5px; box-shadow: 0 2px 5px rgba(245,158,11,0.2);">⋯</div>
+          <div style="font-size: 10px; color: #d97706; font-weight: 700;">Reviewing</div>
+        </div>
+        
+        <div style="position: relative; z-index: 2; text-align: center; background: white; padding: 0 5px;">
+          <div style="width: 24px; height: 24px; border-radius: 50%; background: #f1f5f9; border: 2px solid #cbd5e1; color: #94a3b8; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; margin: 0 auto 5px;">3</div>
+          <div style="font-size: 10px; color: #94a3b8; font-weight: 600;">Pay Token</div>
+        </div>
+      </div>
+      
+      <!-- Disabled Button -->
+      <button style="width: 100%; padding: 12px; background: #f1f5f9; color: #94a3b8; border: none; border-radius: 8px; font-size: 14px; font-weight: 800; cursor: not-allowed; display: flex; align-items: center; justify-content: center; gap: 8px;">
+        ⏳ Please wait for owner
+      </button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- ❌ CARD 3: REJECTED OFFER (Declined)       -->
+    <!-- ========================================== -->
+    <div style="background: white; border-radius: 16px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #fee2e2;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+        <h3 style="margin: 0; font-size: 16px; font-weight: 800; color: #1e293b;">The Imperial Lawn</h3>
+        <span style="background: #fee2e2; color: #ef4444; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 800; display: flex; align-items: center; gap: 4px;">❌ Offer Declined</span>
+      </div>
+      
+      <div style="font-size: 12px; color: #64748b; margin-bottom: 15px; font-weight: 500;">
+        📅 Date: 05 Nov 2026 • <span style="text-decoration: line-through; color: #94a3b8;">Your Offer: ₹30,000</span>
+      </div>
+      
+      <!-- Status Instruction Box (Red) -->
+      <div style="background: #fff5f5; border-radius: 10px; padding: 12px 15px; margin-bottom: 20px; border: 1px dashed #fecaca;">
+        <p style="margin: 0; font-size: 12px; color: #991b1b;">
+          <span style="font-weight: 700; display: block; margin-bottom: 2px;">Message from Owner:</span>
+          "Sorry, this date is in high demand. We cannot accept less than ₹45,000. Please revise your offer."
+        </p>
+      </div>
+      
+      <!-- 🔴 Progress Tracker (Failed State) -->
+      <div style="display: flex; justify-content: space-between; align-items: center; position: relative; margin-bottom: 25px; padding: 0 10px;">
+        <div style="position: absolute; top: 12px; left: 20px; right: 20px; height: 2px; background: #e2e8f0; z-index: 1;"></div>
+        <div style="position: absolute; top: 12px; left: 20px; width: 40%; height: 2px; background: #ef4444; z-index: 1;"></div>
+        
+        <div style="position: relative; z-index: 2; text-align: center; background: white; padding: 0 5px;">
+          <div style="width: 24px; height: 24px; border-radius: 50%; background: #10b981; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; margin: 0 auto 5px;">✓</div>
+          <div style="font-size: 10px; color: #10b981; font-weight: 700;">Offer Sent</div>
+        </div>
+        
+        <div style="position: relative; z-index: 2; text-align: center; background: white; padding: 0 5px;">
+          <div style="width: 24px; height: 24px; border-radius: 50%; background: #fee2e2; border: 2px solid #ef4444; color: #ef4444; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; margin: 0 auto 5px; box-shadow: 0 2px 5px rgba(239,68,68,0.2);">✕</div>
+          <div style="font-size: 10px; color: #ef4444; font-weight: 700;">Declined</div>
+        </div>
+        
+        <div style="position: relative; z-index: 2; text-align: center; background: white; padding: 0 5px;">
+          <div style="width: 24px; height: 24px; border-radius: 50%; background: #f1f5f9; border: 2px solid #cbd5e1; color: #94a3b8; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; margin: 0 auto 5px;">3</div>
+          <div style="font-size: 10px; color: #94a3b8; font-weight: 600;">Pay Token</div>
+        </div>
+      </div>
+      
+      <!-- Retry Button -->
+      <button onclick="document.getElementById('bookingsSection').style.display='none'; document.getElementById('homeSection').style.display='block';" style="width: 100%; padding: 12px; background: #1e293b; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 10px rgba(30,41,59,0.2);">
+        🔄 Make a New Offer
+      </button>
+    </div>
+  
+  
     <!-- SCREEN 3: HIGH-TECH ACCOUNT & PROFILE -->
     <div id="screen-account" class="screen" style="padding-bottom: 90px; background: #f1f5f9; min-height: 100vh;">
       
