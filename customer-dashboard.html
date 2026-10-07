@@ -568,11 +568,18 @@
         <h3 id="modalTitle" style="font-size: 18px; font-weight: 900; color: #0f172a; margin-bottom: 4px;">Make an Offer</h3>
         <p style="font-size: 12px; color: #64748b;">Check availability & send your price ⚡</p>
       </div>
-      <div style="background: #f1f5f9; padding: 10px; border-radius: 12px; font-size: 20px;">📅</div>
-    </div>
+      <div <div onclick="openCalendar()" style="cursor: pointer; ...बाकी आपका पुराना डिज़ाइन...">
+  <!-- आपका आइकॉन वाला कोड --> style="background: #f1f5f9; padding: 10px; border-radius: 12px; font-size: 20px;">📅</div>
+      </div>
+      
+    </div> 
 
     <!-- 📅 REAL-TIME CALENDAR SECTION (1900 - 2100) -->
-    <div style="background: #ffffff; border: 1px solid #e2e8f0; padding: 15px; border-radius: 16px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">
+    <div <div onclick="openCalendar()" style="cursor: pointer; ...बाकी आपका डिज़ाइन...">
+  SELECT EVENT DATE
+  <!-- आपके ड्रॉपडाउन -->
+    </div>
+  style="background: #ffffff; border: 1px solid #e2e8f0; padding: 15px; border-radius: 16px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">
       <label style="font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 10px;">Select Event Date</label>
       
       <!-- Month & Year Selectors -->
@@ -1061,6 +1068,26 @@ function submitOffer() {
         document.getElementById('paymentSuccessModal').style.display = 'none';
         // You can also add code here to change the green status bar from "Pay Token" to "Confirmed"
       }
+    function openCalendar() {
+    // 1. महीना सेलेक्ट करने वाले ड्रॉपडाउन को फोकस (ओपन) करो
+    const monthSelect = document.getElementById('calMonth');
+    if (monthSelect) {
+        monthSelect.focus(); 
+    }
+
+    // 2. अगर कैलेंडर का ग्रिड (तारीखें) छुपा हुआ है, तो उसे दिखाओ
+    const calGrid = document.getElementById('calGrid');
+    if (calGrid) {
+        calGrid.style.display = 'grid'; // या 'flex', जो भी आपने पहले सेट किया हो
+    }
+
+    // 3. (बैकअप) अगर ड्रॉपडाउन खाली हैं, तो कैलेंडर को वापस लोड करो
+    if (typeof initCalendar === 'function' && monthSelect && monthSelect.options.length === 0) {
+        initCalendar();
+    }
+}
+      
+      
     </script>
 
   <script>
