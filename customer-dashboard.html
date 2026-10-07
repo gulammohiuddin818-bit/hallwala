@@ -599,7 +599,8 @@
       <label style="font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 1px;">Your Best Price</label>
       <div style="display: flex; align-items: center; margin-top: 5px;">
         <span style="font-size: 24px; font-weight: 900; color: #0f172a; margin-right: 5px;">₹</span>
-        <input type="number" id="offerPriceInput" value="38000" style="width: 100%; border: none; background: transparent; font-size: 28px; font-weight: 900; color: #4f46e5; outline: none; padding: 0;">
+      <input type="tel" id="offerPriceInput" value="38000" inputmode="numeric" pattern="[0-9]*" style="width: 100%; border: none; background: transparent; font-size: 28px; font-weight: 900; color: #0f172a; outline: none; padding: 0;">
+        
       </div>
     </div>
     
@@ -789,27 +790,69 @@ function cancelOffer(hallName) {
     }
 }
 
-// 🔄 Retry / Make New Offer Logic
-function retryOffer(hallName) {
+// 🔄 Retry / Make New Offer Logic (Blur Fix)
+function retryOffer(hallName, oldAmount) {
     const overlay = document.getElementById('modalOverlay');
-    const modal = document.getElementById('offerModal'); // अगर आपके पॉपअप का ID कुछ और है, तो यहाँ बदल दें
+    const modal = document.getElementById('offerModal');
     const inputField = document.getElementById('offerPriceInput');
 
-    // 1. अमाउंट वाला डिब्बा खाली करो ताकि कस्टमर नया पैसा डाल सके
     if(inputField) {
-        inputField.value = ''; 
+        inputField.value = ''; // डिब्बा खाली करो
     }
 
-    // 2. पॉपअप को वापस स्क्रीन पर लाओ
+    // Blur हटा कर Modal को स्क्रीन पर लाना 
     if(overlay) overlay.style.display = 'block';
     if(modal) {
+        modal.style.display = 'block';
         setTimeout(() => {
             modal.style.transform = 'translateY(0)';
         }, 10);
     }
-    
-    alert("💡 You can now enter a new amount for " + hallName + " and send it to the vendor!");
 }
+
+// 🚀 Submit Offer (With Smart Limit)
+function submitOffer() {
+    const inputField = document.getElementById('offerPriceInput');
+    const offerAmount = parseInt(inputField.value);
+    
+    // मान लीजिये वेंडर ने ₹45,000 माँगा है (आप इसे डायनामिक भी कर सकते हैं)
+    const vendorDemand = 45000; 
+
+    // 1. अगर डिब्बा खाली है या गलत चीज़ डाली
+    if (!offerAmount || isNaN(offerAmount)) {
+        alert('❌ Error: Please enter a valid number!');
+        return;
+    }
+
+    // 2. स्मार्ट सिक्योरिटी (फालतू अमाउंट ब्लॉक)
+    const minLimit = vendorDemand - 10000; // कम से कम (जैसे 35,000)
+    const maxLimit = vendorDemand + 10000; // ज़्यादा से ज़्यादा (जैसे 55,000)
+
+    if (offerAmount < minLimit) {
+        alert('🤣 Bhai, vendor ne ₹' + vendorDemand + ' maanga hai. Aap ₹' + offerAmount + ' de rahe ho! Kam se kam ₹' + minLimit + ' ka izzatdaar offer toh dalo.');
+        inputField.value = ''; 
+        return;
+    }
+
+    if (offerAmount > maxLimit) {
+        alert('🙏 Itna zyada paisa nahi chahiye bhai! ₹' + maxLimit + ' ke andar ka koi realistic amount dalo.');
+        inputField.value = ''; 
+        return;
+    }
+
+    // 3. सब सही है तो सेंड करो
+    alert('🎉 Boom! Your new offer of ₹' + offerAmount + ' has been sent to the vendor successfully!');
+    
+    // सेंड होने के बाद पॉपअप और Blur बंद कर दो
+    const modal = document.getElementById('offerModal');
+    const overlay = document.getElementById('modalOverlay');
+    if(modal) modal.style.transform = 'translateY(100%)';
+    setTimeout(() => {
+        if(overlay) overlay.style.display = 'none';
+        if(modal) modal.style.display = 'none';
+    }, 300);
+}
+    
     
     
   </script>
