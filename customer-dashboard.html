@@ -309,6 +309,11 @@
 <button class="btn-pulse" onclick="processTokenPayment()" style="width: 100%; padding: 12px; background: #10b981; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
   💳 Pay Token ₹4,000 Now
 </button>
+
+ <!-- Cancel Button -->
+<button onclick="cancelOffer('Royal Palace')" style="width: 100%; padding: 10px; background: transparent; color: #ef4444; border: 1px solid #fee2e2; border-radius: 8px; font-size: 13px; font-weight: 700; margin-top: 10px; cursor: pointer; transition: all 0.2s;">
+  ❌ Cancel this Booking
+</button>
         
 
       </div>
@@ -407,10 +412,10 @@
         </div>
       </div>
       
-      <!-- Retry Button -->
-      <button onclick="document.getElementById('bookingsSection').style.display='none'; document.getElementById('homeSection').style.display='block';" style="width: 100%; padding: 12px; background: #1e293b; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 10px rgba(30,41,59,0.2);">
-        🔄 Make a New Offer
+      <button onclick="retryOffer('The Imperial Lawn')" style="width: 100%; padding: 12px; background: #1e293b; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 10px rgba(30,41,59,0.2);">
+  🔄 Make a New Offer
       </button>
+      
     </div>
       
     </div>
@@ -772,6 +777,39 @@
         closeOfferModal();
     }
         }
+
+    // ❌ Cancel Offer Logic
+function cancelOffer(hallName) {
+    // कस्टमर से कन्फर्मेशन मांगेंगे
+    let confirmCancel = confirm("Are you sure you want to cancel your booking for " + hallName + "?");
+    
+    if(confirmCancel) {
+        alert("🚫 Booking Cancelled! Vendor has been notified about the cancellation.");
+        // भविष्य में हम यहाँ से कार्ड को लाल रंग का या गायब करने का कोड भी जोड़ेंगे
+    }
+}
+
+// 🔄 Retry / Make New Offer Logic
+function retryOffer(hallName) {
+    const overlay = document.getElementById('modalOverlay');
+    const modal = document.getElementById('offerModal'); // अगर आपके पॉपअप का ID कुछ और है, तो यहाँ बदल दें
+    const inputField = document.getElementById('offerPriceInput');
+
+    // 1. अमाउंट वाला डिब्बा खाली करो ताकि कस्टमर नया पैसा डाल सके
+    if(inputField) {
+        inputField.value = ''; 
+    }
+
+    // 2. पॉपअप को वापस स्क्रीन पर लाओ
+    if(overlay) overlay.style.display = 'block';
+    if(modal) {
+        setTimeout(() => {
+            modal.style.transform = 'translateY(0)';
+        }, 10);
+    }
+    
+    alert("💡 You can now enter a new amount for " + hallName + " and send it to the vendor!");
+}
     
     
   </script>
