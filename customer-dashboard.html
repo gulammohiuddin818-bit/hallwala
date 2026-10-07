@@ -735,41 +735,44 @@
     }
 
         function submitOffer() {
-      const selectedDate = document.getElementById('selectedDateText').innerText;
-      
-      // 1. अगर कस्टमर ने डेट सेलेक्ट नहीं की है
-      if (!selectedDate || selectedDate === 'None') {
+    // 1. Date Check (Crash-Proof)
+    const dateInput = document.getElementById('selectedDateInput');
+    if (!dateInput || dateInput.value === '' || dateInput.value === 'None') {
         alert('❌ Error: Please select an Event Date first!');
         return;
-      }
-      
-      const hallName = document.getElementById('modalTitle').innerText.replace('Make an offer for ', '');
-      const inputField = document.getElementById('offerPriceInput');
-      const offerAmount = parseInt(inputField.value);
-      
-      // 2. 🛡️ SECURITY LOCKS 🛡️
-      if (!offerAmount || isNaN(offerAmount)) {
+    }
+
+    // 2. Price Check 
+    const inputField = document.getElementById('offerPriceInput');
+    const offerAmount = parseInt(inputField.value);
+
+    // 3. 🛡️ SECURITY LOCKS 🛡️
+    if (!offerAmount || isNaN(offerAmount)) {
         alert('❌ Error: Please enter a valid offer amount!');
         return;
-      }
-      
-      if (offerAmount < 1000) {
-        alert('😂 Bhai, ₹' + offerAmount + ' mein toh chai-pani bhi nahi hoga. Kam se kam ek reasonable amount daalo!');
-        inputField.value = ''; // डिब्बा खाली कर दो
-        return;
-      }
-      
-      if (offerAmount > 500000) {
-        alert('🙏 Itna zyada paisa nahi chahiye bhai! Please enter a realistic amount under ₹5 Lakhs.');
-        inputField.value = ''; // डिब्बा खाली कर दो
-        return;
-      }
+    }
 
-      // 3. अगर सब सही है, तो बुकिंग सेंड करो
-      alert('🎉 Offer of ₹' + offerAmount + ' Sent Successfully for ' + hallName + ' on Date: ' + selectedDate + '!\n\nThe owner has been notified. Check the "Bookings" tab for updates.');
-      
-      closeOfferModal(); // Modal बंद कर दो
+    if (offerAmount < 1000) {
+        alert('🤣 Bhai, ₹' + offerAmount + ' mein toh chai-pani bhi nahi hoga. Kam se kam ek realistic offer dalo!');
+        inputField.value = ''; // डिब्बा खाली कर दो
+        return;
+    }
+
+    if (offerAmount > 500000) {
+        alert('🙏 Itna zyada paisa nahi chahiye bhai! Please enter a realistic amount under ₹5 Lakh.');
+        inputField.value = ''; // डिब्बा खाली कर दो
+        return;
+    }
+
+    // 4. Booking Send Karo
+    alert('🎉 Offer of ₹' + offerAmount + ' Sent Successfully! Vendor will reply soon.');
+    
+    // Modal band kar do (agar function exist karta hai)
+    if (typeof closeOfferModal === 'function') {
+        closeOfferModal();
+    }
         }
+    
     
   </script>
   
