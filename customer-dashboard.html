@@ -1088,43 +1088,8 @@ function submitOffer() {
 }
       
       
-    </script>
-
-  <script>
-  function validateAndSendOffer() {
-    // 1. इनपुट बॉक्स से कस्टमर का डाला हुआ अमाउंट निकालें
-    const offerInput = document.getElementById('offerPriceInput').value;
-    
-    // अगर खाली छोड़ कर बटन दबा दे
-    if (!offerInput || offerInput.trim() === '') {
-      alert("अरे भाई! बिना पैसे लिखे ऑफर भेजोगे क्या? कुछ तो अमाउंट डालो!");
-      return;
-    }
-
-    const offerAmount = parseInt(offerInput);
-
-    // 2. फालतू गिरी चेक (बहुत कम पैसा)
-    if (offerAmount < 10000) {
-      alert("🤣 भाई, समोसे-चाय की पार्टी नहीं है, पूरा मैरिज हॉल है! कम से कम 10,000 के ऊपर का कोई इज़्ज़तदार ऑफर डालो।");
-      return; // यहीं रोक दो, आगे मत जाने दो
-    }
-
-    // 3. फालतू गिरी चेक (बहुत ज़्यादा पैसा)
-    if (offerAmount > 200000) {
-      alert("🤑 अरे मुकेश अंबानी जी, आप यहाँ? इतना ज़्यादा पैसा मत दीजिये, वेंडर को खुशी से हार्ट अटैक आ जाएगा! थोड़ा कम कीजिये।");
-      return;
-    }
-
-    // 4. अगर अमाउंट एकदम सही (लॉजिकल) है
-    alert("🚀 Boom! Your offer of ₹" + offerAmount + " has been sent to the vendor successfully! Wait for their reply in the 'Bookings' section.");
-    
-    // यहाँ आप पॉपअप बंद करने का कोड या 'Bookings' पेज पर भेजने का कोड लगा सकते हैं
-    // switchTab('bookings', document.querySelector('.nav-item')); 
-  }
-  </script>
-  
-  
-</body>
+   </script>
+ </body>
 </html>
 
 
