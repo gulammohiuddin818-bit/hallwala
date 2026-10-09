@@ -857,28 +857,33 @@
     function initCalendar() {
   const today = new Date();
   const currentYear = today.getFullYear();
-  const currentMonth = today.getMonth();
+  const currentMonth = today.getMonth(); // 0 = Jan, 9 = Oct
 
-  // 1. Dropdown elements ko dhoondo
+  // 1. Dropdown ढूँढना (allSelects सिर्फ एक बार डिक्लेयर किया है)
+  const allSelects = document.querySelectorAll('select');
+  
   let yearSelect = document.getElementById('calYear') 
                 || document.getElementById('yearSelect') 
-                || document.getElementById('year');
-
-  if (!yearSelect) {
-    const allSelects = document.querySelectorAll('select');
-    if (allSelects.length >= 2) yearSelect = allSelects[1];
-  }
+                || (allSelects.length > 1 ? allSelects[1] : null);
 
   let monthSelect = document.getElementById('calMonth') 
                  || document.getElementById('monthSelect') 
-                 || document.getElementById('month');
+                 || (allSelects.length > 0 ? allSelects[0] : null);
 
-  if (!monthSelect) {
-    const allSelects = document.querySelectorAll('select');
-    if (allSelects.length >= 1) monthSelect = allSelect[0];
+  // 2. 12 महीने लोड करना और Current Month सिलेक्ट करना
+  if (monthSelect) {
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    monthSelect.innerHTML = '';
+    months.forEach((m, i) => {
+      let opt = document.createElement('option');
+      opt.value = i;
+      opt.innerText = m;
+      if (i === currentMonth) opt.selected = true;
+      monthSelect.appendChild(opt);
+    });
   }
 
-  // 2. 1900 se 2100 tak saare saal load karo
+  // 3. 1900 से 2100 तक सारे साल लोड करना
   if (yearSelect) {
     yearSelect.innerHTML = '';
     for (let y = 1900; y <= 2100; y++) {
@@ -888,27 +893,24 @@
       if (y === currentYear) opt.selected = true;
       yearSelect.appendChild(opt);
     }
-    yearSelect.value = currentYear;
   }
 
-  // 3. Current Month select karo
-  if (monthSelect) {
-    monthSelect.value = currentMonth;
-  }
-
+  // 4. पुराने Date Selection को रीसेट करना
   customerSelectedDate = null;
   const selInput = document.getElementById('selectedDateInput');
   if (selInput) selInput.value = '';
   const dateWarn = document.getElementById('dateWarning');
   if (dateWarn) dateWarn.style.display = 'none';
 
+  // 5. नीचे का कैलेंडर ग्रिड लोड करना
   if (typeof renderCalendar === 'function') {
     renderCalendar();
   }
 }
 
-// Page load par chalane ke liye:
+// Page load होते ही कैलेंडर सेट करने के लिए कॉल:
 initCalendar();
+    
     
     
 
