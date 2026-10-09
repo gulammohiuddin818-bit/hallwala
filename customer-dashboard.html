@@ -528,8 +528,8 @@
             <span style="color: #cbd5e1; font-weight: 900;">➔</span>
           </div>
           <div style="display: flex; align-items: center; padding: 18px 0; border-bottom: 1px solid #f1f5f9; cursor: pointer;">
-            <span style="font-size: 22px; margin-right: 15px; background: #e0f2fe; padding: 8px; border-radius: 10px;">🛡️</span>
-            <div style="flex-grow: 1; font-size: 15px; font-weight: 800; color: #1e293b;">Privacy Policy</div>
+            <div style="display: flex; align-items: center; padding: 18px 0; border-bottom: 1px solid #f1f5f9; cursor: pointer;" onclick="document.getElementById('screen-privacy').style.display='block'; document.getElementById('screen-account').style.display='none'; window.scrollTo(0, 0);">
+             <div style="flex-grow: 1; font-size: 15px; font-weight: 800; color: #1e293b;">Privacy Policy</div>
             <span style="color: #cbd5e1; font-weight: 900;">➔</span>
           </div>
           <div style="display: flex; align-items: center; padding: 18px 0; cursor: pointer;">
@@ -657,6 +657,119 @@
 
 </div>
 <!-- ================= END TERMS & CONDITIONS ================= -->
+
+  <!-- ================= SCREEN: PRIVACY POLICY ================= -->
+<div id="screen-privacy" class="screen" style="display:none; padding: 20px 16px 90px; max-width: 650px; margin: 0 auto; color: #1e293b; line-height: 1.6; height: 100vh; overflow-y: auto;">
+  
+  <!-- Back Button & Header -->
+  <div style="border-bottom: 2px solid #e2e8f0; padding-bottom: 16px; margin-bottom: 24px;">
+    <div style="margin-bottom: 15px;">
+      <button onclick="document.getElementById('screen-privacy').style.display='none'; document.getElementById('screen-account').style.display='block'; window.scrollTo(0, 0);" style="background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 14px; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-weight: 700; color: #1e293b; display: flex; align-items: center; gap: 6px;">
+        ← Back to Account
+      </button>
+    </div>
+    <h1 style="font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">HallWala — Privacy Policy</h1>
+    <p style="font-size: 12px; color: #64748b; margin: 0;">Last Updated: October 2026 | Compliant with IT Act 2000 & DPDP Act</p>
+  </div>
+
+  <!-- 1. Introduction & Scope -->
+  <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-bottom: 12px;">
+    <h4 style="margin: 0 0 6px 0; font-size: 14px; color: #1e3a8a;">1. Introduction & Commitment to Privacy</h4>
+    <p style="margin: 0; font-size: 13px; color: #334155;">
+      HallWala ("Platform", "We", "Our") is committed to protecting the privacy, confidentiality, and security of our users ("Customers", "Guests", "You"). This Privacy Policy outlines our procedures regarding the collection, handling, storage, and safeguarding of your personal and transaction data when you use our web portal and mobile dashboard.
+    </p>
+  </div>
+
+  <!-- 2. Information We Collect -->
+  <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-bottom: 12px;">
+    <h4 style="margin: 0 0 6px 0; font-size: 14px; color: #1e3a8a;">2. Categories of Information Collected</h4>
+    <ul style="margin: 4px 0 0 0; padding-left: 18px; font-size: 13px; color: #334155;">
+      <li><strong>Identity & Contact Details:</strong> Full name, verified mobile phone number, email address, and residential city.</li>
+      <li><strong>Event Specifications:</strong> Intended event dates, guest count estimates, nature of ceremony (e.g., Wedding, Reception, Birthday), and proposed budget offers.</li>
+      <li><strong>Transaction Data:</strong> 10% token payment transaction identifiers, digital timestamps, and gateway payment references.</li>
+      <li><strong>Disbursement / Refund Bank Details:</strong> Masked account numbers and IFSC identifiers entered by the user solely for token refund processing.</li>
+      <li><strong>Device & Log Information:</strong> IP address, operating system, browser type, and access logs gathered automatically for platform security.</li>
+    </ul>
+  </div>
+
+  <!-- 3. Purpose & Processing -->
+  <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-bottom: 12px;">
+    <h4 style="margin: 0 0 6px 0; font-size: 14px; color: #1e3a8a;">3. Purpose of Processing Your Personal Data</h4>
+    <p style="margin: 0; font-size: 13px; color: #334155;">
+      We collect and process your information strictly for legitimate operational purposes:
+    </p>
+    <ul style="margin: 4px 0 0 0; padding-left: 18px; font-size: 13px; color: #334155;">
+      <li>To enable seamless hall discovery and facilitate negotiations between customers and banquet hall owners.</li>
+      <li>To generate official digital Token Receipts and binding Booking Agreement PDFs.</li>
+      <li>To transmit vital transaction notifications, verification codes (OTPs), and booking status updates via SMS/WhatsApp.</li>
+      <li>To investigate fraudulent actions, unauthorized attempts to bypass the platform, or violations of platform guidelines.</li>
+    </ul>
+  </div>
+
+  <!-- 4. Two-Phase Vendor Data Sharing Protocol -->
+  <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-bottom: 12px;">
+    <h4 style="margin: 0 0 6px 0; font-size: 14px; color: #1e3a8a;">4. Structured Two-Phase Vendor Data Sharing</h4>
+    <ul style="margin: 4px 0 0 0; padding-left: 18px; font-size: 13px; color: #334155;">
+      <li><strong>Phase 1 (Negotiation & Offer Stage):</strong> Your personal phone number and direct identity remain strictly masked and private. Vendors only see event requirements and your pricing offer.</li>
+      <li><strong>Phase 2 (Post-Confirmation Stage):</strong> Your direct contact information is revealed to the venue host <em>only after</em> the mandatory 10% token amount is successfully paid and the official Agreement PDF is generated, enabling on-ground coordination.</li>
+    </ul>
+  </div>
+
+  <!-- 5. Payment Security & Financial Data Isolation -->
+  <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-bottom: 12px;">
+    <h4 style="margin: 0 0 6px 0; font-size: 14px; color: #1e3a8a;">5. Payment Security & Financial Data Isolation</h4>
+    <p style="margin: 0; font-size: 13px; color: #334155;">
+      All financial transactions are conducted directly through RBI-authorized payment aggregators utilizing end-to-end 256-bit SSL encryption. <strong>HallWala does not collect, record, or store debit/credit card numbers, CVVs, UPI PINs, or net banking passwords on its servers.</strong>
+    </p>
+  </div>
+
+  <!-- 6. Strict No-Sale & Anti-Spam Guarantee -->
+  <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-bottom: 12px;">
+    <h4 style="margin: 0 0 6px 0; font-size: 14px; color: #1e3a8a;">6. Zero Spam & Strict No-Sale Guarantee</h4>
+    <p style="margin: 0; font-size: 13px; color: #334155;">
+      We strictly honor your digital privacy. HallWala never sells, trades, rents, or commercializes user contact databases to third-party telemarketers, insurance agents, or unsolicited advertising agencies under any circumstances.
+    </p>
+  </div>
+
+  <!-- 7. Data Retention & Account Deletion -->
+  <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-bottom: 12px;">
+    <h4 style="margin: 0 0 6px 0; font-size: 14px; color: #1e3a8a;">7. Data Retention & User Erasure Rights</h4>
+    <p style="margin: 0; font-size: 13px; color: #334155;">
+      Transaction records and agreement PDFs are retained as legally required for financial audit, taxation, and legal dispute defense. Users maintain the right to review, update, or remove linked withdrawal methods or submit account closure and data deletion requests through our support channels.
+    </p>
+  </div>
+
+  <!-- 8. Platform Security & System Protection -->
+  <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-bottom: 12px;">
+    <h4 style="margin: 0 0 6px 0; font-size: 14px; color: #1e3a8a;">8. Information Security & Safeguards</h4>
+    <p style="margin: 0; font-size: 13px; color: #334155;">
+      HallWala deploys industry-standard technical measures, encrypted data transit, firewalls, and restricted administrative privileges to shield your records against unauthorized access, loss, or alteration.
+    </p>
+  </div>
+
+  <!-- 9. Grievance Officer & Statutory Redressal -->
+  <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-bottom: 12px;">
+    <h4 style="margin: 0 0 6px 0; font-size: 14px; color: #1e3a8a;">9. Grievance Redressal Mechanism</h4>
+    <p style="margin: 0; font-size: 13px; color: #334155;">
+      In compliance with the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, users with privacy questions or grievances may contact:
+    </p>
+    <div style="margin-top: 8px; font-size: 12px; color: #475569; background: #f8fafc; padding: 8px 12px; border-radius: 6px;">
+      <strong>Grievance Officer:</strong> HallWala Legal & Compliance Cell<br>
+      <strong>Email:</strong> support@hallwala.in<br>
+      <strong>Address:</strong> Bokaro Steel City, Jharkhand, India
+    </div>
+  </div>
+
+  <!-- 10. Jurisdiction -->
+  <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-bottom: 12px;">
+    <h4 style="margin: 0 0 6px 0; font-size: 14px; color: #1e3a8a;">10. Governing Law & Jurisdiction</h4>
+    <p style="margin: 0; font-size: 13px; color: #334155;">
+      This Privacy Policy is construed under the laws of the Republic of India. Any disputes arising from data handling shall fall within the exclusive jurisdiction of the judicial courts in Bokaro, Jharkhand.
+    </p>
+  </div>
+
+</div>
+<!-- ================= END PRIVACY POLICY ================= -->
   
 
   <!-- BOTTOM APP NAVIGATION -->
