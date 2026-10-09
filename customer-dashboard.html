@@ -849,117 +849,110 @@
   </div>
 
   <script>
-    // --- 📅 CALENDAR LOGIC ---
-    // Example: Dummy booked dates (owner ne already book ki hui hain)
-    const bookedDates = ['2026-10-15', '2026-10-20', '2026-11-12', '2026-11-20']; 
-    let customerSelectedDate = null;
+    
+  // --- 📅 CALENDAR LOGIC ---
+  const bookedDates = ['2026-10-15', '2026-10-20', '2026-11-12'];
+  let customerSelectedDate = null;
 
-    function initCalendar() {
-  const today = new Date();
-  const currentYear = today.getFullYear();
-  const currentMonth = today.getMonth(); // 0 = Jan, 9 = Oct
+  function initCalendar() {
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth();
 
-  // 1. Dropdown ढूँढना (allSelects सिर्फ एक बार डिक्लेयर किया है)
-  const allSelects = document.querySelectorAll('select');
-  
-  let yearSelect = document.getElementById('calYear') 
-                || document.getElementById('yearSelect') 
-                || (allSelects.length > 1 ? allSelects[1] : null);
+    const monthSelect = document.getElementById('calMonth');
+    const yearSelect = document.getElementById('calYear');
 
-  let monthSelect = document.getElementById('calMonth') 
-                 || document.getElementById('monthSelect') 
-                 || (allSelects.length > 0 ? allSelects[0] : null);
-
-  // 2. 12 महीने लोड करना और Current Month सिलेक्ट करना
-  if (monthSelect) {
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    monthSelect.innerHTML = '';
-    months.forEach((m, i) => {
-      let opt = document.createElement('option');
-      opt.value = i;
-      opt.innerText = m;
-      if (i === currentMonth) opt.selected = true;
-      monthSelect.appendChild(opt);
-    });
-  }
-
-      // 3. 1900 se 2100 tak saare saal load karna (Direct Fix)
-    let exactYearDropdown = document.getElementById('calYear');
-    if (exactYearDropdown) {
-      let yearOptions = "";
-      let currentY = new Date().getFullYear();
-      for (let y = 1900; y <= 2100; y++) {
-        let isSelected = (y === currentY) ? "selected" : "";
-        yearOptions += `<option value="${y}" ${isSelected}>${y}</option>`;
-      }
-      exactYearDropdown.innerHTML = yearOptions;
+    // 1. महीने सेट करना (January - December)
+    if (monthSelect) {
+      monthSelect.innerHTML = '';
+      const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      months.forEach((m, i) => {
+        let opt = document.createElement('option');
+        opt.value = i;
+        opt.innerText = m;
+        if (i === currentMonth) opt.selected = true;
+        monthSelect.appendChild(opt);
+      });
     }
-      
 
-  // 4. पुराने Date Selection को रीसेट करना
-  customerSelectedDate = null;
-  const selInput = document.getElementById('selectedDateInput');
-  if (selInput) selInput.value = '';
-  const dateWarn = document.getElementById('dateWarning');
-  if (dateWarn) dateWarn.style.display = 'none';
+    // 2. साल सेट करना (1900 - 2100)
+    if (yearSelect) {
+      yearSelect.innerHTML = '';
+      for (let y = 1900; y <= 2100; y++) {
+        let opt = document.createElement('option');
+        opt.value = y;
+        opt.innerText = y;
+        if (y === currentYear) opt.selected = true;
+        yearSelect.appendChild(opt);
+      }
+    }
 
-  // 5. नीचे का कैलेंडर ग्रिड लोड करना
-  if (typeof renderCalendar === 'function') {
+    // 3. कैलेंडर ग्रिड बनाना
     renderCalendar();
   }
-}
 
-// Page load होते ही कैलेंडर सेट करने के लिए कॉल:
-initCalendar();
+  function renderCalendar() {
+    const yearSelect = document.getElementById('calYear');
+    const monthSelect = document.getElementById('calMonth');
+    const grid = document.getElementById('calGrid');
     
-    
-    
+    if (!yearSelect || !monthSelect || !grid) return;
 
-    function renderCalendar() {
-      const year = parseInt(document.getElementById('calYear').value);
-      const month = parseInt(document.getElementById('calMonth').value);
-      const grid = document.getElementById('calGrid');
-      grid.innerHTML = '';
-      
-      const firstDay = new Date(year, month, 1).getDay();
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
-      
-      // Empty blocks before 1st day
-      for (let i = 0; i < firstDay; i++) { grid.innerHTML += `<div></div>`; }
-      
-      // Print dates
-      for (let d = 1; d <= daysInMonth; d++) {
-        const mStr = String(month + 1).padStart(2, '0');
-        const dStr = String(d).padStart(2, '0');
-        const fullDate = `${year}-${mStr}-${dStr}`; // Format: YYYY-MM-DD
-        
-        const isBooked = bookedDates.includes(fullDate);
-        const isSelected = (customerSelectedDate === fullDate);
-        
-        let styles = "padding: 8px 0; border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; transition: 0.2s;";
-        
-        if (isBooked) {
-          styles += " background: #fee2e2; color: #ef4444; text-decoration: line-through; opacity: 0.7;";
-        } else if (isSelected) {
-          styles += " background: #10b981; color: white; box-shadow: 0 4px 10px rgba(16,185,129,0.3); transform: scale(1.1);";
-        } else {
-          styles += " background: #f1f5f9; color: #0f172a;";
-        }
-        
-        grid.innerHTML += `<div style="${styles}" onclick="selectDate('${fullDate}', ${isBooked})">${d}</div>`;
-      }
+    const year = parseInt(yearSelect.value);
+    const month = parseInt(monthSelect.value);
+    grid.innerHTML = '';
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    // खाली डिब्बे (महीने की शुरुआत से पहले के दिन)
+    for (let i = 0; i < firstDay; i++) {
+      grid.innerHTML += `<div></div>`;
     }
 
-    function selectDate(fullDate, isBooked) {
+    // तारीखें प्रिंट करना
+    for (let d = 1; d <= daysInMonth; d++) {
+      let mStr = String(month + 1).padStart(2, '0');
+      let dStr = String(d).padStart(2, '0');
+      let fullDate = `${year}-${mStr}-${dStr}`;
+
+      let isBooked = bookedDates.includes(fullDate);
+      let isSelected = (customerSelectedDate === fullDate);
+
+      let styles = "padding: 8px 0; border-radius: 8px; font-weight: bold; cursor: pointer; text-align: center; ";
+      
       if (isBooked) {
-        document.getElementById('dateWarning').style.display = 'block';
-        return; // Don't let them select it
+        styles += "background: #fee2e2; color: #ef4444; text-decoration: line-through; opacity: 0.6;";
+      } else if (isSelected) {
+        styles += "background: #10b981; color: white;";
+      } else {
+        styles += "background: #f1f5f9; color: #1e293b;";
       }
-      document.getElementById('dateWarning').style.display = 'none';
-      customerSelectedDate = fullDate;
-      document.getElementById('selectedDateInput').value = fullDate;
-      renderCalendar(); // Refresh UI to show green selection
+
+      grid.innerHTML += `<div style="${styles}" onclick="selectDate('${fullDate}', ${isBooked})">${d}</div>`;
     }
+  }
+
+  function selectDate(fullDate, isBooked) {
+    const dateWarn = document.getElementById('dateWarning');
+    if (isBooked) {
+      if(dateWarn) dateWarn.style.display = 'block';
+      return;
+    }
+    if(dateWarn) dateWarn.style.display = 'none';
+    
+    customerSelectedDate = fullDate;
+    const selInput = document.getElementById('selectedDateInput');
+    if(selInput) selInput.value = fullDate;
+    
+    renderCalendar();
+  }
+
+  // पेज खुलते ही कैलेंडर रन कर दो
+  initCalendar();
+    
+      
+
 
     // --- 🚀 MODAL LOGIC ---
         function openOfferModal(hallName, defaultPrice, rateType) {
