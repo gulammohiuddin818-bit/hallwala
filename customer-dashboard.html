@@ -817,7 +817,19 @@
       <!-- Month & Year Selectors -->
       <div style="display: flex; gap: 10px; margin-bottom: 15px;">
         <select id="calMonth" onchange="renderCalendar()" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc; outline: none;"></select>
-        <select id="calYear" onchange="renderCalendar()" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc; outline: none;"></select>
+        <select id="calYear" onchange="renderCalendar()" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc; outline: none;">
+</select>
+<script>
+  document.querySelectorAll('#calYear').forEach(box => {
+    let html = '';
+    let currentY = new Date().getFullYear();
+    for(let y = 1900; y <= 2100; y++) {
+      html += `<option value="${y}" ${y === currentY ? 'selected' : ''}>${y}</option>`;
+    }
+    box.innerHTML = html;
+  });
+</script>
+        
       </div>
       
       <!-- Days Header -->
