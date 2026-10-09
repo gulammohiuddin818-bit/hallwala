@@ -1174,13 +1174,35 @@ function submitOffer() {
 
     // Tab Switching Logic
     function switchTab(tabId, element) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      
-      document.getElementById('screen-' + tabId).classList.add('active');
-      element.classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+  // 1. Terms aur Privacy screen ko turant hide karo
+  const termsScreen = document.getElementById('screen-terms');
+  const privacyScreen = document.getElementById('screen-privacy');
+  if (termsScreen) termsScreen.style.display = 'none';
+  if (privacyScreen) privacyScreen.style.display = 'none';
+
+  // 2. Saari screens ko hide karo
+  document.querySelectorAll('.screen').forEach(s => {
+    s.classList.remove('active');
+    s.style.display = 'none';
+  });
+
+  // 3. Nav items se active class hatao
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.classList.remove('active');
+  });
+
+  // 4. Selected tab ko open karo
+  const targetScreen = document.getElementById('screen-' + tabId);
+  if (targetScreen) {
+    targetScreen.classList.add('active');
+    targetScreen.style.display = 'block';
+  }
+
+  // 5. Clicked button ko active karo aur page top par scroll karo
+  if (element) element.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+    
 
     // Search Execution
     function executeSearch() {
