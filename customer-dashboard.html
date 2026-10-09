@@ -855,37 +855,61 @@
     let customerSelectedDate = null;
 
     function initCalendar() {
-      const yearSelect = document.getElementById('calYear');
-      const monthSelect = document.getElementById('calMonth');
-      
-      // 1900 to 2100 Year Setup
-      yearSelect.innerHTML = '';
-      for(let y = 1900; y <= 2100; y++) {
-        let opt = document.createElement('option');
-        opt.value = y; opt.innerText = y;
-        yearSelect.appendChild(opt);
-      }
-      
-      // Month Setup
-      const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-      monthSelect.innerHTML = '';
-      months.forEach((m, i) => {
-        let opt = document.createElement('option');
-        opt.value = i; opt.innerText = m;
-        monthSelect.appendChild(opt);
-      });
+  const yearSelect = document.getElementById('calYear') || document.getElementById('yearSelect');
+  const monthSelect = document.getElementById('calMonth') || document.getElementById('monthSelect');
 
-      // Set current date
-      const today = new Date();
-      yearSelect.value = today.getFullYear();
-      monthSelect.value = today.getMonth();
-      
-      customerSelectedDate = null; // Reset selection
-      document.getElementById('selectedDateInput').value = '';
-      document.getElementById('dateWarning').style.display = 'none';
-      
-      renderCalendar();
+  // 1. Live Current Date, Month aur Year nikalo
+  const today = new Date();
+  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth(); // 0 = Jan, 9 = Oct
+
+  // 2. 1900 se 2100 tak saare saal load karo aur Current Year auto-select karo
+  if (yearSelect) {
+    yearSelect.innerHTML = '';
+    for (let y = 1900; y <= 2100; y++) {
+      let opt = document.createElement('option');
+      opt.value = y;
+      opt.innerText = y;
+      if (y === currentYear) {
+        opt.selected = true;
+      }
+      yearSelect.appendChild(opt);
     }
+    yearSelect.value = currentYear;
+  }
+
+  // 3. 12 Mahine load karo aur Current Month auto-select karo
+  if (monthSelect) {
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    monthSelect.innerHTML = '';
+    months.forEach((m, i) => {
+      let opt = document.createElement('option');
+      opt.value = i;
+      opt.innerText = m;
+      if (i === currentMonth) {
+        opt.selected = true;
+      }
+      monthSelect.appendChild(opt);
+    });
+    monthSelect.value = currentMonth;
+  }
+
+  // 4. Date selection reset
+  customerSelectedDate = null;
+  const selInput = document.getElementById('selectedDateInput');
+  if (selInput) selInput.value = '';
+  const dateWarn = document.getElementById('dateWarning');
+  if (dateWarn) dateWarn.style.display = 'none';
+
+  if (typeof renderCalendar === 'function') {
+    renderCalendar();
+  }
+}
+
+// 👉 Page load hote hi turant calendar setup active ho jaye:
+initCalendar();
+    
+    
 
     function renderCalendar() {
       const year = parseInt(document.getElementById('calYear').value);
