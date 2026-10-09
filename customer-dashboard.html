@@ -819,18 +819,8 @@
         <select id="calMonth" onchange="renderCalendar()" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc; outline: none;"></select>
         <select id="calYear" onchange="renderCalendar()" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc; outline: none;">
 </select>
-<script>
-  document.querySelectorAll('#calYear').forEach(box => {
-    let html = '';
-    let currentY = new Date().getFullYear();
-    for(let y = 1900; y <= 2100; y++) {
-      html += `<option value="${y}" ${y === currentY ? 'selected' : ''}>${y}</option>`;
-    }
-    box.innerHTML = html;
-  });
-</script>
-        
-      </div>
+    
+    </div>
       
       <!-- Days Header -->
       <div style="display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 10px; font-weight: 900; color: #94a3b8; margin-bottom: 8px;">
@@ -900,13 +890,17 @@
     }
 
     // 3. कैलेंडर ग्रिड बनाना
-    renderCalendar();
-  }
-
-  function renderCalendar() {
-    const yearSelect = document.getElementById('calYear');
-    const monthSelect = document.getElementById('calMonth');
-    const grid = document.getElementById('calGrid');
+    // 2. साल सेट करना (1900 - 2100) - FAST WAY
+    if (yearSelect) {
+      let currentY = today.getFullYear();
+      let yearHtml = '';
+      for (let y = 1900; y <= 2100; y++) {
+        let isSel = (y === currentY) ? 'selected' : '';
+        yearHtml += `<option value="${y}" ${isSel}>${y}</option>`;
+      }
+      yearSelect.innerHTML = yearHtml;
+    }
+    
     
     if (!yearSelect || !monthSelect || !grid) return;
 
@@ -1363,22 +1357,9 @@ function submitOffer() {
   const calGrid = document.getElementById('calGrid');
   if (calGrid) calGrid.style.display = 'grid';
 
-  // 2. 100% पक्का तरीका: 1900-2100 साल भरना
-  const yearSelect = document.getElementById('calYear');
-  
-  // Agar dropdown mein sirf 2026 hai (ya khali hai), tabhi saare saal bharo
-  if (yearSelect && yearSelect.options.length <= 1) {
-    let currentYear = new Date().getFullYear();
-    let optionsHTML = '';
-    
-    for (let y = 1900; y <= 2100; y++) {
-      let sel = (y === currentYear) ? 'selected' : '';
-      optionsHTML += `<option value="${y}" ${sel}>${y}</option>`;
-    }
-    
-    yearSelect.innerHTML = optionsHTML;
+
   }
-    }
+  
       
       
       
