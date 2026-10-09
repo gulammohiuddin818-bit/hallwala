@@ -1344,23 +1344,30 @@ function submitOffer() {
         // You can also add code here to change the green status bar from "Pay Token" to "Confirmed"
       }
     function openCalendar() {
-    // 1. महीना सेलेक्ट करने वाले ड्रॉपडाउन को फोकस (ओपन) करो
-    const monthSelect = document.getElementById('calMonth');
-    if (monthSelect) {
-        monthSelect.focus(); 
-    }
+  // 1. Calendar grid open karo
+  const monthSelect = document.getElementById('calMonth');
+  if (monthSelect) monthSelect.focus();
 
-    // 2. अगर कैलेंडर का ग्रिड (तारीखें) छुपा हुआ है, तो उसे दिखाओ
-    const calGrid = document.getElementById('calGrid');
-    if (calGrid) {
-        calGrid.style.display = 'grid'; // या 'flex', जो भी आपने पहले सेट किया हो
-    }
+  const calGrid = document.getElementById('calGrid');
+  if (calGrid) calGrid.style.display = 'grid';
 
-    // 3. (बैकअप) अगर ड्रॉपडाउन खाली हैं, तो कैलेंडर को वापस लोड करो
-    if (typeof initCalendar === 'function' && monthSelect && monthSelect.options.length === 0) {
-        initCalendar();
+  // 2. 100% पक्का तरीका: 1900-2100 साल भरना
+  const yearSelect = document.getElementById('calYear');
+  
+  // Agar dropdown mein sirf 2026 hai (ya khali hai), tabhi saare saal bharo
+  if (yearSelect && yearSelect.options.length <= 1) {
+    let currentYear = new Date().getFullYear();
+    let optionsHTML = '';
+    
+    for (let y = 1900; y <= 2100; y++) {
+      let sel = (y === currentYear) ? 'selected' : '';
+      optionsHTML += `<option value="${y}" ${sel}>${y}</option>`;
     }
-}
+    
+    yearSelect.innerHTML = optionsHTML;
+  }
+    }
+      
       
       
    </script>
