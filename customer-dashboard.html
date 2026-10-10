@@ -1361,47 +1361,62 @@ function submitOffer() {
       
    </script>
 
-<!-- 🚀 SMART BACK BUTTON & REFRESH FIX 🚀 -->
+<!-- 🚀 PERFECT NAVIGATION & BACK BUTTON FIX 🚀 -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. लॉगिन के बाद हमेशा HOME खुलेगा (अगर URL में #home, #bookings नहीं है तो)
-    let currentHash = window.location.hash.replace('#', '');
-    let activeTab = 'home'; // Default हमेशा Home रहेगा
-
-    if (currentHash === 'bookings' || currentHash === 'account') {
-        activeTab = currentHash; // अगर यूजर ने रिफ्रेश किया है, तो उसी पेज पर रहें
+    let currentHash = window.location.hash.replace('#', '') || 'home';
+    
+    // 1. PERFECT STACK MAGIC (Refresh Handler)
+    // अगर पेज रिफ्रेश हुआ है किसी टैब पर (जैसे Bookings), तो हिस्ट्री में ज़बरदस्ती 
+    // एक 'Home' डाल दो ताकि बैक दबाने पर हमेशा Home ही आए।
+    if (currentHash !== 'home') {
+        history.replaceState({ page: 'home' }, "", "#home");
+        history.pushState({ page: currentHash }, "", "#" + currentHash);
     } else {
-        // अगर फ्रेश लॉगिन है (कोई हैश नहीं है), तो हमेशा Home पर जाएँ
+        // नॉर्मल लॉगिन या होम पेज लोड
         history.replaceState({ page: 'home' }, "", "#home");
     }
-
+    
+    localStorage.setItem("myActiveTab", currentHash);
+    
     // पेज लोड होते ही सही टैब खोलो
-    let tabBtn = document.querySelector(`[onclick*="switchTab('${activeTab}'"]`);
-    if (tabBtn && typeof switchTab === 'function') {
-        switchTab(activeTab, tabBtn);
-    }
+    let tabBtn = document.querySelector(`[onclick*="switchTab('${currentHash}'"]`);
+    if (tabBtn && typeof switchTab === 'function') switchTab(currentHash, tabBtn);
 
-    // 2. जब भी कोई नीचे के टैब पर क्लिक करे, तो हिस्ट्री में सेव करो
+    // 2. TAB CLICKS HANDLER (History Stack Controller)
     document.querySelectorAll('.nav-item').forEach(btn => {
         btn.addEventListener('click', function() {
             let onclickText = this.getAttribute('onclick');
             if (onclickText && onclickText.includes('switchTab')) {
-                let tabName = onclickText.split("'")[1]; 
-                if(tabName) {
-                    history.pushState({ page: tabName }, "", "#" + tabName);
+                let newTab = onclickText.split("'")[1]; 
+                let currentTab = localStorage.getItem("myActiveTab") || 'home';
+                
+                if (newTab === currentTab) return; // सेम टैब पर कुछ मत करो
+                
+                if (newTab === 'home') {
+                    // अगर Home टैब पर क्लिक किया, तो कोई नई हिस्ट्री मत बनाओ, बस 1 कदम पीछे चले जाओ
+                    history.back();
+                } else if (currentTab === 'home') {
+                    // Home से किसी और टैब में जा रहे हैं -> हिस्ट्री में Push करो
+                    localStorage.setItem("myActiveTab", newTab);
+                    history.pushState({ page: newTab }, "", "#" + newTab);
+                } else {
+                    // Bookings से Account में जा रहे हैं -> PUSH मत करो, सिर्फ REPLACE करो
+                    // (ताकि हिस्ट्री की लंबी चेन न बने और बैक हमेशा Home पर ले जाए)
+                    localStorage.setItem("myActiveTab", newTab);
+                    history.replaceState({ page: newTab }, "", "#" + newTab);
                 }
             }
         });
     });
 });
 
-// 3. BACK BUTTON FIX (असली नेविगेशन)
+// 3. BACK BUTTON PRESS HANDLER
 window.addEventListener('popstate', (e) => {
-    // (A) सबसे पहले चेक करें कि क्या कोई मोडल/पॉपअप खुला है? (जैसे Terms, Offer)
+    // (A) चेक करो कि कोई Popup/Modal खुला है क्या? (Terms, Offer etc.)
     let openModals = Array.from(document.querySelectorAll('div[id$="Modal"], .bottom-sheet, .modal-active'))
                           .filter(m => m.style.display === 'block' || m.style.display === 'flex' || m.classList.contains('show'));
     
-    let modalClosed = false;
     if (openModals.length > 0) {
         // सबसे ऊपर वाले मोडल को बंद करो
         let topModal = openModals[openModals.length - 1];
@@ -1415,33 +1430,27 @@ window.addEventListener('popstate', (e) => {
         let overlay = document.getElementById('modalOverlay');
         if(overlay) overlay.style.display = 'none';
         
-        modalClosed = true;
-    }
-
-    // (B) अगर मोडल बंद हुआ है, तो ब्राउज़र को उसी टैब पर रोक लो (पीछे मत जाओ)
-    if (modalClosed) {
-        let currTab = window.location.hash.replace('#', '') || 'home';
+        // मोडल बंद किया है, इसलिए बैक जाने से रोको और उसी टैब पर रखो
+        let currTab = localStorage.getItem("myActiveTab") || 'home';
         history.pushState({ page: currTab }, "", "#" + currTab);
         return; 
     }
 
-    // (C) अगर कोई मोडल नहीं था, तो पिछले टैब पर जाओ
+    // (B) अगर मोडल नहीं खुला था, तो सीधा Home टैब (या पिछले टैब) पर जाओ
     if (e.state && e.state.page) {
         let prevTab = e.state.page;
+        localStorage.setItem("myActiveTab", prevTab);
         let tabBtn = document.querySelector(`[onclick*="switchTab('${prevTab}'"]`);
-        if (tabBtn && typeof switchTab === 'function') {
-            switchTab(prevTab, tabBtn);
-        }
+        if (tabBtn && typeof switchTab === 'function') switchTab(prevTab, tabBtn);
     } else {
-        // अगर हिस्ट्री खत्म हो गई (पहला पेज है), तो हमेशा Home पर जाओ
+        // Failsafe: अगर सब फेल हो जाए तो हमेशा Home पर जाओ
+        localStorage.setItem("myActiveTab", 'home');
         let homeBtn = document.querySelector(`[onclick*="switchTab('home'"]`);
-        if (homeBtn && typeof switchTab === 'function') {
-            switchTab('home', homeBtn);
-            history.replaceState({ page: 'home' }, "", "#home");
-        }
+        if (homeBtn && typeof switchTab === 'function') switchTab('home', homeBtn);
     }
 });
 </script>
+  
   
 
 <!-- ========================================== -->
