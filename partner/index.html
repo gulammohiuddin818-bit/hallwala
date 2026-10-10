@@ -39,17 +39,20 @@
             background: linear-gradient(135deg, #10b981, #059669);
             box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
             transition: transform 0.2s;
+            cursor: pointer;
         }
         .btn-business:active { transform: scale(0.96); }
     </style>
 </head>
-<body class="p-4 relative overflow-hidden">
+
+<!-- YAHAN OVERFLOW-X-HIDDEN LAGAYA HAI TAAKI MOBILE MEIN PULL-TO-REFRESH KAAM KARE -->
+<body class="p-4 relative overflow-x-hidden">
 
     <!-- Background Glow -->
     <div class="absolute top-[-10%] left-[-10%] w-72 h-72 bg-emerald-500 rounded-full mix-blend-screen filter blur-[100px] opacity-20"></div>
     <div class="absolute bottom-[-10%] right-[-10%] w-72 h-72 bg-indigo-500 rounded-full mix-blend-screen filter blur-[100px] opacity-20"></div>
 
-    <div class="glass-panel w-full max-w-md rounded-3xl p-8 relative z-10">
+    <div class="glass-panel w-full max-w-md rounded-3xl p-8 relative z-10 my-6">
         
         <!-- Header -->
         <div class="text-center mb-8">
@@ -64,25 +67,25 @@
 
         <!-- 1. LOGIN SECTION -->
         <div id="loginSection">
-            <form onsubmit="event.preventDefault(); handleBusinessLogin();" class="space-y-5">
+            <div class="space-y-5">
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Registered Mobile Number</label>
                     <div class="relative">
                         <span class="absolute left-4 top-3.5 text-slate-400">🇮🇳 +91</span>
-                        <input type="tel" placeholder="Enter 10-digit number" required pattern="[0-9]{10}" class="input-field w-full rounded-xl py-3.5 pl-16 pr-4 text-sm font-medium">
+                        <input type="tel" id="loginMob" placeholder="Enter 10-digit number" class="input-field w-full rounded-xl py-3.5 pl-16 pr-4 text-sm font-medium">
                     </div>
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Secure Vendor PIN</label>
                     <div class="relative">
                         <span class="absolute left-4 top-3.5 text-slate-400">🔒</span>
-                        <input type="password" placeholder="Enter 4 or 6 digit PIN" required class="input-field w-full rounded-xl py-3.5 pl-12 pr-4 text-sm font-medium">
+                        <input type="password" id="loginPin" placeholder="Enter 4 or 6 digit PIN" class="input-field w-full rounded-xl py-3.5 pl-12 pr-4 text-sm font-medium">
                     </div>
                 </div>
-                <button type="submit" id="loginBtn" class="btn-business w-full text-white font-bold rounded-xl py-4 mt-4 flex justify-center items-center gap-2">
+                <button onclick="handleBusinessLogin()" id="loginBtn" class="btn-business w-full text-white font-bold rounded-xl py-4 mt-4 flex justify-center items-center gap-2">
                     Secure Login <span class="text-lg">→</span>
                 </button>
-            </form>
+            </div>
 
             <div class="flex items-center gap-4 my-6 opacity-40">
                 <div class="flex-1 h-px bg-white"></div>
@@ -100,31 +103,31 @@
 
         <!-- 2. REGISTRATION SECTION (Hidden By Default) -->
         <div id="registerSection" style="display: none;">
-            <form onsubmit="event.preventDefault(); handleBusinessRegister();" class="space-y-4">
+            <div class="space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Owner Full Name</label>
-                    <input type="text" placeholder="Enter your name" required class="input-field w-full rounded-xl py-3 px-4 text-sm font-medium">
+                    <input type="text" id="regName" placeholder="Enter your name" class="input-field w-full rounded-xl py-3 px-4 text-sm font-medium">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Hall / Banquet Name</label>
-                    <input type="text" placeholder="e.g. Royal Palace" required class="input-field w-full rounded-xl py-3 px-4 text-sm font-medium">
+                    <input type="text" id="regHall" placeholder="e.g. Royal Palace" class="input-field w-full rounded-xl py-3 px-4 text-sm font-medium">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Mobile Number</label>
                     <div class="relative">
                         <span class="absolute left-4 top-3 text-slate-400">🇮🇳 +91</span>
-                        <input type="tel" placeholder="10-digit number" required pattern="[0-9]{10}" class="input-field w-full rounded-xl py-3 pl-16 pr-4 text-sm font-medium">
+                        <input type="tel" id="regMob" placeholder="10-digit number" class="input-field w-full rounded-xl py-3 pl-16 pr-4 text-sm font-medium">
                     </div>
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Create 4-Digit PIN</label>
-                    <input type="password" placeholder="Create a secure PIN" required class="input-field w-full rounded-xl py-3 px-4 text-sm font-medium">
+                    <input type="password" id="regPin" placeholder="Create a secure PIN" class="input-field w-full rounded-xl py-3 px-4 text-sm font-medium">
                 </div>
                 
-                <button type="submit" id="registerBtn" class="btn-business w-full text-white font-bold rounded-xl py-4 mt-4 flex justify-center items-center gap-2">
+                <button onclick="handleBusinessRegister()" id="registerBtn" class="btn-business w-full text-white font-bold rounded-xl py-4 mt-4 flex justify-center items-center gap-2">
                     Register My Hall ✅
                 </button>
-            </form>
+            </div>
             
             <div class="text-center mt-5">
                 <button onclick="toggleSection('login')" class="text-sm font-semibold text-emerald-400 hover:text-emerald-300">
@@ -159,11 +162,23 @@
                 loginSec.style.display = 'block';
                 subText.innerText = 'Manage your venues & grow revenue.';
             }
+            
+            // Mobile par smooth scroll up taaki pull-to-refresh properly kaam kare
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Dummy Login Logic (Redirects to Owner Dashboard)
+        // SMART DUMMY LOGIN LOGIC
         function handleBusinessLogin() {
             triggerHaptic('heavy');
+            
+            let mob = document.getElementById('loginMob').value;
+            let pin = document.getElementById('loginPin').value;
+            
+            if(!mob || !pin) {
+                alert("Please enter Mobile Number and PIN!");
+                return;
+            }
+
             let btn = document.getElementById('loginBtn');
             btn.innerHTML = `Authenticating...`;
             
@@ -172,15 +187,26 @@
                 btn.style.background = "#059669";
                 
                 setTimeout(() => {
-                    // Yahan `../` lagaya hai kyunki ye partner folder ke andar hai
+                    // Redirects to Owner Dashboard
                     window.location.href = '../owner-dashboard.html'; 
-                }, 500);
-            }, 1500);
+                }, 800);
+            }, 1200);
         }
 
-        // Dummy Registration Logic
+        // SMART DUMMY REGISTRATION LOGIC
         function handleBusinessRegister() {
             triggerHaptic('heavy');
+            
+            let name = document.getElementById('regName').value;
+            let hall = document.getElementById('regHall').value;
+            let mob = document.getElementById('regMob').value;
+            let pin = document.getElementById('regPin').value;
+            
+            if(!name || !hall || !mob || !pin) {
+                alert("Please fill all the details to register!");
+                return;
+            }
+
             let btn = document.getElementById('registerBtn');
             btn.innerHTML = `Registering...`;
             
@@ -190,9 +216,16 @@
                 
                 setTimeout(() => {
                     alert("Account created successfully! Please login with your details.");
+                    
+                    // Fields ko khali kar dena
+                    document.getElementById('regName').value = '';
+                    document.getElementById('regHall').value = '';
+                    document.getElementById('regMob').value = '';
+                    document.getElementById('regPin').value = '';
+                    
                     toggleSection('login');
                     btn.innerHTML = `Register My Hall ✅`;
-                    btn.style.background = ""; // Reset Button Color
+                    btn.style.background = ""; 
                 }, 1000);
             }, 1500);
         }
