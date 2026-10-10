@@ -1505,6 +1505,142 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 <!-- ========================================== -->
   
+<!-- ========================================== -->
+<!-- 🤖 FUTURISTIC HALLWALA AI (GEMINI STYLE) 🤖 -->
+<!-- ========================================== -->
+
+<!-- 1. AI Chat Window (Hidden By Default) -->
+<div id="aiChatWindow" style="display: none; position: fixed; bottom: 90px; right: 20px; width: 350px; height: 500px; max-width: 90vw; max-height: 70vh; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 24px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.5); z-index: 10000; flex-direction: column; overflow: hidden; transform: translateY(20px); opacity: 0; transition: all 0.3s ease;">
+  
+  <!-- Header -->
+  <div style="background: linear-gradient(135deg, #6366f1, #a855f7); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+    <div style="font-weight: 900; font-size: 16px; display: flex; align-items: center; gap: 8px;">
+      <span style="font-size: 20px;">✨</span> HallWala AI
+    </div>
+    <div onclick="toggleAI()" style="cursor: pointer; font-size: 24px; font-weight: bold; opacity: 0.8;">&times;</div>
+  </div>
+
+  <!-- Chat Area -->
+  <div id="aiChatArea" style="flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: rgba(248, 250, 252, 0.5);">
+    
+    <!-- AI Welcome Message -->
+    <div class="chat-bubble ai-bubble">
+      Hi there! 👋 Main HallWala AI हूँ। आज मैं आपके लिए बेस्ट शादी का हॉल या बैंक्वेट ढूँढने में कैसे मदद कर सकता हूँ?
+    </div>
+
+    <!-- Quick Suggestion Chips -->
+    <div id="quickChips" style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; margin-top: 5px;">
+      <button class="ai-chip" onclick="sendUserMsg('Mujhe AC hall chahiye')">❄️ AC Halls</button>
+      <button class="ai-chip" onclick="sendUserMsg('Under ₹50,000')">💰 Under ₹50k</button>
+      <button class="ai-chip" onclick="sendUserMsg('Customer care number?')">📞 Support</button>
+    </div>
+  </div>
+
+  <!-- Input Area -->
+  <div style="padding: 12px; background: white; border-top: 1px solid #e2e8f0; display: flex; gap: 10px; align-items: center;">
+    <input type="text" id="aiInput" placeholder="Ask anything..." onkeypress="if(event.key === 'Enter') sendUserMsg()" style="flex: 1; border: none; background: #f1f5f9; padding: 12px 16px; border-radius: 20px; outline: none; font-size: 14px; font-weight: 500;">
+    <button onclick="sendUserMsg()" style="background: linear-gradient(135deg, #6366f1, #a855f7); color: white; border: none; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);">
+      <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm.8-1.123L1.576 6.186 13.424 1.87l-6 7.077Z"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- 2. AI Floating Button (Toggle) -->
+<div onclick="toggleAI()" id="aiFloatingBtn" style="position: fixed; bottom: 85px; right: 20px; width: 60px; height: 60px; background: linear-gradient(135deg, #6366f1, #a855f7); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(99, 102, 241, 0.5); cursor: pointer; z-index: 9999; animation: bounceFloat 3s infinite;">
+  <span style="font-size: 28px;">✨</span>
+</div>
+
+<!-- AI CSS & Animations -->
+<style>
+.chat-bubble { max-width: 85%; padding: 12px 16px; border-radius: 18px; font-size: 13px; line-height: 1.5; font-weight: 500; word-wrap: break-word; animation: popIn 0.3s ease; }
+.ai-bubble { background: white; color: #1e293b; border-bottom-left-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+.user-bubble { background: linear-gradient(135deg, #6366f1, #a855f7); color: white; border-bottom-right-radius: 4px; align-self: flex-end; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); }
+.ai-chip { background: white; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: #475569; cursor: pointer; white-space: nowrap; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+.ai-chip:active { background: #f1f5f9; transform: scale(0.95); }
+.typing-dots::after { content: '...'; animation: blink 1.5s infinite steps(4); }
+@keyframes popIn { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes blink { 0%, 100% { color: transparent; } 50% { color: inherit; } }
+@keyframes bounceFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); box-shadow: 0 15px 30px rgba(99, 102, 241, 0.6); } }
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+</style>
+
+<!-- AI Brain (Logic) -->
+<script>
+let aiWindowOpen = false;
+
+function toggleAI() {
+  const win = document.getElementById('aiChatWindow');
+  const btn = document.getElementById('aiFloatingBtn');
+  if(typeof triggerHaptic === 'function') triggerHaptic('heavy');
+  
+  aiWindowOpen = !aiWindowOpen;
+  if (aiWindowOpen) {
+    win.style.display = 'flex';
+    setTimeout(() => { win.style.transform = 'translateY(0)'; win.style.opacity = '1'; }, 10);
+    btn.style.transform = 'scale(0)';
+  } else {
+    win.style.transform = 'translateY(20px)'; win.style.opacity = '0';
+    setTimeout(() => { win.style.display = 'none'; btn.style.transform = 'scale(1)'; }, 300);
+  }
+}
+
+function sendUserMsg(text = null) {
+  const inputEl = document.getElementById('aiInput');
+  const msg = text || inputEl.value.trim();
+  if (!msg) return;
+  
+  if(typeof triggerHaptic === 'function') triggerHaptic('light');
+  
+  // 1. Hide Chips & Clear Input
+  const chips = document.getElementById('quickChips');
+  if(chips) chips.style.display = 'none';
+  if(!text) inputEl.value = '';
+
+  // 2. Add User Message
+  appendBubble(msg, 'user-bubble');
+
+  // 3. Show Typing Indicator
+  const typingId = 'typing-' + Date.now();
+  setTimeout(() => {
+    appendBubble('<span class="typing-dots">AI is typing</span>', 'ai-bubble', typingId);
+  }, 400);
+
+  // 4. Generate AI Reply (Smart logic)
+  setTimeout(() => {
+    document.getElementById(typingId).remove();
+    let reply = getSmartReply(msg.toLowerCase());
+    appendBubble(reply, 'ai-bubble');
+  }, 1500 + Math.random() * 1000); // 1.5 to 2.5 seconds delay
+}
+
+function appendBubble(htmlContent, className, id = null) {
+  const chatArea = document.getElementById('aiChatArea');
+  const div = document.createElement('div');
+  div.className = `chat-bubble ${className}`;
+  div.innerHTML = htmlContent;
+  if(id) div.id = id;
+  chatArea.appendChild(div);
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+// AI's Brain - Matching keywords
+function getSmartReply(msg) {
+  if (msg.includes('ac') || msg.includes('a/c')) {
+    return "✅ <b>Grand Milestone Banquet</b> aur <b>Royal Palace</b> dono fully AC hain. Aap inki availability 'Bookings' tab se check kar sakte hain.";
+  } else if (msg.includes('50') || msg.includes('budget') || msg.includes('price')) {
+    return "💡 Budget me halls chahiye? Aap <b>The Imperial Lawn</b> check karein, inka starting price ₹30,000 hai. Aap direct 'Make Offer' button dabakar apna price bhi bhej sakte hain!";
+  } else if (msg.includes('support') || msg.includes('care') || msg.includes('number')) {
+    return "📞 Hamara 24x7 customer support humesha active hai! Aap hume <b>+91 98765 43210</b> par call kar sakte hain ya Account tab se ticket raise kar sakte hain.";
+  } else if (msg.includes('hi') || msg.includes('hello')) {
+    return "Hello! ✨ Main kaise help karun? Kya aap kisi specific date ke liye hall search kar rahe hain?";
+  } else {
+    return "🤔 Sorry, main abhi seekh raha hoon. Par aap HallWala par apna favorite hall search karke direct owner ko 'Offer' bhej sakte hain. Zero Brokerage!";
+  }
+}
+</script>
+<!-- ========================================== -->
+  
   
  </body>
 </html>
