@@ -1361,29 +1361,24 @@ function submitOffer() {
       
    </script>
 
-<!-- 🚀 PERFECT NAVIGATION & BACK BUTTON FIX 🚀 -->
+<!-- 🚀 ULTIMATE STACK NAVIGATION & POPUP FIX 🚀 -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    let currentHash = window.location.hash.replace('#', '') || 'home';
+    let currentHash = window.location.hash.replace('#', '').replace('-popup', '') || 'home';
     
-    // 1. PERFECT STACK MAGIC (Refresh Handler)
-    // अगर पेज रिफ्रेश हुआ है किसी टैब पर (जैसे Bookings), तो हिस्ट्री में ज़बरदस्ती 
-    // एक 'Home' डाल दो ताकि बैक दबाने पर हमेशा Home ही आए।
+    // 1. Initial State Setup (रिफ्रेश फिक्स)
     if (currentHash !== 'home') {
         history.replaceState({ page: 'home' }, "", "#home");
         history.pushState({ page: currentHash }, "", "#" + currentHash);
     } else {
-        // नॉर्मल लॉगिन या होम पेज लोड
         history.replaceState({ page: 'home' }, "", "#home");
     }
-    
     localStorage.setItem("myActiveTab", currentHash);
     
-    // पेज लोड होते ही सही टैब खोलो
     let tabBtn = document.querySelector(`[onclick*="switchTab('${currentHash}'"]`);
     if (tabBtn && typeof switchTab === 'function') switchTab(currentHash, tabBtn);
 
-    // 2. TAB CLICKS HANDLER (History Stack Controller)
+    // 2. Tab Navigation Magic
     document.querySelectorAll('.nav-item').forEach(btn => {
         btn.addEventListener('click', function() {
             let onclickText = this.getAttribute('onclick');
@@ -1391,67 +1386,84 @@ document.addEventListener("DOMContentLoaded", () => {
                 let newTab = onclickText.split("'")[1]; 
                 let currentTab = localStorage.getItem("myActiveTab") || 'home';
                 
-                if (newTab === currentTab) return; // सेम टैब पर कुछ मत करो
+                if (newTab === currentTab) return; 
                 
                 if (newTab === 'home') {
-                    // अगर Home टैब पर क्लिक किया, तो कोई नई हिस्ट्री मत बनाओ, बस 1 कदम पीछे चले जाओ
-                    history.back();
+                    history.replaceState({ page: 'home' }, "", "#home");
                 } else if (currentTab === 'home') {
-                    // Home से किसी और टैब में जा रहे हैं -> हिस्ट्री में Push करो
-                    localStorage.setItem("myActiveTab", newTab);
                     history.pushState({ page: newTab }, "", "#" + newTab);
                 } else {
-                    // Bookings से Account में जा रहे हैं -> PUSH मत करो, सिर्फ REPLACE करो
-                    // (ताकि हिस्ट्री की लंबी चेन न बने और बैक हमेशा Home पर ले जाए)
-                    localStorage.setItem("myActiveTab", newTab);
                     history.replaceState({ page: newTab }, "", "#" + newTab);
                 }
+                localStorage.setItem("myActiveTab", newTab);
             }
         });
     });
+
+    // 3. ✨ SUPER SMART POPUP INTERCEPTOR ✨
+    // यह हर उस बटन को पकड़ेगा जो कोई पॉपअप, कैलेंडर या Terms खोलता है
+    // और ब्राउज़र की हिस्ट्री में एक नकली कदम (Dummy State) डाल देगा 
+    // ताकि बैक दबाने पर ऐप Login पेज पर बाहर न फेंके!
+    document.body.addEventListener('click', (e) => {
+        let el = e.target.closest('[onclick]');
+        if (!el) return;
+        let str = el.getAttribute('onclick').toLowerCase();
+        
+        // अगर बटन किसी पॉपअप या Terms को खोलने वाला है
+        if ((str.includes('open') || str.includes('show') || str.includes('modal') || str.includes('terms') || str.includes('policy')) && !str.includes('switchtab') && !str.includes('toggleai')) {
+            if (!window.location.hash.includes('-popup')) {
+                history.pushState({ popup: true }, "", window.location.hash + "-popup");
+            }
+        }
+    }, true);
 });
 
-// 3. BACK BUTTON PRESS HANDLER
+// 4. BACK BUTTON PRESS HANDLER (असली नेविगेशन)
 window.addEventListener('popstate', (e) => {
-    // (A) चेक करो कि कोई Popup/Modal खुला है क्या? (Terms, Offer etc.)
-    let openModals = Array.from(document.querySelectorAll('div[id$="Modal"], .bottom-sheet, .modal-active'))
-                          .filter(m => m.style.display === 'block' || m.style.display === 'flex' || m.classList.contains('show'));
-    
-    if (openModals.length > 0) {
-        // सबसे ऊपर वाले मोडल को बंद करो
-        let topModal = openModals[openModals.length - 1];
-        if (typeof closeOfferModal === 'function' && topModal.id === 'offerModal') closeOfferModal();
-        else if (typeof closePaymentModal === 'function' && topModal.id === 'paymentSuccessModal') closePaymentModal();
-        else {
-            topModal.style.display = 'none';
-            topModal.style.transform = 'translateY(100%)';
+    // (A) यूनिवर्सल डिटेक्टर: पूरे ऐप में कोई भी Popup, Terms या Modal खुला हो, उसे ढूँढो
+    let openModals = Array.from(document.querySelectorAll('div')).filter(el => {
+        let id = (el.id || '').toLowerCase();
+        // अगर ID में modal, sheet, terms या privacy है, तो उसे पकड़ लो
+        if (id.includes('modal') || id.includes('sheet') || id.includes('terms') || id.includes('privacy') || id.includes('policy') || el.classList.contains('modal-active')) {
+            let style = window.getComputedStyle(el);
+            return (style.display === 'block' || style.display === 'flex') && (style.position === 'fixed' || style.position === 'absolute');
         }
+        return false;
+    });
+    
+    // (B) अगर कोई पॉपअप या Terms खुला मिला, तो बस उसे बंद करो और उसी टैब पर रुको!
+    if (openModals.length > 0) {
+        openModals.forEach(m => {
+            m.style.display = 'none';
+            m.style.transform = 'translateY(100%)'; 
+        });
         
         let overlay = document.getElementById('modalOverlay');
         if(overlay) overlay.style.display = 'none';
+
+        // यूजर को उसी टैब (Bookings या Account) पर रोक लो, Home पर मत जाने दो
+        let baseTab = window.location.hash.replace('#', '').replace('-popup', '') || 'home';
+        localStorage.setItem("myActiveTab", baseTab);
         
-        // मोडल बंद किया है, इसलिए बैक जाने से रोको और उसी टैब पर रखो
-        let currTab = localStorage.getItem("myActiveTab") || 'home';
-        history.pushState({ page: currTab }, "", "#" + currTab);
-        return; 
+        return; // यहीं रुक जाओ, आगे का कोड रन मत करो
     }
 
-    // (B) अगर मोडल नहीं खुला था, तो सीधा Home टैब (या पिछले टैब) पर जाओ
-    if (e.state && e.state.page) {
+    // (C) अगर कोई पॉपअप नहीं खुला था, तो नॉर्मल बैक (जैसे Account से Home) करो
+    if (e.state && e.state.page && e.state.page !== 'home') {
         let prevTab = e.state.page;
         localStorage.setItem("myActiveTab", prevTab);
         let tabBtn = document.querySelector(`[onclick*="switchTab('${prevTab}'"]`);
         if (tabBtn && typeof switchTab === 'function') switchTab(prevTab, tabBtn);
     } else {
-        // Failsafe: अगर सब फेल हो जाए तो हमेशा Home पर जाओ
+        // अगर सब खत्म हो गया तो Home पर आ जाओ
         localStorage.setItem("myActiveTab", 'home');
         let homeBtn = document.querySelector(`[onclick*="switchTab('home'"]`);
         if (homeBtn && typeof switchTab === 'function') switchTab('home', homeBtn);
+        history.replaceState({ page: 'home' }, "", "#home");
     }
 });
 </script>
-  
-  
+<!-- 🚀 ULTIMATE STACK NAVIGATION & POPUP FIX END 🚀 -->
 
 <!-- ========================================== -->
 <!-- 🚀 PREMIUM FUTURISTIC UI/UX ADD-ONS 🚀 -->
