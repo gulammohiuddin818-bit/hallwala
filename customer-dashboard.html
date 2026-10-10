@@ -1624,20 +1624,73 @@ function appendBubble(htmlContent, className, id = null) {
   chatArea.scrollTop = chatArea.scrollHeight;
 }
 
-// AI's Brain - Matching keywords
+// =========================================================
+// 🧠 HALLWALA PRO AI BRAIN (ULTIMATE BUSINESS LOGIC) 🧠
+// =========================================================
 function getSmartReply(msg) {
-  if (msg.includes('ac') || msg.includes('a/c')) {
-    return "✅ <b>Grand Milestone Banquet</b> aur <b>Royal Palace</b> dono fully AC hain. Aap inki availability 'Bookings' tab se check kar sakte hain.";
-  } else if (msg.includes('50') || msg.includes('budget') || msg.includes('price')) {
-    return "💡 Budget me halls chahiye? Aap <b>The Imperial Lawn</b> check karein, inka starting price ₹30,000 hai. Aap direct 'Make Offer' button dabakar apna price bhi bhej sakte hain!";
-  } else if (msg.includes('support') || msg.includes('care') || msg.includes('number')) {
-    return "📞 Hamara 24x7 customer support humesha active hai! Aap hume <b>+91 98765 43210</b> par call kar sakte hain ya Account tab se ticket raise kar sakte hain.";
-  } else if (msg.includes('hi') || msg.includes('hello')) {
-    return "Hello! ✨ Main kaise help karun? Kya aap kisi specific date ke liye hall search kar rahe hain?";
-  } else {
-    return "🤔 Sorry, main abhi seekh raha hoon. Par aap HallWala par apna favorite hall search karke direct owner ko 'Offer' bhej sakte hain. Zero Brokerage!";
+  let m = msg.toLowerCase();
+
+  // 1. VENUE TYPES & EVENTS (Banquets, Weddings, Corporate, etc.)
+  if (m.includes('party') || m.includes('banquet') || m.includes('wedding') || m.includes('corporate') || m.includes('shadi') || m.includes('marriage')) {
+    return "🎉 Weddings, Corporate events ya Parties ke liye humare paas Premium Banquets aur Party Halls available hain. Aap Home tab se apna area filter karke best option chun sakte hain!";
+  }
+  
+  // 2. OPEN LAWNS & GARDENS
+  else if (m.includes('lawn') || m.includes('garden') || m.includes('khula') || m.includes('open')) {
+    return "🌳 Open space aur grand events ke liye humare paas shaandar Open Lawns aur Gardens (jaise The Imperial Lawn) hain. Ye outdoor functions ke liye perfect hain.";
+  }
+  
+  // 3. ROOFTOP & HOTEL BANQUETS
+  else if (m.includes('roof') || m.includes('terrace') || m.includes('hotel')) {
+    return "🌃 Rooftop parties aur Luxury Hotel Banquets ke liye humare paas exclusive VIP options hain. Inka city view aur ambience aapko zaroor pasand aayega!";
+  }
+  
+  // 4. CUSTOMER SUPPORT / HELPLINE (STRICTLY NO NUMBER, ONLY EMAIL)
+  else if (m.includes('support') || m.includes('care') || m.includes('number') || m.includes('helpline') || m.includes('contact') || m.includes('call')) {
+    return "📧 Customer Support ke liye aap hume direct <b>support@hallwala.in</b> par email kar sakte hain. Ye email direct humari core team ke paas aati hai aur hum aapko turant reply karenge! (Security reasons ke liye hum direct number provide nahi karte).";
+  }
+  
+  // 5. MAKE AN OFFER / BARGAIN / PRICE / VENDORS
+  else if (m.includes('offer') || m.includes('bargain') || m.includes('price') || m.includes('rate') || m.includes('discount') || m.includes('vendor')) {
+    return "💡 <b>Make an Offer:</b> HallWala par Zero Brokerage hai! Aap direct vendor ko apna price (offer) bhej sakte hain. Vendor aapka offer accept ya reject kar sakta hai. Aap direct owner se bargain kar sakte hain like a boss! 😎";
+  }
+  
+  // 6. PAYMENT LOGIC (10% TOKEN & 90% REMAINING)
+  else if (m.includes('token') || m.includes('payment') || m.includes('book') || m.includes('advance') || m.includes('90') || m.includes('10')) {
+    return "💳 <b>Booking Rule:</b> Kisi bhi date ko permanently lock karne ke liye sirf <b>10% Token Amount</b> dena hota hai. Baaki ka bacha hua <b>90% amount</b> aapko direct hall owner ko event ke time par pay karna hai. Hai na aasaan?";
+  }
+  
+  // 7. TERMS & CONDITIONS / PRIVACY POLICY
+  else if (m.includes('term') || m.includes('condition') || m.includes('privacy') || m.includes('policy') || m.includes('rule')) {
+    return "📜 <b>Terms & Policies:</b> HallWala ek independent tech platform hai jo aapko aur hall owner ko connect karta hai. Yaad rahe, Token amount non-refundable hota hai. Pura details aap 'Account' tab me 'Terms & Conditions' me padh sakte hain.";
+  }
+  
+  // 8. CAPACITY, LOG & FOOD (CATERING)
+  else if (m.includes('log') || m.includes('capacity') || m.includes('food') || m.includes('cater') || m.includes('veg') || m.includes('khana') || m.includes('aadmi') || m.includes('guests')) {
+    return "🍽️ <b>Capacity & Food:</b> Humare paas 100 se lekar 2000+ guests tak ki capacity wale halls hain. Maximum halls me in-house catering (Veg/Non-Veg) milti hai. Aap hall ki photo par click karke uski saari details padh sakte hain.";
+  }
+  
+  // 9. LOCATION & AREA SEARCH
+  else if (m.includes('location') || m.includes('area') || m.includes('jagah') || m.includes('kaha') || m.includes('search')) {
+    return "📍 Aap Home page par apna State aur City (jaise Jharkhand -> Bokaro) select karke 'Explore Available Halls' par click karein. Aapko apne aas-paas ke saare best venues mil jayenge.";
+  }
+  
+  // 10. AFFIRMATIVE REPLIES ("Haa", "Yes" -> Next Steps)
+  else if (m === 'haa' || m === 'ha' || m.includes('yes') || m.includes('ji') || m.includes('yep') || m.includes('ok')) {
+    return "Great! 🚀 Toh chaliye shuru karte hain. Aap Home page par 'Explore Available Halls' button par click karein. Agar koi pasand aaye toh date select karke turant 'Make Offer' bhej dein!";
+  }
+  
+  // 11. WELCOME / GREETING
+  else if (m.includes('hi') || m.includes('hello') || m.includes('hey')) {
+    return "Hello! ✨ Main HallWala Pro AI हूँ। Aaj main aapki kaise help karu? Aap mujhse Booking, Token, Make an Offer, ya kisi Venue type (Lawn, Banquet, Rooftop) ke baare me pooch sakte hain.";
+  }
+  
+  // 12. FALLBACK (Agar AI ko samajh na aaye toh kya bolega)
+  else {
+    return "🤔 Sorry, mujhe samajh nahi aaya. Par main ek Pro AI hoon! Aap mujhse <b>Banquets, Open Lawns, Make an Offer, Token Payment (10%), ya Policies</b> ke baare me kuch bhi pooch sakte hain.";
   }
 }
+  
 </script>
 <!-- ========================================== -->
   
