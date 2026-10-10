@@ -814,13 +814,14 @@
     <div onclick="openCalendar()" style="cursor: pointer; background: #ffffff; border: 1px solid #e2e8f0; padding: 15px; border-radius: 16px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">
   <label style="font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 10px;">Select Event Date</label>
       
+      
       <!-- Month & Year Selectors -->
-      <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-     <select id="calMonth" onchange="renderCalendar()" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc; outline: none;"></select>
-<select id="calYear" onchange="renderCalendar()" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc; outline: none;"></select>
-        
-    
-    </div>
+<div style="display: flex; gap: 10px; margin-bottom: 15px;">
+  <select id="calMonth" onchange="renderCalendar()" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc; outline: none;"></select>
+  <select id="calYear" onchange="renderCalendar()" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc; outline: none;"></select>
+</div>
+
+      
       
       <!-- Days Header -->
       <div style="display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 10px; font-weight: 900; color: #94a3b8; margin-bottom: 8px;">
@@ -856,40 +857,42 @@
   const bookedDates = ['2026-10-15', '2026-10-20', '2026-11-12'];
   let customerSelectedDate = null;
 
-  
       function initCalendar() {
-    const today = new Date();
-    const currentYear = today.getFullYear();
-    const currentMonth = today.getMonth();
+      const today = new Date();
+      const currentYear = today.getFullYear();
+      const currentMonth = today.getMonth();
 
-    const monthSelect = document.getElementById('calMonth');
-    const yearSelect = document.getElementById('calYear');
+      const monthSelect = document.getElementById('calMonth');
+      const yearSelect = document.getElementById('calYear');
 
-    // 1. महीने सेट करना
-    if (monthSelect) {
-      const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-      monthSelect.innerHTML = '';
-      months.forEach((m, i) => {
-        let opt = document.createElement('option');
-        opt.value = i;
-        opt.innerText = m;
-        if (i === currentMonth) opt.selected = true;
-        monthSelect.appendChild(opt);
-      });
-    }
-
-    // 2. साल सेट करना (1900 - 2100)
-    if (yearSelect) {
-      let yearHtml = '';
-      for (let y = 1900; y <= 2100; y++) {
-        let isSel = (y === currentYear) ? 'selected' : '';
-        yearHtml += `<option value="${y}" ${isSel}>${y}</option>`;
+      // 1. Month Dropdown
+      if (monthSelect) {
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let monthHtmlString = '';
+        months.forEach((m, i) => {
+          let selectedStr = (i === currentMonth) ? 'selected' : '';
+          monthHtmlString += `<option value="${i}" ${selectedStr}>${m}</option>`;
+        });
+        monthSelect.innerHTML = monthHtmlString;
       }
-      yearSelect.innerHTML = yearHtml;
-    }
 
-    renderCalendar();
-  }
+      // 2. Year Dropdown (The Bulletproof Solution)
+      if (yearSelect) {
+        let yearHtmlString = '';
+        for (let y = 1900; y <= 2100; y++) {
+          let selectedStr = (y === currentYear) ? 'selected' : '';
+          yearHtmlString += `<option value="${y}" ${selectedStr}>${y}</option>`;
+        }
+        yearSelect.innerHTML = yearHtmlString;
+      }
+
+      // Ab renderCalendar call kijiye
+      if (typeof renderCalendar === 'function') {
+        renderCalendar();
+      }
+      }
+    
+      
 
   function renderCalendar() {
     const yearSelect = document.getElementById('calYear');
