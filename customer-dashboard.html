@@ -1360,6 +1360,74 @@ function submitOffer() {
       
       
    </script>
+
+<!-- 🚀 BACK BUTTON & REFRESH FIX SCRIPT 🚀 -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. REFRESH FIX (पिछला टैब याद रखना)
+    let lastTab = localStorage.getItem("myActiveTab") || 'home';
+    let tabBtn = document.querySelector(`[onclick*="switchTab('${lastTab}'"]`);
+    
+    // पेज लोड होते ही ऑटोमैटिक वो टैब खोल दो जहाँ यूजर था
+    if (tabBtn && typeof switchTab === 'function') {
+        switchTab(lastTab, tabBtn);
+        history.replaceState({ page: lastTab }, "", "#" + lastTab);
+    }
+
+    // जब भी कोई नीचे के टैब पर क्लिक करे, तो उसे सेव कर लो
+    document.querySelectorAll('.nav-item').forEach(btn => {
+        btn.addEventListener('click', function() {
+            let onclickText = this.getAttribute('onclick');
+            if (onclickText && onclickText.includes('switchTab')) {
+                let tabName = onclickText.split("'")[1]; // 'home', 'bookings', ya 'account'
+                if(tabName) {
+                    localStorage.setItem("myActiveTab", tabName);
+                    history.pushState({ page: tabName }, "", "#" + tabName);
+                }
+            }
+        });
+    });
+});
+
+// 2. BACK BUTTON FIX (मोबाइल का बैक बटन दबाने पर)
+window.addEventListener('popstate', (e) => {
+    // (A) सबसे पहले चेक करें कि क्या कोई मोडल (Popup) खुला है?
+    let modals = [document.getElementById('offerModal'), document.getElementById('paymentSuccessModal')];
+    let modalClosed = false;
+
+    modals.forEach(m => {
+        if (m && (m.style.display === 'block' || m.style.display === 'flex')) {
+            // अगर मोडल खुला है, तो उसे बंद करो (लॉगिन पेज पर मत जाओ)
+            m.style.display = 'none';
+            m.style.transform = 'translateY(100%)';
+            
+            let overlay = document.getElementById('modalOverlay');
+            if(overlay) overlay.style.display = 'none';
+            
+            modalClosed = true;
+        }
+    });
+
+    if (modalClosed) {
+        // मोडल बंद कर दिया गया है, अब यूजर को उसी टैब पर रोक कर रखो
+        let currTab = localStorage.getItem("myActiveTab") || 'home';
+        history.pushState({ page: currTab }, "", "#" + currTab);
+        return; // आगे का कोड रन मत करो
+    }
+
+    // (B) अगर कोई मोडल नहीं खुला था, तो यूजर को पिछले टैब पर ले जाओ (लॉगिन पेज पर नहीं)
+    if (e.state && e.state.page) {
+        let prevTab = e.state.page;
+        localStorage.setItem("myActiveTab", prevTab);
+        let tabBtn = document.querySelector(`[onclick*="switchTab('${prevTab}'"]`);
+        if (tabBtn && typeof switchTab === 'function') {
+            switchTab(prevTab, tabBtn);
+        }
+    }
+});
+</script>
+  
+  
  </body>
 </html>
 
