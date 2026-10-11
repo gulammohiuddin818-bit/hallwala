@@ -1769,8 +1769,8 @@ function getSmartReply(msg) {
         document.getElementById('vrModal').style.display = 'flex';
         
         // Dummy 360 Image URL (Museum/Hall Room)
-        let dummy360Url = "https://pannellum.org/viewer/?panorama=https://pannellum.org/images/bma-1.jpg&autoLoad=true";
-        document.getElementById('vrFrame').src = dummy360Url;
+        let dummy360Url = "https://cdn.pannellum.org/2.5/pannellum.htm#panorama=https://pannellum.org/images/bma-1.jpg&autoLoad=true";    
+       document.getElementById('vrFrame').src = dummy360Url;
         
         // Hide loader after 2.5 seconds
         setTimeout(() => {
