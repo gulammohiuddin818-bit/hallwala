@@ -1888,7 +1888,9 @@ function closeAIChat() {
     document.getElementById('ai-chat-modal').style.display = 'none';
 }
 
-// AI Brain Logic
+// AI Brain Logic (Hi-Tech Version)
+let bargainCount = 0; // AI yaad rakhega ki kitni baar baat hui hai
+
 function sendOffer() {
     let offerInput = document.getElementById('user-offer');
     let offerAmount = parseInt(offerInput.value);
@@ -1903,24 +1905,38 @@ function sendOffer() {
         </div>
     `;
     
-    offerInput.value = ''; // Input box khali karein
-    chatBox.scrollTop = chatBox.scrollHeight; // Scroll niche karein
+    offerInput.value = ''; 
+    chatBox.scrollTop = chatBox.scrollHeight; 
 
-    // 2. AI Thinking Time (1 Second Delay for Realism)
+    // 2. AI Thinking Time (1.5 Seconds delay for realistic feel)
     setTimeout(() => {
         let aiReply = "";
-        let vendorSecretMinimum = 48000; // Vendor ka sabse kam rate
+        bargainCount++; // Bargain counter badhayein
+        
+        let listedPrice = 60000;
+        let aiLimit = 55000; // Vendor ka set kiya hua last limit
 
-        // AI Logic: Bargaining Rules
-        if(offerAmount >= vendorSecretMinimum) {
-            aiReply = `🎉 Congratulations! The owner accepts your offer of <b>₹${offerAmount.toLocaleString('en-IN')}</b>. We can lock this date right now. <br><br> 
+        // AI Logic: Smart Negotiation
+        if (offerAmount >= aiLimit) {
+            // Agar customer ne AI ki limit ya usse zyada de diya
+            aiReply = `🎉 Fantastic! I am authorized to accept this. We have a deal at <b>₹${offerAmount.toLocaleString('en-IN')}</b>. Let's proceed with the booking! <br><br> 
             <button onclick="closeAIChat(); openOwnerDetails();" style="margin-top: 10px; width: 100%; padding: 10px; background: #10b981; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">✅ Lock Deal & Pay Token</button>`;
         } 
-        else if(offerAmount >= 42000) {
-            aiReply = `That's a bit low, Gulam. But let's meet in the middle! 🤝 I can finalize it for <b>₹48,000</b> right now. Do we have a deal?`;
+        else if (bargainCount === 1) {
+            // Pehli baar bargaining par professional counter
+            aiReply = `I appreciate your offer, Gulam. However, ₹${offerAmount.toLocaleString('en-IN')} is quite low for this premium venue (Listed: ₹60,000). Can you improve your offer a bit?`;
+        } 
+        else if (bargainCount === 2) {
+            // Dusri baar bargaining par AI apna best price dega
+            aiReply = `You drive a hard bargain! 😅 I want to make this work for you. I can instantly lock this date for you at my rock-bottom limit of <b>₹${aiLimit.toLocaleString('en-IN')}</b>. Shall we do it?`;
         } 
         else {
-            aiReply = `Sorry, ₹${offerAmount.toLocaleString('en-IN')} is too low for this premium hall. 😕 The owner's final price is <b>₹50,000</b>. Would you like to book at this price?`;
+            // Agar customer apni zidd par ada hai (Below limit) - Forward to Vendor
+            aiReply = `I understand you are looking to close at ₹${offerAmount.toLocaleString('en-IN')}. Since this is strictly below my authorized limit, I have forwarded your special offer directly to the owner. 📩 <br><br><b>Please wait while the owner reviews your offer. You will be notified shortly!</b>`;
+            
+            // Yahan input box hide kar denge taaki aur chat na ho
+            document.querySelector('#ai-chat-modal input').disabled = true;
+            document.querySelector('#ai-chat-modal button[onclick="sendOffer()"]').style.display = 'none';
         }
 
         // AI ka Reply print karein
@@ -1930,8 +1946,9 @@ function sendOffer() {
             </div>
         `;
         chatBox.scrollTop = chatBox.scrollHeight;
-    }, 1000); // 1000 miliseconds = 1 second
+    }, 1500); 
 }
+  
       
 </script>
   
