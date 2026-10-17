@@ -1832,53 +1832,13 @@ function getSmartReply(msg) {
             <input type="number" id="initial-offer-amount" placeholder="e.g. 45000" style="width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 10px; margin-top: 5px; font-size: 15px; outline: none; font-weight: bold;">
         </div>
 
-        <!-- Options -->
-        <div style="display: flex; flex-direction: column; gap: 10px;">
-            <button onclick="startAIBargain()" style="background: #8b5cf6; color: white; border: none; padding: 14px; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer; box-shadow: 0 4px 10px rgba(139,92,246,0.3);">
-                🤖 Ask AI to Negotiate (Instant Reply)
+                <!-- Single Simple Button -->
+        <div style="margin-top: 15px;">
+            <button onclick="sendDirectToOwner()" style="width: 100%; background: #2563eb; color: white; border: none; padding: 14px; border-radius: 10px; font-weight: bold; font-size: 15px; cursor: pointer; box-shadow: 0 4px 10px rgba(37,99,235,0.3);">
+                🚀 Send Offer to Owner
             </button>
-            <button onclick="sendDirectToOwner()" style="background: #f8fafc; color: #334155; border: 1px solid #cbd5e1; padding: 14px; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer;">
-                📩 Send Offer Directly to Owner
-            </button>
-        </div>
-    </div>
-</div>
-  
-  
-  
-<!-- 🤖 AI SMART NEGOTIATION MODAL -->
-<div id="ai-chat-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 105; justify-content: center; align-items: flex-end; sm:align-items: center; box-sizing: border-box;">
-    <div style="background: white; width: 100%; max-width: 400px; height: 75vh; border-radius: 20px 20px 0 0; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 -10px 25px rgba(0,0,0,0.2);">
-        
-                <!-- Chat Header -->
-        <div style="background: #1e293b; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
-            <div>
-                <h3 style="margin: 0; font-size: 16px; display: flex; align-items: center; gap: 8px;">👑 Your Personal Wedding Planner 🤖</h3>
-                <p style="margin: 0; font-size: 11px; color: #94a3b8; margin-top: 2px;">Negotiation & Hall Details Expert</p>
-            </div>
-            <button onclick="closeAIChat()" style="background: none; border: none; color: white; font-size: 24px; cursor: pointer;">×</button>
-        </div>
-
-        <!-- Chat Messages Area -->
-        <div id="chat-box" style="flex: 1; padding: 15px; background: #f8fafc; overflow-y: auto; display: flex; flex-direction: column; gap: 12px;">
-            <!-- AI Initial Message -->
-            <div style="align-self: flex-start; background: white; padding: 12px 14px; border-radius: 0 12px 12px 12px; font-size: 13px; color: #334155; box-shadow: 0 2px 5px rgba(0,0,0,0.05); max-width: 85%; line-height: 1.5;">
-                Hi Gulam! 👋 I am your Personal Wedding Planner. <br><br>The starting price for <b>Grand Milestone Banquet</b> is ₹55,000. I can help you negotiate the best deal directly with the owner. <br><br>Also, feel free to ask me anything about this venue's AC rooms, parking space, or catering options! 🍽️🚗<br><br><b>What is your best offer, or what details would you like to know?</b>
-            </div>
         </div>
       
-
-        <!-- Input Area -->
-        <div style="padding: 15px; background: white; border-top: 1px solid #e2e8f0; display: flex; gap: 10px;">
-            <div style="position: relative; flex: 1;">
-                <span style="position: absolute; left: 12px; top: 12px; color: #64748b; font-weight: bold;">₹</span>
-                <input type="number" id="user-offer" placeholder="Enter amount" style="width: 100%; padding: 12px 12px 12px 30px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 14px; box-sizing: border-box; outline: none;">
-            </div>
-            <button onclick="sendOffer()" style="background: #8b5cf6; color: white; border: none; padding: 0 20px; border-radius: 12px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(139, 92, 246, 0.3);">Send</button>
-        </div>
-    </div>
-</div>
-  
   
 <!-- DIRECT CONNECT MODAL (Vendor Details & UTR) -->
 <div id="owner-details-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 100; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box;">
@@ -1935,116 +1895,6 @@ function submitUTR() {
 }
 
 
-  // Open/Close AI Chat
-function openAIChat() {
-    document.getElementById('ai-chat-modal').style.display = 'flex';
-}
-function closeAIChat() {
-    document.getElementById('ai-chat-modal').style.display = 'none';
-}
-
-// AI Brain Logic (Hi-Tech Version)
-let bargainCount = 0; // AI yaad rakhega ki kitni baar baat hui hai
-
-function sendOffer() {
-    let offerInput = document.getElementById('user-offer');
-    let offerAmount = parseInt(offerInput.value);
-    let chatBox = document.getElementById('chat-box');
-
-    if(isNaN(offerAmount) || offerAmount <= 0) return;
-
-    // 1. Customer Message Print Karein
-    chatBox.innerHTML += `
-        <div style="align-self: flex-end; background: #8b5cf6; color: white; padding: 10px 14px; border-radius: 12px 12px 0 12px; font-size: 13px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); max-width: 85%; margin-top: 5px;">
-            My offer is ₹${offerAmount.toLocaleString('en-IN')}
-        </div>
-    `;
-    
-    offerInput.value = ''; 
-    chatBox.scrollTop = chatBox.scrollHeight; 
-
-    // 2. AI Thinking Time (1.5 Seconds delay for realistic feel)
-    setTimeout(() => {
-        let aiReply = "";
-        bargainCount++; // Bargain counter badhayein
-        
-        let listedPrice = 60000;
-        let aiLimit = 55000; // Vendor ka set kiya hua last limit
-
-        // AI Logic: Smart Negotiation
-        if (offerAmount >= aiLimit) {
-            // Agar customer ne AI ki limit ya usse zyada de diya
-            aiReply = `🎉 Fantastic! I am authorized to accept this. We have a deal at <b>₹${offerAmount.toLocaleString('en-IN')}</b>. Let's proceed with the booking! <br><br> 
-            <button onclick="closeAIChat(); openOwnerDetails();" style="margin-top: 10px; width: 100%; padding: 10px; background: #10b981; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">✅ Lock Deal & Pay Token</button>`;
-        } 
-        else if (bargainCount === 1) {
-            // Pehli baar bargaining par professional counter
-            aiReply = `I appreciate your offer, Gulam. However, ₹${offerAmount.toLocaleString('en-IN')} is quite low for this premium venue (Listed: ₹60,000). Can you improve your offer a bit?`;
-        } 
-        else if (bargainCount === 2) {
-            // Dusri baar bargaining par AI apna best price dega
-            aiReply = `You drive a hard bargain! 😅 I want to make this work for you. I can instantly lock this date for you at my rock-bottom limit of <b>₹${aiLimit.toLocaleString('en-IN')}</b>. Shall we do it?`;
-        } 
-        else {
-            // Agar customer apni zidd par ada hai (Below limit) - Forward to Vendor
-            aiReply = `I understand you are looking to close at ₹${offerAmount.toLocaleString('en-IN')}. Since this is strictly below my authorized limit, I have forwarded your special offer directly to the owner. 📩 <br><br><b>Please wait while the owner reviews your offer. You will be notified shortly!</b>`;
-            
-            // Yahan input box hide kar denge taaki aur chat na ho
-            document.querySelector('#ai-chat-modal input').disabled = true;
-            document.querySelector('#ai-chat-modal button[onclick="sendOffer()"]').style.display = 'none';
-        }
-
-        // AI ka Reply print karein
-        chatBox.innerHTML += `
-            <div style="align-self: flex-start; background: white; padding: 12px 14px; border-radius: 0 12px 12px 12px; font-size: 13px; color: #334155; box-shadow: 0 2px 5px rgba(0,0,0,0.05); max-width: 85%; margin-top: 5px; line-height: 1.5;">
-                ${aiReply}
-            </div>
-        `;
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }, 1500); 
-}
-
-  // --- 📅 HI-TECH CUSTOM CALENDAR LOGIC ---
-let currentDate = new Date(2026, 9, 1); // Shuruaat October 2026 se (Demo ke liye)
-
-// Vendor ki Booked Dates (Ye dates Red aur Cross dikhengi)
-const bookedDates = ['2026-10-18', '2026-10-22', '2026-10-24', '2026-10-25', '2026-11-05'];
-
-function renderCalendar() {
-    const monthYear = document.getElementById('calendar-month-year');
-    const daysGrid = document.getElementById('calendar-days');
-    
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-    
-    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    monthYear.innerText = `${monthNames[month]} ${year}`;
-    
-    daysGrid.innerHTML = ''; // Pehle ka clear karein
-    
-    const firstDay = new Date(year, month, 1).getDay();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    
-    // Khali jagah bharein (Mahina shuru hone se pehle ke din)
-    for(let i=0; i<firstDay; i++) {
-        daysGrid.innerHTML += `<div></div>`;
-    }
-    
-    // Asli dates render karein
-    for(let day=1; day<=daysInMonth; day++) {
-        const dateStr = `${year}-${String(month+1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-        const isBooked = bookedDates.includes(dateStr);
-        
-        if(isBooked) {
-            // ❌ RED / BOOKED DATES
-            daysGrid.innerHTML += `<div onclick="alert('❌ This date is already booked by another user. Please select a Green available date.')" style="background: #fee2e2; color: #ef4444; text-decoration: line-through; padding: 10px 0; text-align: center; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: not-allowed; border: 1px solid #f87171;">${day}</div>`;
-        } else {
-            // ✅ GREEN / AVAILABLE DATES
-            daysGrid.innerHTML += `<div onclick="selectCustomDate(this, '${dateStr}')" class="available-date" style="background: #dcfce7; color: #166534; padding: 10px 0; text-align: center; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; border: 1px solid #4ade80; transition: 0.2s;">${day}</div>`;
-        }
-    }
-}
-
 function changeMonth(step) {
     currentDate.setMonth(currentDate.getMonth() + step);
     renderCalendar();
@@ -2077,18 +1927,6 @@ function openOfferSetup() {
     }
 }
   
-
-// Option 1: AI Bargain
-function startAIBargain() {
-    let date = document.getElementById('selected-custom-date').value;
-    let amount = document.getElementById('initial-offer-amount').value;
-    
-    if(!date) { alert("⚠️ Please select a Green Date from the calendar first!"); return; }
-    if(!amount) { alert("⚠️ Please enter an offer amount!"); return; }
-    
-    closeOfferSetup();
-    openAIChat(); 
-}
 
 // Option 2: Direct Owner
 function sendDirectToOwner() {
