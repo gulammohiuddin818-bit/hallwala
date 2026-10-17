@@ -1870,79 +1870,142 @@ function getSmartReply(msg) {
 </div>
   
 <script>
-// Open Owner Details Modal
-function openOwnerDetails() {
-    document.getElementById('owner-details-modal').style.display = 'flex';
-}
+    // --- 📅 HI-TECH CUSTOM CALENDAR LOGIC ---
+    let currentDate = new Date(2026, 9, 1); 
 
-// Close Owner Details Modal
-function closeOwnerDetails() {
-    document.getElementById('owner-details-modal').style.display = 'none';
-}
+    const bookedDates = ['2026-10-18', '2026-10-22', '2026-10-24', '2026-10-25', '2026-11-05'];
 
-// Submit UTR Function
-function submitUTR() {
-    let utr = document.getElementById('utr-input').value;
-    
-    // Check if UTR is 12 digits
-    if(utr.length !== 12) {
-        alert("Please enter a valid 12-digit UTR number from your payment receipt!");
-        return;
+    function renderCalendar() {
+        const monthYear = document.getElementById('calendar-month-year');
+        const daysGrid = document.getElementById('calendar-days');
+        
+        if(!monthYear || !daysGrid) return; 
+        
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+        
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        monthYear.innerText = `${monthNames[month]} ${year}`;
+        
+        daysGrid.innerHTML = ''; 
+        
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        
+        for(let i=0; i<firstDay; i++) {
+            daysGrid.innerHTML += `<div></div>`;
+        }
+        
+        for(let day=1; day<=daysInMonth; day++) {
+            const dateStr = `${year}-${String(month+1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            const isBooked = bookedDates.includes(dateStr);
+            
+            if(isBooked) {
+                daysGrid.innerHTML += `<div onclick="alert('❌ This date is already booked by another user. Please select a Green available date.')" style="background: #fee2e2; color: #ef4444; text-decoration: line-through; padding: 10px 0; text-align: center; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: not-allowed; border: 1px solid #f87171;">${day}</div>`;
+            } else {
+                daysGrid.innerHTML += `<div onclick="selectCustomDate(this, '${dateStr}')" class="available-date" style="background: #dcfce7; color: #166534; padding: 10px 0; text-align: center; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; border: 1px solid #4ade80; transition: 0.2s;">${day}</div>`;
+            }
+        }
+    }
+
+    function changeMonth(step) {
+        currentDate.setMonth(currentDate.getMonth() + step);
+        renderCalendar();
+    }
+
+    function selectCustomDate(element, dateStr) {
+        let allDates = document.querySelectorAll('.available-date');
+        allDates.forEach(d => {
+            d.style.background = '#dcfce7';
+            d.style.color = '#166534';
+        });
+        
+        element.style.background = '#16a34a';
+        element.style.color = 'white';
+        
+        let hiddenInput = document.getElementById('selected-custom-date');
+        if(hiddenInput) hiddenInput.value = dateStr;
+    }
+
+    function openOfferSetup() {
+        let modal = document.getElementById('offer-setup-modal');
+        if(modal) {
+            modal.style.display = 'flex';
+            renderCalendar(); 
+        } else {
+            alert("Error: Calendar Modal not found in HTML!");
+        }
+    }
+
+    function closeOfferSetup() {
+        let modal = document.getElementById('offer-setup-modal');
+        if(modal) modal.style.display = 'none';
+    }
+
+    function sendDirectToOwner() {
+        let dateInput = document.getElementById('selected-custom-date');
+        let amountInput = document.getElementById('initial-offer-amount');
+        
+        if(!dateInput || !dateInput.value) { 
+            alert("⚠️ Please select a Green Date from the calendar first!"); 
+            return; 
+        }
+        if(!amountInput || !amountInput.value) { 
+            alert("⚠️ Please enter an offer amount!"); 
+            return; 
+        }
+        
+        closeOfferSetup();
+        alert("✅ Your offer of ₹" + amountInput.value + " for date " + dateInput.value + " has been sent directly to the owner!");
+    }
+
+    // --- OTHER MODALS ---
+    function openVR() {
+        if (navigator.vibrate) navigator.vibrate(30);
+        document.getElementById('vrModal').style.display = 'flex';
+        
+        let vrFrame = document.getElementById('vrFrame');
+        if (vrFrame.src === "") {
+            vrFrame.src = "https://my.matterport.com/show/?m=J9c2c62u6rM&play=1"; 
+        }
+        
+        setTimeout(() => {
+            let loader = document.getElementById('vrLoader');
+            if(loader) loader.style.display = 'none';
+        }, 2500);
     }
     
-    // Success Message
-    alert("✅ UTR Submitted Successfully!\n\nThe owner will verify the payment in their bank app and confirm your booking.");
-    closeOwnerDetails();
-}
-
-
-function changeMonth(step) {
-    currentDate.setMonth(currentDate.getMonth() + step);
-    renderCalendar();
-}
-
-function selectCustomDate(element, dateStr) {
-    // Baaki sab green se highlight hatao
-    let allDates = document.querySelectorAll('.available-date');
-    allDates.forEach(d => {
-        d.style.background = '#dcfce7';
-        d.style.color = '#166534';
-    });
-    
-    // Jo select kiya hai usko Dark Green karo
-    element.style.background = '#16a34a';
-    element.style.color = 'white';
-    
-    // Hidden box me date save karo
-    document.getElementById('selected-custom-date').value = dateStr;
-}
-
-// Modal Kholne par Calendar Render ho
-function openOfferSetup() {
-    let modal = document.getElementById('offer-setup-modal');
-    if (modal) {
-        modal.style.display = 'flex';
-        renderCalendar(); 
-    } else {
-        alert("Calendar modal HTML missing!");
+    function closeVR() {
+        if (navigator.vibrate) navigator.vibrate(30);
+        document.getElementById('vrModal').style.display = 'none';
+        document.getElementById('vrFrame').src = ""; 
+        document.getElementById('vrLoader').style.display = 'block'; 
     }
-}
-  
 
-// Option 2: Direct Owner
-function sendDirectToOwner() {
-    let date = document.getElementById('selected-custom-date').value;
-    let amount = document.getElementById('initial-offer-amount').value;
-    
-    if(!date) { alert("⚠️ Please select a Green Date from the calendar first!"); return; }
-    if(!amount) { alert("⚠️ Please enter an offer amount!"); return; }
-    
-    closeOfferSetup();
-    alert("✅ Your offer of ₹" + amount + " for date " + date + " has been sent directly to the owner!");
-}
-  
-      
+    function openOwnerDetails() {
+        let modal = document.getElementById('owner-details-modal');
+        if(modal) modal.style.display = 'flex';
+    }
+
+    function closeOwnerDetails() {
+        let modal = document.getElementById('owner-details-modal');
+        if(modal) modal.style.display = 'none';
+    }
+
+    function submitUTR() {
+        let utrInput = document.getElementById('utr-input');
+        if(!utrInput) return;
+        
+        let utr = utrInput.value;
+        if(utr.length !== 12) {
+            alert("Please enter a valid 12-digit UTR number from your payment receipt!");
+            return;
+        }
+        alert("✅ UTR Submitted Successfully!\n\nThe owner will verify the payment in their bank app and confirm your booking.");
+        closeOwnerDetails();
+    }
 </script>
+  
   
  </body>
 </html>
