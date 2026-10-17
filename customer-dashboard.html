@@ -1792,15 +1792,50 @@ function getSmartReply(msg) {
 </script>
 <!-- 🥽 FUTURISTIC 360 VR MODAL END 🥽 -->
 
+<!-- 📅 STEP 1: CALENDAR & OFFER SETUP MODAL -->
+<div id="offer-setup-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 104; justify-content: center; align-items: flex-end; box-sizing: border-box;">
+    <div style="background: white; width: 100%; max-width: 400px; padding: 20px; border-radius: 20px 20px 0 0; box-shadow: 0 -10px 25px rgba(0,0,0,0.2);">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3 style="margin: 0; font-size: 18px; color: #1e293b;">📅 Setup Your Offer</h3>
+            <button onclick="closeOfferSetup()" style="background: none; border: none; font-size: 24px; cursor: pointer;">×</button>
+        </div>
+
+        <!-- Real-Time Calendar Input -->
+        <div style="margin-bottom: 15px;">
+            <label style="font-size: 13px; color: #64748b; font-weight: bold;">Select Event Date</label>
+            <!-- 1900 se 2100 tak ka support -->
+            <input type="date" id="event-date" min="1900-01-01" max="2100-12-31" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; margin-top: 5px; font-size: 15px; box-sizing: border-box; outline: none;">
+        </div>
+
+        <!-- Amount Input -->
+        <div style="margin-bottom: 20px;">
+            <label style="font-size: 13px; color: #64748b; font-weight: bold;">Your Offer Amount (₹)</label>
+            <input type="number" id="initial-offer-amount" placeholder="e.g. 45000" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; margin-top: 5px; font-size: 15px; box-sizing: border-box; outline: none;">
+        </div>
+
+        <!-- 2 Hi-Tech Options for Customer -->
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <button onclick="startAIBargain()" style="background: #8b5cf6; color: white; border: none; padding: 14px; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer; box-shadow: 0 4px 10px rgba(139,92,246,0.3);">
+                🤖 Ask AI to Negotiate (Instant Reply)
+            </button>
+            <button onclick="sendDirectToOwner()" style="background: #f8fafc; color: #334155; border: 1px solid #cbd5e1; padding: 14px; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer;">
+                📩 Send Offer Directly to Owner
+            </button>
+        </div>
+    </div>
+</div>
+  
+  
 <!-- 🤖 AI SMART NEGOTIATION MODAL -->
 <div id="ai-chat-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 105; justify-content: center; align-items: flex-end; sm:align-items: center; box-sizing: border-box;">
     <div style="background: white; width: 100%; max-width: 400px; height: 75vh; border-radius: 20px 20px 0 0; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 -10px 25px rgba(0,0,0,0.2);">
         
-        <!-- Chat Header -->
+                <!-- Chat Header -->
         <div style="background: #1e293b; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
             <div>
-                <h3 style="margin: 0; font-size: 16px; display: flex; align-items: center; gap: 8px;">⚡ HallWala Smart Assist 🤖</h3>
-                <p style="margin: 0; font-size: 11px; color: #94a3b8; margin-top: 2px;">Authorized by Owner to Negotiate</p>
+                <h3 style="margin: 0; font-size: 16px; display: flex; align-items: center; gap: 8px;">👑 Your Personal Wedding Planner 🤖</h3>
+                <p style="margin: 0; font-size: 11px; color: #94a3b8; margin-top: 2px;">Negotiation & Hall Details Expert</p>
             </div>
             <button onclick="closeAIChat()" style="background: none; border: none; color: white; font-size: 24px; cursor: pointer;">×</button>
         </div>
@@ -1809,9 +1844,10 @@ function getSmartReply(msg) {
         <div id="chat-box" style="flex: 1; padding: 15px; background: #f8fafc; overflow-y: auto; display: flex; flex-direction: column; gap: 12px;">
             <!-- AI Initial Message -->
             <div style="align-self: flex-start; background: white; padding: 12px 14px; border-radius: 0 12px 12px 12px; font-size: 13px; color: #334155; box-shadow: 0 2px 5px rgba(0,0,0,0.05); max-width: 85%; line-height: 1.5;">
-                Hi Gulam! 👋 The starting price for <b>Grand Milestone Banquet</b> is ₹55,000. I am authorized to give you an instant discount. <br><br><b>What is your best offer?</b>
+                Hi Gulam! 👋 I am your Personal Wedding Planner. <br><br>The starting price for <b>Grand Milestone Banquet</b> is ₹55,000. I can help you negotiate the best deal directly with the owner. <br><br>Also, feel free to ask me anything about this venue's AC rooms, parking space, or catering options! 🍽️🚗<br><br><b>What is your best offer, or what details would you like to know?</b>
             </div>
         </div>
+      
 
         <!-- Input Area -->
         <div style="padding: 15px; background: white; border-top: 1px solid #e2e8f0; display: flex; gap: 10px;">
@@ -1947,6 +1983,43 @@ function sendOffer() {
         `;
         chatBox.scrollTop = chatBox.scrollHeight;
     }, 1500); 
+}
+
+  // Open/Close Calendar Setup Modal
+function openOfferSetup() {
+    document.getElementById('offer-setup-modal').style.display = 'flex';
+}
+function closeOfferSetup() {
+    document.getElementById('offer-setup-modal').style.display = 'none';
+}
+
+// Option 1: AI Bargain Shuru Karein
+function startAIBargain() {
+    let date = document.getElementById('event-date').value;
+    let amount = document.getElementById('initial-offer-amount').value;
+    
+    if(!date || !amount) {
+        alert("Please select a date and enter an amount first!");
+        return;
+    }
+    
+    // Calendar popup band karein aur AI Chat kholein
+    closeOfferSetup();
+    openAIChat(); 
+}
+
+// Option 2: Direct Owner Ko Bhejein
+function sendDirectToOwner() {
+    let date = document.getElementById('event-date').value;
+    let amount = document.getElementById('initial-offer-amount').value;
+    
+    if(!date || !amount) {
+        alert("Please select a date and enter an amount first!");
+        return;
+    }
+    
+    closeOfferSetup();
+    alert("✅ Your offer of ₹" + amount + " for date " + date + " has been sent directly to the owner!\n\nCheck 'Waiting for Confirmation' track on your dashboard.");
 }
   
       
