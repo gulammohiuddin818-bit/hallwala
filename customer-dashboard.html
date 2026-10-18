@@ -1793,124 +1793,135 @@ function getSmartReply(msg) {
 </script>
 <!-- 🥽 FUTURISTIC 360 VR MODAL END 🥽 -->
 
-<!-- 📅 STEP 1: CALENDAR & OFFER SETUP MODAL -->
-
-<!-- 📅 HI-TECH CUSTOM CALENDAR & OFFER SETUP MODAL -->
-<div id="offer-setup-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 104; justify-content: center; align-items: flex-end; box-sizing: border-box;">
-    <div style="background: white; width: 100%; max-width: 400px; padding: 20px; border-radius: 20px 20px 0 0; box-shadow: 0 -10px 25px rgba(0,0,0,0.2);">
+<!-- 📅 GREEN INTERFACE 1900-2100 CALENDAR & OFFER MODAL -->
+<div id="offer-setup-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(4px); z-index: 9999; justify-content: center; align-items: flex-end; box-sizing: border-box;">
+    <div style="background: white; width: 100%; max-width: 420px; padding: 20px; border-radius: 24px 24px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.25); box-sizing: border-box; max-height: 92vh; overflow-y: auto;">
         
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-            <h3 style="margin: 0; font-size: 18px; color: #1e293b;">📅 Select Date & Offer</h3>
-            <button onclick="closeOfferSetup()" style="background: none; border: none; font-size: 24px; cursor: pointer;">×</button>
+        <!-- Top Drag Bar -->
+        <div style="width: 45px; height: 5px; background: #cbd5e1; border-radius: 10px; margin: 0 auto 15px auto;"></div>
+
+        <!-- Header -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+            <div>
+                <h3 style="margin: 0; font-size: 20px; font-weight: 800; color: #0f172a;">Make an Offer</h3>
+                <p style="margin: 3px 0 0 0; font-size: 12px; color: #64748b;">Check availability & send your price ⚡</p>
+            </div>
+            <button onclick="closeOfferSetup()" style="background: #f1f5f9; border: none; width: 34px; height: 34px; border-radius: 50%; font-size: 20px; color: #334155; cursor: pointer; display: flex; align-items: center; justify-content: center;">×</button>
         </div>
 
-        <!-- Custom Calendar UI -->
-        <div style="margin-bottom: 15px; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-            <!-- Month Header -->
-            <div style="background: #1e293b; color: white; padding: 10px; display: flex; justify-content: space-between; align-items: center;">
-                <button onclick="changeMonth(-1)" style="background: none; border: none; color: white; cursor: pointer; font-size: 14px; font-weight: bold;">◀ Prev</button>
-                <span id="calendar-month-year" style="font-weight: bold; font-size: 15px;">October 2026</span>
-                <button onclick="changeMonth(1)" style="background: none; border: none; color: white; cursor: pointer; font-size: 14px; font-weight: bold;">Next ▶</button>
+        <!-- Calendar Box -->
+        <div style="border: 1px solid #e2e8f0; border-radius: 16px; padding: 14px; margin-bottom: 15px; background: #ffffff;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span style="font-size: 11px; font-weight: 800; color: #64748b; letter-spacing: 0.5px;">SELECT EVENT DATE</span>
+                <div style="display: flex; gap: 8px; font-size: 11px; font-weight: bold;">
+                    <span style="color: #16a34a;">🟢 Available</span>
+                    <span style="color: #ef4444;">🔴 Booked</span>
+                </div>
             </div>
-            
+
+            <!-- Month & Year (1900 - 2100) Dropdowns -->
+            <div style="display: flex; gap: 10px; margin-bottom: 12px;">
+                <select id="cal-month-select" onchange="renderCalendar()" style="flex: 1; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 14px; font-weight: 600; color: #1e293b; background: #f8fafc; outline: none;">
+                    <option value="0">January</option>
+                    <option value="1">February</option>
+                    <option value="2">March</option>
+                    <option value="3">April</option>
+                    <option value="4">May</option>
+                    <option value="5">June</option>
+                    <option value="6">July</option>
+                    <option value="7">August</option>
+                    <option value="8">September</option>
+                    <option value="9" selected>October</option>
+                    <option value="10">November</option>
+                    <option value="11">December</option>
+                </select>
+
+                <select id="cal-year-select" onchange="renderCalendar()" style="flex: 1; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 14px; font-weight: 600; color: #1e293b; background: #f8fafc; outline: none;">
+                </select>
+            </div>
+
             <!-- Days of Week -->
-            <div style="display: grid; grid-template-columns: repeat(7, 1fr); background: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: center; font-size: 12px; font-weight: bold; color: #64748b; padding: 8px 0;">
-                <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+            <div style="display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 11px; font-weight: 700; color: #94a3b8; padding-bottom: 8px;">
+                <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
             </div>
 
-            <!-- Dates Grid (Generated by JavaScript) -->
-            <div id="calendar-days" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; padding: 8px; background: white;">
-            </div>
+            <!-- Dates Grid -->
+            <div id="calendar-days" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px;"></div>
         </div>
 
-        <!-- Hidden input to store selected date -->
         <input type="hidden" id="selected-custom-date" value="">
 
-        <!-- Amount Input -->
-        <div style="margin-bottom: 20px;">
-            <label style="font-size: 13px; color: #64748b; font-weight: bold;">Your Offer Amount (₹)</label>
-            <input type="number" id="initial-offer-amount" placeholder="e.g. 45000" style="width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 10px; margin-top: 5px; font-size: 15px; outline: none; font-weight: bold;">
+        <!-- Best Price Input Box -->
+        <div style="border: 1px solid #e2e8f0; border-radius: 16px; padding: 12px 14px; margin-bottom: 16px; background: #f8fafc;">
+            <label style="font-size: 11px; font-weight: 800; color: #64748b; letter-spacing: 0.5px; display: block; margin-bottom: 6px;">YOUR BEST PRICE</label>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 20px; font-weight: 800; color: #0f172a;">₹</span>
+                <input type="number" id="initial-offer-amount" placeholder="Enter your offer amount" style="width: 100%; border: none; background: transparent; font-size: 18px; font-weight: 700; color: #0f172a; outline: none;">
+            </div>
         </div>
 
-                <!-- Single Simple Button -->
-        <div style="margin-top: 15px;">
-            <button onclick="sendDirectToOwner()" style="width: 100%; background: #2563eb; color: white; border: none; padding: 14px; border-radius: 10px; font-weight: bold; font-size: 15px; cursor: pointer; box-shadow: 0 4px 10px rgba(37,99,235,0.3);">
-                🚀 Send Offer to Owner
-            </button>
-        </div>
-    </div> 
-</div>
-      
-<!-- DIRECT CONNECT MODAL (Vendor Details & UTR) -->
-<div id="owner-details-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 100; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box;">
-    <div style="background: white; width: 100%; max-width: 400px; padding: 20px; border-radius: 16px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
-        <h3 style="margin-top: 0; color: #1e293b;">Deal Locked! 🎉</h3>
-        <p style="font-size: 14px; color: #475569; margin-bottom: 20px;">Please transfer the token amount directly to the owner to lock your date.</p>
-        
-        <!-- Vendor Details Box -->
-        <div style="background: #f8fafc; padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 1px dashed #cbd5e1; text-align: left;">
-            <p style="margin: 0 0 8px 0; font-size: 14px;"><strong>🏢 Owner:</strong> Royal Palace Banquet</p>
-            <p style="margin: 0 0 8px 0; font-size: 14px;"><strong>📞 Phone:</strong> 98765-43210</p>
-            <p style="margin: 0 0 8px 0; font-size: 14px;"><strong>🔗 UPI ID:</strong> royalpalace@sbi</p>
-            <p style="margin: 0; font-size: 14px;"><strong>💰 Token Amount:</strong> ₹4,000</p>
-        </div>
-        
-        <!-- UTR Input for Fraud Prevention -->
-        <div style="text-align: left; margin-bottom: 20px;">
-            <label style="font-size: 12px; font-weight: bold; color: #dc2626;">🚨 Enter 12-Digit UTR Number (Mandatory)</label>
-            <input type="number" id="utr-input" placeholder="e.g. 312456789012" style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
-        </div>
-
-        <!-- Buttons -->
-        <div style="display: flex; gap: 10px;">
-            <button onclick="closeOwnerDetails()" style="flex: 1; padding: 12px; background: #f1f5f9; color: #475569; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Cancel</button>
-            <button onclick="submitUTR()" style="flex: 1; padding: 12px; background: #10b981; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Submit UTR</button>
-        </div>
+        <!-- Green Send Offer Button -->
+        <button onclick="sendDirectToOwner()" style="width: 100%; background: #10b981; color: white; border: none; padding: 15px; border-radius: 14px; font-weight: 800; font-size: 16px; cursor: pointer; box-shadow: 0 6px 15px rgba(16, 185, 129, 0.35);">
+            Send Offer Instantly 🚀
+        </button>
     </div>
 </div>
-  
+
 <script>
-    // --- 📅 HI-TECH CUSTOM CALENDAR LOGIC ---
-    let currentDate = new Date(2026, 9, 1); 
+    // Vendor ki Booked Dates (Har mahine ki 15, 20, 24 tarikh demo ke liye Red Crossed dikhegi)
+    const bookedDaysList = [15, 20, 24];
 
-    const bookedDates = ['2026-10-18', '2026-10-22', '2026-10-24', '2026-10-25', '2026-11-05'];
-
-    function renderCalendar() {
-        const monthYear = document.getElementById('calendar-month-year');
-        const daysGrid = document.getElementById('calendar-days');
-        
-        if(!monthYear || !daysGrid) return; 
-        
-        const year = currentDate.getFullYear();
-        const month = currentDate.getMonth();
-        
-        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        monthYear.innerText = `${monthNames[month]} ${year}`;
-        
-        daysGrid.innerHTML = ''; 
-        
-        const firstDay = new Date(year, month, 1).getDay();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-        
-        for(let i=0; i<firstDay; i++) {
-            daysGrid.innerHTML += `<div></div>`;
-        }
-        
-        for(let day=1; day<=daysInMonth; day++) {
-            const dateStr = `${year}-${String(month+1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-            const isBooked = bookedDates.includes(dateStr);
-            
-            if(isBooked) {
-                daysGrid.innerHTML += `<div onclick="alert('❌ This date is already booked by another user. Please select a Green available date.')" style="background: #fee2e2; color: #ef4444; text-decoration: line-through; padding: 10px 0; text-align: center; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: not-allowed; border: 1px solid #f87171;">${day}</div>`;
-            } else {
-                daysGrid.innerHTML += `<div onclick="selectCustomDate(this, '${dateStr}')" class="available-date" style="background: #dcfce7; color: #166534; padding: 10px 0; text-align: center; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; border: 1px solid #4ade80; transition: 0.2s;">${day}</div>`;
-            }
+    function initYearDropdown() {
+        const yearSelect = document.getElementById('cal-year-select');
+        if (!yearSelect || yearSelect.options.length > 0) return;
+        for (let y = 1900; y <= 2100; y++) {
+            let opt = document.createElement('option');
+            opt.value = y;
+            opt.innerText = y;
+            if (y === 2026) opt.selected = true;
+            yearSelect.appendChild(opt);
         }
     }
 
-    function changeMonth(step) {
-        currentDate.setMonth(currentDate.getMonth() + step);
-        renderCalendar();
+    function renderCalendar() {
+        initYearDropdown();
+        const monthSelect = document.getElementById('cal-month-select');
+        const yearSelect = document.getElementById('cal-year-select');
+        const daysGrid = document.getElementById('calendar-days');
+        if (!monthSelect || !yearSelect || !daysGrid) return;
+
+        const month = parseInt(monthSelect.value);
+        const year = parseInt(yearSelect.value);
+
+        daysGrid.innerHTML = '';
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        for (let i = 0; i < firstDay; i++) {
+            daysGrid.innerHTML += `<div></div>`;
+        }
+
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            const isBooked = bookedDaysList.includes(day);
+
+            if (isBooked) {
+                // 🔴 RED CROSSED BOOKED DATE
+                daysGrid.innerHTML += `
+                    <div onclick="alert('❌ Yeh date (' + '${dateStr}' + ') pehle se Booked hai! Kripya koi Green (Available) date chunein.')" 
+                         style="background: #fee2e2; color: #ef4444; text-decoration: line-through; padding: 10px 0; text-align: center; border-radius: 10px; font-size: 14px; font-weight: 800; cursor: not-allowed; border: 1px solid #fca5a5;">
+                        ${day}
+                    </div>`;
+            } else {
+                // 🟢 GREEN AVAILABLE DATE
+                daysGrid.innerHTML += `
+                    <div onclick="selectCustomDate(this, '${dateStr}')" 
+                         class="available-date" 
+                         style="background: #dcfce7; color: #166534; padding: 10px 0; text-align: center; border-radius: 10px; font-size: 14px; font-weight: 800; cursor: pointer; border: 1px solid #86efac; transition: 0.15s;">
+                        ${day}
+                    </div>`;
+            }
+        }
     }
 
     function selectCustomDate(element, dateStr) {
@@ -1918,93 +1929,50 @@ function getSmartReply(msg) {
         allDates.forEach(d => {
             d.style.background = '#dcfce7';
             d.style.color = '#166534';
+            d.style.transform = 'scale(1)';
         });
-        
+
         element.style.background = '#16a34a';
-        element.style.color = 'white';
-        
-        let hiddenInput = document.getElementById('selected-custom-date');
-        if(hiddenInput) hiddenInput.value = dateStr;
+        element.style.color = '#ffffff';
+        element.style.transform = 'scale(1.05)';
+
+        document.getElementById('selected-custom-date').value = dateStr;
     }
 
     function openOfferSetup() {
         let modal = document.getElementById('offer-setup-modal');
-        if(modal) {
+        if (modal) {
             modal.style.display = 'flex';
-            renderCalendar(); 
-        } else {
-            alert("Error: Calendar Modal not found in HTML!");
+            renderCalendar();
         }
     }
 
     function closeOfferSetup() {
         let modal = document.getElementById('offer-setup-modal');
-        if(modal) modal.style.display = 'none';
+        if (modal) modal.style.display = 'none';
     }
 
     function sendDirectToOwner() {
-        let dateInput = document.getElementById('selected-custom-date');
-        let amountInput = document.getElementById('initial-offer-amount');
-        
-        if(!dateInput || !dateInput.value) { 
-            alert("⚠️ Please select a Green Date from the calendar first!"); 
-            return; 
-        }
-        if(!amountInput || !amountInput.value) { 
-            alert("⚠️ Please enter an offer amount!"); 
-            return; 
-        }
-        
-        closeOfferSetup();
-        alert("✅ Your offer of ₹" + amountInput.value + " for date " + dateInput.value + " has been sent directly to the owner!");
-    }
+        let dateVal = document.getElementById('selected-custom-date').value;
+        let amountVal = document.getElementById('initial-offer-amount').value;
 
-    // --- OTHER MODALS ---
-    function openVR() {
-        if (navigator.vibrate) navigator.vibrate(30);
-        document.getElementById('vrModal').style.display = 'flex';
-        
-        let vrFrame = document.getElementById('vrFrame');
-        if (vrFrame.src === "") {
-            vrFrame.src = "https://my.matterport.com/show/?m=J9c2c62u6rM&play=1"; 
-        }
-        
-        setTimeout(() => {
-            let loader = document.getElementById('vrLoader');
-            if(loader) loader.style.display = 'none';
-        }, 2500);
-    }
-    
-    function closeVR() {
-        if (navigator.vibrate) navigator.vibrate(30);
-        document.getElementById('vrModal').style.display = 'none';
-        document.getElementById('vrFrame').src = ""; 
-        document.getElementById('vrLoader').style.display = 'block'; 
-    }
-
-    function openOwnerDetails() {
-        let modal = document.getElementById('owner-details-modal');
-        if(modal) modal.style.display = 'flex';
-    }
-
-    function closeOwnerDetails() {
-        let modal = document.getElementById('owner-details-modal');
-        if(modal) modal.style.display = 'none';
-    }
-
-    function submitUTR() {
-        let utrInput = document.getElementById('utr-input');
-        if(!utrInput) return;
-        
-        let utr = utrInput.value;
-        if(utr.length !== 12) {
-            alert("Please enter a valid 12-digit UTR number from your payment receipt!");
+        if (!dateVal) {
+            alert("⚠️ Kripya pehle Calendar mein se koi Green (Available) Date chunein!");
             return;
         }
-        alert("✅ UTR Submitted Successfully!\n\nThe owner will verify the payment in their bank app and confirm your booking.");
-        closeOwnerDetails();
+        if (!amountVal || amountVal <= 0) {
+            alert("⚠️ Kripya apna Offer Amount (₹) daalein!");
+            return;
+        }
+
+        closeOfferSetup();
+        alert("✅ Aapka ₹" + Number(amountVal).toLocaleString('en-IN') + " ka offer (" + dateVal + " ke liye) Hall Owner ko bhej diya gaya hai!\n\nAb aap Bookings tab mein Vendor ke Accept, Reject ya Counter Offer ka status track kar sakte hain.");
     }
 </script>
+  
+    
+
+    
   
   
  </body>
