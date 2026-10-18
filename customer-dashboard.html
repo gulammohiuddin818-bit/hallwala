@@ -467,9 +467,11 @@
                 <div style="display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 12px 0; font-size: 11px; color: #475569; font-weight: 600;">
             
 
-    </div>
-  </div>
+               </div>
+           </div>
+        </div>
 
+      
   <!-- SCREEN 2: LIVE BOOKINGS & OFFER TRACKER -->
   <div id="screen-bookings" class="screen">
     <div class="container" style="padding-top: 20px;">
@@ -2050,7 +2052,6 @@ function getSmartReply(msg) {
 </div>
 
 <script>
-    // Vendor ki Booked Dates (Har mahine ki 15, 20, 24 tarikh demo ke liye Red Crossed dikhegi)
     const bookedDaysList = [15, 20, 24];
 
     function initYearDropdown() {
@@ -2080,35 +2081,24 @@ function getSmartReply(msg) {
         const daysInMonth = new Date(year, month + 1, 0).getDate();
 
         for (let i = 0; i < firstDay; i++) {
-            daysGrid.innerHTML += `<div></div>`;
+            daysGrid.innerHTML += '<div></div>';
         }
 
         for (let day = 1; day <= daysInMonth; day++) {
-            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            const dateStr = year + '-' + String(month + 1).padStart(2, '0') + '-' + String(day).padStart(2, '0');
             const isBooked = bookedDaysList.includes(day);
 
             if (isBooked) {
-                // 🔴 RED CROSSED BOOKED DATE
-                daysGrid.innerHTML += `
-                    <div onclick="alert('❌ Yeh date (' + '${dateStr}' + ') pehle se Booked hai! Kripya koi Green (Available) date chunein.')" 
-                         style="background: #fee2e2; color: #ef4444; text-decoration: line-through; padding: 10px 0; text-align: center; border-radius: 10px; font-size: 14px; font-weight: 800; cursor: not-allowed; border: 1px solid #fca5a5;">
-                        ${day}
-                    </div>`;
+                daysGrid.innerHTML += '<div onclick="alert(\'Yeh date (' + dateStr + ') pehle se Booked hai! Kripya koi Green date chunein.\')" style="background: #fee2e2; color: #ef4444; text-decoration: line-through; padding: 10px 0; text-align: center; border-radius: 10px; font-size: 14px; font-weight: 800; cursor: not-allowed; border: 1px solid #fca5a5;">' + day + '</div>';
             } else {
-                // 🟢 GREEN AVAILABLE DATE
-                daysGrid.innerHTML += `
-                    <div onclick="selectCustomDate(this, '${dateStr}')" 
-                         class="available-date" 
-                         style="background: #dcfce7; color: #166534; padding: 10px 0; text-align: center; border-radius: 10px; font-size: 14px; font-weight: 800; cursor: pointer; border: 1px solid #86efac; transition: 0.15s;">
-                        ${day}
-                    </div>`;
+                daysGrid.innerHTML += '<div onclick="selectCustomDate(this, \'' + dateStr + '\')" class="available-date" style="background: #dcfce7; color: #166534; padding: 10px 0; text-align: center; border-radius: 10px; font-size: 14px; font-weight: 800; cursor: pointer; border: 1px solid #86efac; transition: 0.15s;">' + day + '</div>';
             }
         }
     }
 
-        function selectCustomDate(element, dateStr) {
+    function selectCustomDate(element, dateStr) {
         let allDates = document.querySelectorAll('.available-date');
-        allDates.forEach(d => {
+        allDates.forEach(function(d) {
             d.style.background = '#dcfce7';
             d.style.color = '#166534';
             d.style.transform = 'scale(1)';
@@ -2140,39 +2130,26 @@ function getSmartReply(msg) {
         let amountVal = document.getElementById('initial-offer-amount').value;
 
         if (!dateVal) {
-            alert("⚠️ Kripya pehle Calendar mein se koi Green (Available) Date chunein!");
+            alert("Kripya pehle Calendar mein se koi Green (Available) Date chunein!");
             return;
         }
         if (!amountVal || amountVal <= 0) {
-            alert("⚠️ Kripya apna Offer Amount (₹) daalein!");
+            alert("Kripya apna Offer Amount daalein!");
             return;
         }
 
         closeOfferSetup();
-        alert("✅ Aapka ₹" + Number(amountVal).toLocaleString('en-IN') + " ka offer (" + dateVal + " ke liye) Hall Owner ko bhej diya gaya hai!\n\nAb aap Bookings tab mein Vendor ke Accept, Reject ya Counter Offer ka status track kar sakte hain.");
+        alert("Aapka Rs. " + Number(amountVal).toLocaleString('en-IN') + " ka offer (" + dateVal + " ke liye) Hall Owner ko bhej diya gaya hai!");
     }
 
-    // --- BOTTOM NAVIGATION (SCREEN SWITCH) LOGIC ---
-    function switchScreen(screenId) {
-        let screens = document.querySelectorAll('.screen');
-        screens.forEach(function(s) {
-            s.style.display = 'none';
-        });
-        
-        let activeScreen = document.getElementById(screenId);
-        if(activeScreen) {
-            activeScreen.style.display = 'block';
-        }
-        window.scrollTo(0, 0); 
-    }
-
-    // Modal Close Fix (Click outside to close)
-    window.onclick = function(event) {
+    window.addEventListener('click', function(event) {
         let offerModal = document.getElementById('offer-setup-modal');
         if (event.target === offerModal) {
             closeOfferSetup();
         }
-  }
+    });
+</script>
+      
   
   
     
