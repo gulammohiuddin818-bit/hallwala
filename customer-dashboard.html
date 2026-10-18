@@ -2052,6 +2052,7 @@ function getSmartReply(msg) {
 </div>
 
 <script>
+    // 1. 📅 CALENDAR & OFFER LOGIC
     const bookedDaysList = [15, 20, 24];
 
     function initYearDropdown() {
@@ -2089,7 +2090,7 @@ function getSmartReply(msg) {
             const isBooked = bookedDaysList.includes(day);
 
             if (isBooked) {
-                daysGrid.innerHTML += '<div onclick="alert(\'Yeh date (' + dateStr + ') pehle se Booked hai! Kripya koi Green date chunein.\')" style="background: #fee2e2; color: #ef4444; text-decoration: line-through; padding: 10px 0; text-align: center; border-radius: 10px; font-size: 14px; font-weight: 800; cursor: not-allowed; border: 1px solid #fca5a5;">' + day + '</div>';
+                daysGrid.innerHTML += '<div onclick="alert(\'❌ Yeh date (' + dateStr + ') pehle se Booked hai! Kripya koi Green date chunein.\')" style="background: #fee2e2; color: #ef4444; text-decoration: line-through; padding: 10px 0; text-align: center; border-radius: 10px; font-size: 14px; font-weight: 800; cursor: not-allowed; border: 1px solid #fca5a5;">' + day + '</div>';
             } else {
                 daysGrid.innerHTML += '<div onclick="selectCustomDate(this, \'' + dateStr + '\')" class="available-date" style="background: #dcfce7; color: #166534; padding: 10px 0; text-align: center; border-radius: 10px; font-size: 14px; font-weight: 800; cursor: pointer; border: 1px solid #86efac; transition: 0.15s;">' + day + '</div>';
             }
@@ -2117,6 +2118,8 @@ function getSmartReply(msg) {
         if (modal) {
             modal.style.display = 'flex';
             renderCalendar();
+        } else {
+            alert("Calendar HTML Code Missing!");
         }
     }
 
@@ -2126,22 +2129,60 @@ function getSmartReply(msg) {
     }
 
     function sendDirectToOwner() {
-        let dateVal = document.getElementById('selected-custom-date').value;
-        let amountVal = document.getElementById('initial-offer-amount').value;
+        let dateVal = document.getElementById('selected-custom-date');
+        let amountVal = document.getElementById('initial-offer-amount');
 
-        if (!dateVal) {
-            alert("Kripya pehle Calendar mein se koi Green (Available) Date chunein!");
+        if (!dateVal || !dateVal.value) {
+            alert("⚠️ Kripya pehle Calendar mein se koi Green (Available) Date chunein!");
             return;
         }
-        if (!amountVal || amountVal <= 0) {
-            alert("Kripya apna Offer Amount daalein!");
+        if (!amountVal || !amountVal.value || amountVal.value <= 0) {
+            alert("⚠️ Kripya apna Offer Amount (₹) daalein!");
             return;
         }
 
         closeOfferSetup();
-        alert("Aapka Rs. " + Number(amountVal).toLocaleString('en-IN') + " ka offer (" + dateVal + " ke liye) Hall Owner ko bhej diya gaya hai!");
+        alert("✅ Aapka ₹" + Number(amountVal.value).toLocaleString('en-IN') + " ka offer (" + dateVal.value + " ke liye) Hall Owner ko bhej diya gaya hai!");
     }
 
+    // 2. 📱 BOTTOM NAVIGATION (HOME, BOOKINGS, ACCOUNT)
+    function switchScreen(screenId) {
+        let screens = document.querySelectorAll('.screen');
+        screens.forEach(function(s) {
+            s.style.display = 'none';
+        });
+        
+        let activeScreen = document.getElementById(screenId);
+        if(activeScreen) {
+            activeScreen.style.display = 'block';
+        }
+        window.scrollTo(0, 0); 
+    }
+
+    // 3. 🥽 360° VR MODAL LOGIC
+    function openVR() {
+        if (navigator.vibrate) navigator.vibrate(30);
+        let modal = document.getElementById('vrModal');
+        if(modal) modal.style.display = 'flex';
+    }
+    function closeVR() {
+        let modal = document.getElementById('vrModal');
+        if(modal) modal.style.display = 'none';
+    }
+
+    // 4. ✨ HALLWALA AI BUTTON LOGIC
+    function toggleAI() {
+        let aiWindow = document.getElementById('aiChatWindow');
+        if(aiWindow) {
+            if(aiWindow.style.display === 'none' || aiWindow.style.display === '') {
+                aiWindow.style.display = 'flex';
+            } else {
+                aiWindow.style.display = 'none';
+            }
+        }
+    }
+
+    // 5. 👆 OUTSIDE CLICK TO CLOSE CALENDAR
     window.addEventListener('click', function(event) {
         let offerModal = document.getElementById('offer-setup-modal');
         if (event.target === offerModal) {
@@ -2150,12 +2191,6 @@ function getSmartReply(msg) {
     });
 </script>
       
-  
-  
-    
-
-    
-  
   
  </body>
 </html>
