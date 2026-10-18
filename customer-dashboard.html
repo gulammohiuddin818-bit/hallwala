@@ -2150,6 +2150,34 @@ function getSmartReply(msg) {
         closeOfferSetup();
         alert("✅ Aapka ₹" + Number(amountVal).toLocaleString('en-IN') + " ka offer (" + dateVal + " ke liye) Hall Owner ko bhej diya gaya hai!\n\nAb aap Bookings tab mein Vendor ke Accept, Reject ya Counter Offer ka status track kar sakte hain.");
     }
+    // --- 1. BOTTOM NAVIGATION (SCREEN SWITCH) LOGIC ---
+    function switchScreen(screenId) {
+        // पहले सभी स्क्रीन्स को छुपा दें
+        let screens = document.querySelectorAll('.screen');
+        screens.forEach(function(s) {
+            s.style.display = 'none';
+        });
+        
+        // अब जिस बटन (Home/Bookings/Account) पर क्लिक हुआ है, उसे दिखाएं
+        let activeScreen = document.getElementById(screenId);
+        if(activeScreen) {
+            activeScreen.style.display = 'block';
+        }
+        
+        // पेज को ऊपर स्क्रॉल कर दें
+        window.scrollTo(0, 0); 
+    }
+
+    // --- 2. MODAL OUTSIDE CLICK TO CLOSE FIX ---
+    // अगर कोई कैलेंडर के बाहर (डार्क बैकग्राउंड पर) टच करे, तो कैलेंडर बंद हो जाए
+    window.onclick = function(event) {
+        let offerModal = document.getElementById('offer-setup-modal');
+        if (event.target === offerModal) {
+            closeOfferSetup();
+        
+  }
+  
+  
 </script>
   
     
