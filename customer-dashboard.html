@@ -1917,34 +1917,31 @@ function getSmartReply(msg) {
 }
   
 </script>
-<!-- ========================================== -->
   
-<!-- 🥽 FUTURISTIC 360 VR MODAL START 🥽 -->
-<div id="vrModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(15px); z-index: 100000; flex-direction: column;">
-    
-    <!-- Premium Header -->
-    <div style="padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); background: linear-gradient(135deg, rgba(0,0,0,0.5), transparent);">
-        <div style="color: white; font-weight: 800; font-size: 18px; display: flex; align-items: center; gap: 10px; font-family: 'Plus Jakarta Sans', sans-serif;">
-            <span style="background: linear-gradient(135deg, #3b82f6, #8b5cf6); padding: 5px 10px; border-radius: 10px; font-size: 12px; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);">VR</span>
+  <!-- ========================================== -->
+<!-- ALL MODALS (HTML) AT ONE PLACE -->
+<!-- ========================================== -->
+
+<!-- 🥽 1. FUTURISTIC 360 VR MODAL -->
+<div id="vrModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.9); z-index: 99999; flex-direction: column;">
+    <div style="padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <div style="color: white; font-weight: 800; font-size: 18px; display: flex; align-items: center; gap: 10px;">
+            <span style="background: linear-gradient(135deg, #3b82f6, #8b5cf6); padding: 5px 10px; border-radius: 10px; font-size: 14px;">360°</span>
             Virtual Walkthrough
         </div>
-        <button onclick="closeVR()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; width: 36px; height: 36px; border-radius: 50%; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px);">✕</button>
+        <button onclick="closeVR()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 24px; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: 0.3s;">×</button>
     </div>
-
-    <!-- 360 Viewer (Using Free Pannellum Iframe for Dummy View) -->
     <div style="flex: 1; position: relative; width: 100%; height: 100%; background: #000;">
         <iframe id="vrFrame" width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src=""></iframe>
         
         <!-- Loading Animation -->
-        <div id="vrLoader" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; text-align: center; font-family: 'Plus Jakarta Sans', sans-serif;">
-            <div style="width: 45px; height: 45px; border: 4px solid rgba(255,255,255,0.1); border-top: 4px solid #8b5cf6; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 15px auto;"></div>
+        <div id="vrLoader" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; display: flex; flex-direction: column; align-items: center; gap: 15px;">
+            <div style="width: 45px; height: 45px; border: 4px solid rgba(255,255,255,0.1); border-top: 4px solid #8b5cf6; border-radius: 50%; animation: spin 1s linear infinite;"></div>
             <p style="font-size: 15px; font-weight: 600; letter-spacing: 0.5px;">Loading 360° Experience...</p>
         </div>
     </div>
-    
-    <!-- Bottom Instruction -->
-    <div style="padding: 15px; text-align: center; background: rgba(0,0,0,0.8); border-top: 1px solid rgba(255,255,255,0.05);">
-        <p style="color: #cbd5e1; font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif;">👆 Drag to look around. Double tap to zoom.</p>
+    <div style="padding: 15px; text-align: center; background: rgba(0,0,0,0.8); border-top: 1px solid rgba(255,255,255,0.1);">
+        <p style="color: #cbd5e1; font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif;">👆 Drag to look around inside the hall</p>
     </div>
 </div>
 
@@ -1952,41 +1949,12 @@ function getSmartReply(msg) {
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 </style>
 
-<script>
-    function openVR() {
-        // Haptic Feedback for premium feel
-        if (navigator.vibrate) navigator.vibrate([50, 50, 50]); 
-        
-        document.getElementById('vrModal').style.display = 'flex';
-        
-        // Dummy 360 Image URL (Museum/Hall Room)
-        let dummy360Url = "https://cdn.pannellum.org/2.5/pannellum.htm#panorama=https://pannellum.org/images/bma-1.jpg&autoLoad=true";    
-       document.getElementById('vrFrame').src = dummy360Url;
-        
-        // Hide loader after 2.5 seconds
-        setTimeout(() => {
-            let loader = document.getElementById('vrLoader');
-            if(loader) loader.style.display = 'none';
-        }, 2500);
-    }
-
-    function closeVR() {
-        if (navigator.vibrate) navigator.vibrate(30);
-        document.getElementById('vrModal').style.display = 'none';
-        document.getElementById('vrFrame').src = ""; // Stop video to save internet data
-        document.getElementById('vrLoader').style.display = 'block'; // Reset loader for next time
-    }
-</script>
-<!-- 🥽 FUTURISTIC 360 VR MODAL END 🥽 -->
-
-<!-- 📅 GREEN INTERFACE 1900-2100 CALENDAR & OFFER MODAL -->
+<!-- 📅 2. GREEN INTERFACE 1900-2100 CALENDAR & OFFER MODAL -->
 <div id="offer-setup-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(4px); z-index: 9999; justify-content: center; align-items: flex-end; box-sizing: border-box;">
     <div style="background: white; width: 100%; max-width: 420px; padding: 20px; border-radius: 24px 24px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.25); box-sizing: border-box; max-height: 92vh; overflow-y: auto;">
         
-        <!-- Top Drag Bar -->
         <div style="width: 45px; height: 5px; background: #cbd5e1; border-radius: 10px; margin: 0 auto 15px auto;"></div>
 
-        <!-- Header -->
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
             <div>
                 <h3 style="margin: 0; font-size: 20px; font-weight: 800; color: #0f172a;">Make an Offer</h3>
@@ -1995,7 +1963,6 @@ function getSmartReply(msg) {
             <button onclick="closeOfferSetup()" style="background: #f1f5f9; border: none; width: 34px; height: 34px; border-radius: 50%; font-size: 20px; color: #334155; cursor: pointer; display: flex; align-items: center; justify-content: center;">×</button>
         </div>
 
-        <!-- Calendar Box -->
         <div style="border: 1px solid #e2e8f0; border-radius: 16px; padding: 14px; margin-bottom: 15px; background: #ffffff;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                 <span style="font-size: 11px; font-weight: 800; color: #64748b; letter-spacing: 0.5px;">SELECT EVENT DATE</span>
@@ -2005,7 +1972,6 @@ function getSmartReply(msg) {
                 </div>
             </div>
 
-            <!-- Month & Year (1900 - 2100) Dropdowns -->
             <div style="display: flex; gap: 10px; margin-bottom: 12px;">
                 <select id="cal-month-select" onchange="renderCalendar()" style="flex: 1; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 14px; font-weight: 600; color: #1e293b; background: #f8fafc; outline: none;">
                     <option value="0">January</option>
@@ -2021,23 +1987,17 @@ function getSmartReply(msg) {
                     <option value="10">November</option>
                     <option value="11">December</option>
                 </select>
-
-                <select id="cal-year-select" onchange="renderCalendar()" style="flex: 1; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 14px; font-weight: 600; color: #1e293b; background: #f8fafc; outline: none;">
-                </select>
+                <select id="cal-year-select" onchange="renderCalendar()" style="flex: 1; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 14px; font-weight: 600; color: #1e293b; background: #f8fafc; outline: none;"></select>
             </div>
 
-            <!-- Days of Week -->
             <div style="display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 11px; font-weight: 700; color: #94a3b8; padding-bottom: 8px;">
                 <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
             </div>
-
-            <!-- Dates Grid -->
             <div id="calendar-days" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px;"></div>
         </div>
 
         <input type="hidden" id="selected-custom-date" value="">
 
-        <!-- Best Price Input Box -->
         <div style="border: 1px solid #e2e8f0; border-radius: 16px; padding: 12px 14px; margin-bottom: 16px; background: #f8fafc;">
             <label style="font-size: 11px; font-weight: 800; color: #64748b; letter-spacing: 0.5px; display: block; margin-bottom: 6px;">YOUR BEST PRICE</label>
             <div style="display: flex; align-items: center; gap: 8px;">
@@ -2046,13 +2006,15 @@ function getSmartReply(msg) {
             </div>
         </div>
 
-        <!-- Green Send Offer Button -->
         <button onclick="sendDirectToOwner()" style="width: 100%; background: #10b981; color: white; border: none; padding: 15px; border-radius: 14px; font-weight: 800; font-size: 16px; cursor: pointer; box-shadow: 0 6px 15px rgba(16, 185, 129, 0.35);">
             Send Offer Instantly 🚀
         </button>
     </div>
 </div>
 
+<!-- ========================================== -->
+<!-- SINGLE JAVASCRIPT BLOCK FOR EVERYTHING -->
+<!-- ========================================== -->
 <script>
     // 1. 📅 CALENDAR & OFFER LOGIC
     const bookedDaysList = [15, 20, 24];
@@ -2118,7 +2080,6 @@ function getSmartReply(msg) {
     function openOfferSetup() {
         let modal = document.getElementById('offer-setup-modal');
         if (modal) {
-            // Mobile Touch Glitch Fix: 50ms का छोटा सा delay
             setTimeout(function() {
                 modal.style.display = 'flex';
                 renderCalendar();
@@ -2128,7 +2089,9 @@ function getSmartReply(msg) {
 
     function closeOfferSetup() {
         let modal = document.getElementById('offer-setup-modal');
-        if (modal) modal.style.display = 'none';
+        if (modal) {
+            modal.style.display = 'none';
+        }
     }
 
     function sendDirectToOwner() {
@@ -2165,14 +2128,30 @@ function getSmartReply(msg) {
     function openVR() {
         if (navigator.vibrate) navigator.vibrate(30);
         let modal = document.getElementById('vrModal');
+        let vrFrame = document.getElementById('vrFrame');
         if(modal) modal.style.display = 'flex';
+        
+        let dummy360Url = "https://cdn.pannellum.org/2.5/pannellum.htm#panorama=https://pannellum.org/images/bma-1.jpg&autoLoad=true";
+        if(vrFrame) vrFrame.src = dummy360Url;
+
+        setTimeout(function() {
+            let loader = document.getElementById('vrLoader');
+            if(loader) loader.style.display = 'none';
+        }, 2500);
     }
+    
     function closeVR() {
+        if (navigator.vibrate) navigator.vibrate(30);
         let modal = document.getElementById('vrModal');
+        let vrFrame = document.getElementById('vrFrame');
+        let loader = document.getElementById('vrLoader');
+        
         if(modal) modal.style.display = 'none';
+        if(vrFrame) vrFrame.src = "";
+        if(loader) loader.style.display = 'flex';
     }
 
-    // 4. ✨ HALLWALA AI BUTTON LOGIC
+    // 4. ✨ AI TOGGLE LOGIC
     function toggleAI() {
         let aiWindow = document.getElementById('aiChatWindow');
         if(aiWindow) {
@@ -2193,8 +2172,6 @@ function getSmartReply(msg) {
     });
 </script>
   
-
-        
       
   
  </body>
