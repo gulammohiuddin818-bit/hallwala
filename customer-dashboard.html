@@ -2077,10 +2077,12 @@ function getSmartReply(msg) {
         if (dateInput) dateInput.value = dateStr;
     }
 
-        function openOfferSetup() {
+           function openOfferSetup() {
         let modal = document.getElementById('offer-setup-modal');
         if (modal) {
-            // 80ms ka delay aur reset logic
+            // 1. URL में एक नकली '#offer' जोड़ें ताकि मोबाइल का Back Button इसे पकड़ सके
+            window.history.pushState({ modalOpen: true }, "", "#offer");
+            
             setTimeout(function() {
                 modal.style.display = 'flex';
                 document.getElementById('cal-month-select').value = "9"; // October
@@ -2096,8 +2098,21 @@ function getSmartReply(msg) {
         let modal = document.getElementById('offer-setup-modal');
         if (modal) {
             modal.style.display = 'none';
+            // अगर कोई 'x' बटन से बंद करता है, तो हिस्ट्री से '#offer' हटा दें
+            if (window.location.hash === "#offer") {
+                window.history.back();
+            }
         }
     }
+
+    // 2. 📱 MOBILE BACK BUTTON FIX (Hardware Back Button)
+    window.addEventListener('popstate', function(event) {
+        let offerModal = document.getElementById('offer-setup-modal');
+        if (offerModal && offerModal.style.display === 'flex') {
+            offerModal.style.display = 'none';
+        }
+    });
+  
   
 
     function sendDirectToOwner() {
