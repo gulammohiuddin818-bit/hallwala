@@ -2118,10 +2118,11 @@ function getSmartReply(msg) {
     function openOfferSetup() {
         let modal = document.getElementById('offer-setup-modal');
         if (modal) {
-            modal.style.display = 'flex';
-            renderCalendar();
-        } else {
-            alert("Calendar HTML Code Missing!");
+            // Mobile Touch Glitch Fix: 50ms का छोटा सा delay
+            setTimeout(function() {
+                modal.style.display = 'flex';
+                renderCalendar();
+            }, 50);
         }
     }
 
@@ -2147,13 +2148,12 @@ function getSmartReply(msg) {
         alert("✅ Aapka ₹" + Number(amountVal.value).toLocaleString('en-IN') + " ka offer (" + dateVal.value + " ke liye) Hall Owner ko bhej diya gaya hai!");
     }
 
-    // 2. 📱 BOTTOM NAVIGATION (HOME, BOOKINGS, ACCOUNT)
+    // 2. 📱 BOTTOM NAVIGATION LOGIC
     function switchScreen(screenId) {
         let screens = document.querySelectorAll('.screen');
         screens.forEach(function(s) {
             s.style.display = 'none';
         });
-        
         let activeScreen = document.getElementById(screenId);
         if(activeScreen) {
             activeScreen.style.display = 'block';
@@ -2184,7 +2184,7 @@ function getSmartReply(msg) {
         }
     }
 
-    // 5. 👆 OUTSIDE CLICK TO CLOSE CALENDAR
+    // 5. 👆 CLICK OUTSIDE TO CLOSE MODAL
     window.addEventListener('click', function(event) {
         let offerModal = document.getElementById('offer-setup-modal');
         if (event.target === offerModal) {
@@ -2192,6 +2192,9 @@ function getSmartReply(msg) {
         }
     });
 </script>
+  
+
+        
       
   
  </body>
