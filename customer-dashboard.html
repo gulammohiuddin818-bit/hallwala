@@ -2077,11 +2077,12 @@ function getSmartReply(msg) {
         if (dateInput) dateInput.value = dateStr;
     }
 
-           function openOfferSetup() {
+    // Modal Opening & URL Hash Trick for Mobile Back Button
+    function openOfferSetup() {
         let modal = document.getElementById('offer-setup-modal');
         if (modal) {
-            // 1. URL में एक नकली '#offer' जोड़ें ताकि मोबाइल का Back Button इसे पकड़ सके
-            window.history.pushState({ modalOpen: true }, "", "#offer");
+            // URL में #modal जोड़ें ताकि मोबाइल बैक बटन इसे पकड़ सके
+            window.location.hash = 'modal'; 
             
             setTimeout(function() {
                 modal.style.display = 'flex';
@@ -2098,22 +2099,8 @@ function getSmartReply(msg) {
         let modal = document.getElementById('offer-setup-modal');
         if (modal) {
             modal.style.display = 'none';
-            // अगर कोई 'x' बटन से बंद करता है, तो हिस्ट्री से '#offer' हटा दें
-            if (window.location.hash === "#offer") {
-                window.history.back();
-            }
         }
     }
-
-    // 2. 📱 MOBILE BACK BUTTON FIX (Hardware Back Button)
-    window.addEventListener('popstate', function(event) {
-        let offerModal = document.getElementById('offer-setup-modal');
-        if (offerModal && offerModal.style.display === 'flex') {
-            offerModal.style.display = 'none';
-        }
-    });
-  
-  
 
     function sendDirectToOwner() {
         let dateVal = document.getElementById('selected-custom-date');
@@ -2128,29 +2115,74 @@ function getSmartReply(msg) {
             return;
         }
 
-        closeOfferSetup();
+        // URL से #modal हटा दें
+        if(window.location.hash === '#modal') {
+            history.back(); 
+        } else {
+            closeOfferSetup();
+        }
         alert("✅ Aapka ₹" + Number(amountVal.value).toLocaleString('en-IN') + " ka offer (" + dateVal.value + " ke liye) Hall Owner ko bhej diya gaya hai!");
     }
 
-    // 2. 📱 BOTTOM NAVIGATION LOGIC
+
+    // 2. 📱 BOTTOM NAVIGATION LOGIC WITH BACK BUTTON FIX (replaceState)
     function switchScreen(screenId) {
         let screens = document.querySelectorAll('.screen');
         screens.forEach(function(s) {
             s.style.display = 'none';
         });
+        
         let activeScreen = document.getElementById(screenId);
         if(activeScreen) {
             activeScreen.style.display = 'block';
         }
         window.scrollTo(0, 0); 
+        
+        // 🚀 THE MAGIC TRICK: हम URL हिस्ट्री को "replace" कर रहे हैं, "push" नहीं। 
+        // इससे Back Button की फालतू हिस्ट्री नहीं बनेगी।
+        if(screenId === 'screen-home') {
+            window.history.replaceState({page: "home"}, "", "#home");
+        } else if(screenId === 'screen-bookings') {
+            window.history.replaceState({page: "bookings"}, "", "#bookings");
+        } else if(screenId === 'screen-account') {
+            window.history.replaceState({page: "account"}, "", "#account");
+        }
     }
+
+    // 🚀 HARDWARE BACK BUTTON LOGIC (आपकी शर्त के अनुसार)
+    window.addEventListener('popstate', function(event) {
+        // 1. अगर Modal (कैलेंडर) खुला है, तो सिर्फ उसे बंद करें
+        let offerModal = document.getElementById('offer-setup-modal');
+        let vrModal = document.getElementById('vrModal');
+        
+        if (offerModal && offerModal.style.display === 'flex') {
+            closeOfferSetup();
+            return;
+        }
+        if (vrModal && vrModal.style.display === 'flex') {
+            closeVR();
+            return;
+        }
+
+        // 2. अगर हम Bookings या Account पेज पर हैं, तो बैक दबाने पर Home पर जाएँ
+        let hash = window.location.hash;
+        if (hash === '#bookings' || hash === '#account') {
+            switchScreen('screen-home');
+        } 
+        // 3. अगर किसी भी सब-पेज (Terms, Privacy) में हैं (जिसका हमने अभी hash नहीं बनाया है)
+        // तो आप यहाँ लॉजिक सेट कर सकते हैं कि वो Account पर जाए।
+    });
+
 
     // 3. 🥽 360° VR MODAL LOGIC
     function openVR() {
         if (navigator.vibrate) navigator.vibrate(30);
         let modal = document.getElementById('vrModal');
         let vrFrame = document.getElementById('vrFrame');
-        if(modal) modal.style.display = 'flex';
+        if(modal) {
+            window.location.hash = 'vrmodal'; // Back button fix
+            modal.style.display = 'flex';
+        }
         
         let dummy360Url = "https://cdn.pannellum.org/2.5/pannellum.htm#panorama=https://pannellum.org/images/bma-1.jpg&autoLoad=true";
         if(vrFrame) vrFrame.src = dummy360Url;
@@ -2172,7 +2204,8 @@ function getSmartReply(msg) {
         if(loader) loader.style.display = 'flex';
     }
 
-    // 4. ✨ AI TOGGLE LOGIC
+
+    // 4. ✨ HALLWALA AI BUTTON LOGIC
     function toggleAI() {
         let aiWindow = document.getElementById('aiChatWindow');
         if(aiWindow) {
@@ -2184,16 +2217,19 @@ function getSmartReply(msg) {
         }
     }
 
+
     // 5. 👆 CLICK OUTSIDE TO CLOSE MODAL
     window.addEventListener('mousedown', function(event) {
         let offerModal = document.getElementById('offer-setup-modal');
         if (event.target === offerModal) {
-            closeOfferSetup();
+            if(window.location.hash === '#modal') {
+                history.back(); // Trigger popstate
+            } else {
+                closeOfferSetup();
+            }
         }
     });
 </script>
-  
-      
   
  </body>
 </html>
