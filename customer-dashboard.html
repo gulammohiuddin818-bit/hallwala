@@ -2081,15 +2081,28 @@ function getSmartReply(msg) {
     function openOfferSetup() {
         let modal = document.getElementById('offer-setup-modal');
         if (modal) {
-            window.location.hash = 'offerModal';
-            setTimeout(function() {
-                modal.style.display = 'flex';
-                document.getElementById('cal-month-select').value = "9"; 
-                document.getElementById('cal-year-select').value = "2026"; 
-                document.getElementById('initial-offer-amount').value = '';
-                document.getElementById('selected-custom-date').value = '';
-                renderCalendar();
-            }, 50);
+            // 1. Z-INDEX FIX: कैलेंडर को हमेशा होम पेज के ऊपर रखने के लिए
+            modal.style.zIndex = "999999";
+            
+            // 2. BACK BUTTON FIX: 'pushState' का इस्तेमाल (यह दूसरी बार ना खुलने वाले ग्लिच को ख़त्म करेगा)
+            if (window.location.hash !== '#offer') {
+                window.history.pushState({ modalOpen: true }, "", "#offer");
+            }
+            
+            modal.style.display = 'flex';
+            
+            // कैलेंडर रिसेट करें
+            let monthSel = document.getElementById('cal-month-select');
+            let yearSel = document.getElementById('cal-year-select');
+            let amtInput = document.getElementById('initial-offer-amount');
+            let dateInput = document.getElementById('selected-custom-date');
+            
+            if(monthSel) monthSel.value = "9"; 
+            if(yearSel) yearSel.value = "2026"; 
+            if(amtInput) amtInput.value = '';
+            if(dateInput) dateInput.value = '';
+            
+            renderCalendar();
         }
     }
 
@@ -2097,6 +2110,10 @@ function getSmartReply(msg) {
         let modal = document.getElementById('offer-setup-modal');
         if (modal) {
             modal.style.display = 'none';
+            // अगर ❌ बटन से बंद किया है, तो URL की हिस्ट्री साफ़ कर दें
+            if (window.location.hash === '#offer') {
+                window.history.back();
+            }
         }
     }
 
@@ -2113,21 +2130,16 @@ function getSmartReply(msg) {
             return;
         }
 
-        if(window.location.hash === '#offerModal') {
-            window.history.back(); 
-        } else {
-            closeOfferSetup();
-        }
+        closeOfferSetup();
         alert("✅ Aapka ₹" + Number(amountVal.value).toLocaleString('en-IN') + " ka offer (" + dateVal.value + " ke liye) Hall Owner ko bhej diya gaya hai!");
     }
 
-    // 2. 📱 BOTTOM NAVIGATION LOGIC (Crash-Proof Version)
+    // 📱 BOTTOM NAVIGATION LOGIC
     function switchScreen(screenId) {
         let screens = document.querySelectorAll('.screen');
         screens.forEach(function(s) {
             s.style.display = 'none';
         });
-        
         let activeScreen = document.getElementById(screenId);
         if(activeScreen) {
             activeScreen.style.display = 'block';
@@ -2135,17 +2147,15 @@ function getSmartReply(msg) {
         window.scrollTo(0, 0); 
     }
 
-    // 🚀 SAFE MOBILE BACK BUTTON FIX
-    window.addEventListener('hashchange', function() {
-        let hash = window.location.hash;
-        let offerModal = document.getElementById('offer-setup-modal');
-        
-        // अगर hash '#offerModal' नहीं है और कैलेंडर खुला है, तो उसे बंद कर दो
-        if (hash !== '#offerModal' && offerModal && offerModal.style.display === 'flex') {
-            offerModal.style.display = 'none';
+    // 🚀 THE ULTIMATE MOBILE BACK BUTTON FIX (ये हर बार काम करेगा)
+    window.addEventListener('popstate', function(event) {
+        let modal = document.getElementById('offer-setup-modal');
+        if (modal && modal.style.display === 'flex') {
+            modal.style.display = 'none';
         }
     });
-
+  
+  
     // 3. 🥽 360° VR MODAL LOGIC
     function openVR() {
         if (navigator.vibrate) navigator.vibrate(30);
