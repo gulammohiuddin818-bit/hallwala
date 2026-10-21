@@ -1560,114 +1560,6 @@ function submitOffer() {
 
   }
   
-      
-      
-      
-   </script>
-
-<!-- 🚀 ULTIMATE STACK NAVIGATION & POPUP FIX 🚀 -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    let currentHash = window.location.hash.replace('#', '').replace('-popup', '') || 'home';
-    
-    // 1. Initial State Setup (रिफ्रेश फिक्स)
-    if (currentHash !== 'home') {
-        history.replaceState({ page: 'home' }, "", "#home");
-        history.pushState({ page: currentHash }, "", "#" + currentHash);
-    } else {
-        history.replaceState({ page: 'home' }, "", "#home");
-    }
-    localStorage.setItem("myActiveTab", currentHash);
-    
-    let tabBtn = document.querySelector(`[onclick*="switchTab('${currentHash}'"]`);
-    if (tabBtn && typeof switchTab === 'function') switchTab(currentHash, tabBtn);
-
-    // 2. Tab Navigation Magic
-    document.querySelectorAll('.nav-item').forEach(btn => {
-        btn.addEventListener('click', function() {
-            let onclickText = this.getAttribute('onclick');
-            if (onclickText && onclickText.includes('switchTab')) {
-                let newTab = onclickText.split("'")[1]; 
-                let currentTab = localStorage.getItem("myActiveTab") || 'home';
-                
-                if (newTab === currentTab) return; 
-                
-                if (newTab === 'home') {
-                    history.replaceState({ page: 'home' }, "", "#home");
-                } else if (currentTab === 'home') {
-                    history.pushState({ page: newTab }, "", "#" + newTab);
-                } else {
-                    history.replaceState({ page: newTab }, "", "#" + newTab);
-                }
-                localStorage.setItem("myActiveTab", newTab);
-            }
-        });
-    });
-
-    // 3. ✨ SUPER SMART POPUP INTERCEPTOR ✨
-    // यह हर उस बटन को पकड़ेगा जो कोई पॉपअप, कैलेंडर या Terms खोलता है
-    // और ब्राउज़र की हिस्ट्री में एक नकली कदम (Dummy State) डाल देगा 
-    // ताकि बैक दबाने पर ऐप Login पेज पर बाहर न फेंके!
-    document.body.addEventListener('click', (e) => {
-        let el = e.target.closest('[onclick]');
-        if (!el) return;
-        let str = el.getAttribute('onclick').toLowerCase();
-        
-        // अगर बटन किसी पॉपअप या Terms को खोलने वाला है
-        if ((str.includes('open') || str.includes('show') || str.includes('modal') || str.includes('terms') || str.includes('policy')) && !str.includes('switchtab') && !str.includes('toggleai')) {
-            if (!window.location.hash.includes('-popup')) {
-                history.pushState({ popup: true }, "", window.location.hash + "-popup");
-            }
-        }
-    }, true);
-});
-
-// 4. BACK BUTTON PRESS HANDLER (असली नेविगेशन)
-window.addEventListener('popstate', (e) => {
-    // (A) यूनिवर्सल डिटेक्टर: पूरे ऐप में कोई भी Popup, Terms या Modal खुला हो, उसे ढूँढो
-    let openModals = Array.from(document.querySelectorAll('div')).filter(el => {
-        let id = (el.id || '').toLowerCase();
-        // अगर ID में modal, sheet, terms या privacy है, तो उसे पकड़ लो
-        if (id.includes('modal') || id.includes('sheet') || id.includes('terms') || id.includes('privacy') || id.includes('policy') || el.classList.contains('modal-active')) {
-            let style = window.getComputedStyle(el);
-            return (style.display === 'block' || style.display === 'flex') && (style.position === 'fixed' || style.position === 'absolute');
-        }
-        return false;
-    });
-    
-    // (B) अगर कोई पॉपअप या Terms खुला मिला, तो बस उसे बंद करो और उसी टैब पर रुको!
-    if (openModals.length > 0) {
-        openModals.forEach(m => {
-            m.style.display = 'none';
-            m.style.transform = 'translateY(100%)'; 
-        });
-        
-        let overlay = document.getElementById('modalOverlay');
-        if(overlay) overlay.style.display = 'none';
-
-        // यूजर को उसी टैब (Bookings या Account) पर रोक लो, Home पर मत जाने दो
-        let baseTab = window.location.hash.replace('#', '').replace('-popup', '') || 'home';
-        localStorage.setItem("myActiveTab", baseTab);
-        
-        return; // यहीं रुक जाओ, आगे का कोड रन मत करो
-    }
-
-    // (C) अगर कोई पॉपअप नहीं खुला था, तो नॉर्मल बैक (जैसे Account से Home) करो
-    if (e.state && e.state.page && e.state.page !== 'home') {
-        let prevTab = e.state.page;
-        localStorage.setItem("myActiveTab", prevTab);
-        let tabBtn = document.querySelector(`[onclick*="switchTab('${prevTab}'"]`);
-        if (tabBtn && typeof switchTab === 'function') switchTab(prevTab, tabBtn);
-    } else {
-        // अगर सब खत्म हो गया तो Home पर आ जाओ
-        localStorage.setItem("myActiveTab", 'home');
-        let homeBtn = document.querySelector(`[onclick*="switchTab('home'"]`);
-        if (homeBtn && typeof switchTab === 'function') switchTab('home', homeBtn);
-        history.replaceState({ page: 'home' }, "", "#home");
-    }
-});
-</script>
-<!-- 🚀 ULTIMATE STACK NAVIGATION & POPUP FIX END 🚀 -->
 
 <!-- ========================================== -->
 <!-- 🚀 PREMIUM FUTURISTIC UI/UX ADD-ONS 🚀 -->
@@ -2078,20 +1970,29 @@ function getSmartReply(msg) {
         if (dateInput) dateInput.value = dateStr;
     }
 
-    // 🔥 ROOT CAUSE FIX 1: THE MODAL LOGIC 🔥
+    // 🔥 MODAL & BACK BUTTON LOGIC 🔥
     function openOfferSetup() {
         let modal = document.getElementById('offer-setup-modal');
         if (modal) {
             modal.style.zIndex = "999999";
+            
+            // URL में #makeoffer लगाएँ ताकि बैक बटन इसे पकड़ सके
+            if (window.location.hash !== '#makeoffer') {
+                window.history.pushState({ modal: true }, "", "#makeoffer");
+            }
+            
             modal.style.display = 'flex';
             
-            // Jese hi modal khule, ek fake history state push karein (Sirf mobile back button ke liye)
-            window.history.pushState({ isModalOpen: true }, "");
-
-            document.getElementById('cal-month-select').value = "9"; 
-            document.getElementById('cal-year-select').value = "2026"; 
-            document.getElementById('initial-offer-amount').value = '';
-            document.getElementById('selected-custom-date').value = '';
+            let monthSel = document.getElementById('cal-month-select');
+            let yearSel = document.getElementById('cal-year-select');
+            let amtInput = document.getElementById('initial-offer-amount');
+            let dateInput = document.getElementById('selected-custom-date');
+            
+            if(monthSel) monthSel.value = "9"; 
+            if(yearSel) yearSel.value = "2026"; 
+            if(amtInput) amtInput.value = '';
+            if(dateInput) dateInput.value = '';
+            
             renderCalendar();
         }
     }
@@ -2099,10 +2000,11 @@ function getSmartReply(msg) {
     function closeOfferSetup() {
         let modal = document.getElementById('offer-setup-modal');
         if (modal && modal.style.display === 'flex') {
-            modal.style.display = 'none';
-            // Agar user ne ❌ (Cross) dbaya hai, to wo fake history state hata do
-            if (history.state && history.state.isModalOpen) {
-                window.history.back();
+            // अगर ❌ दबाया है, तो बैक बटन का काम कोड खुद कर देगा
+            if (window.location.hash === '#makeoffer') {
+                window.history.back(); 
+            } else {
+                modal.style.display = 'none';
             }
         }
     }
@@ -2124,7 +2026,7 @@ function getSmartReply(msg) {
         alert("✅ Aapka ₹" + Number(amountVal.value).toLocaleString('en-IN') + " ka offer (" + dateVal.value + " ke liye) Hall Owner ko bhej diya gaya hai!");
     }
 
-    // 🔥 ROOT CAUSE FIX 2: BOTTOM NAVIGATION TABS (No endless back) 🔥
+    // 📱 BOTTOM NAVIGATION LOGIC 
     function switchScreen(screenId) {
         let screens = document.querySelectorAll('.screen');
         screens.forEach(s => s.style.display = 'none');
@@ -2134,17 +2036,19 @@ function getSmartReply(msg) {
             activeScreen.style.display = 'block';
         }
         window.scrollTo(0, 0); 
-
-        // Naya page save mat karo, purane ko hi replace karo
-        window.history.replaceState({page: screenId}, "");
     }
 
-    // 🔥 ROOT CAUSE FIX 3: MOBILE HARDWARE BACK BUTTON MASTER LISTENER 🔥
+    // 🚀 MASTER POPSTATE (BACK BUTTON) LISTENER (ये हर बार काम करेगा)
     window.addEventListener('popstate', function(event) {
-        // Agar back button dabe aur calendar khula ho, to sirf usko band karo
-        let modal = document.getElementById('offer-setup-modal');
-        if (modal && modal.style.display === 'flex') {
-            modal.style.display = 'none';
+        let offerModal = document.getElementById('offer-setup-modal');
+        let vrModal = document.getElementById('vrModal');
+        
+        // अगर बैक बटन दबाया है और कैलेंडर खुला है, तो सिर्फ उसे बंद करो
+        if (offerModal && offerModal.style.display === 'flex') {
+            offerModal.style.display = 'none';
+        }
+        if (vrModal && vrModal.style.display === 'flex') {
+            vrModal.style.display = 'none';
         }
     });
 
@@ -2154,13 +2058,13 @@ function getSmartReply(msg) {
         let modal = document.getElementById('vrModal');
         let vrFrame = document.getElementById('vrFrame');
         if(modal) {
-            window.history.pushState({ isModalOpen: true }, "");
+            if (window.location.hash !== '#vrmodal') {
+                window.history.pushState({ vr: true }, "", "#vrmodal");
+            }
             modal.style.display = 'flex';
         }
-        
         let dummy360Url = "https://cdn.pannellum.org/2.5/pannellum.htm#panorama=https://pannellum.org/images/bma-1.jpg&autoLoad=true";
         if(vrFrame) vrFrame.src = dummy360Url;
-
         setTimeout(() => {
             let loader = document.getElementById('vrLoader');
             if(loader) loader.style.display = 'none';
@@ -2174,24 +2078,21 @@ function getSmartReply(msg) {
         let loader = document.getElementById('vrLoader');
         
         if(modal && modal.style.display === 'flex') {
-            modal.style.display = 'none';
-            if (history.state && history.state.isModalOpen) {
+            if (window.location.hash === '#vrmodal') {
                 window.history.back();
+            } else {
+                modal.style.display = 'none';
             }
         }
         if(vrFrame) vrFrame.src = "";
         if(loader) loader.style.display = 'flex';
     }
 
-    // 4. ✨ HALLWALA AI BUTTON LOGIC
+    // 4. ✨ AI TOGGLE LOGIC
     function toggleAI() {
         let aiWindow = document.getElementById('aiChatWindow');
         if(aiWindow) {
-            if(aiWindow.style.display === 'none' || aiWindow.style.display === '') {
-                aiWindow.style.display = 'flex';
-            } else {
-                aiWindow.style.display = 'none';
-            }
+            aiWindow.style.display = (aiWindow.style.display === 'none' || aiWindow.style.display === '') ? 'flex' : 'none';
         }
     }
 
@@ -2203,6 +2104,7 @@ function getSmartReply(msg) {
         }
     });
 </script>
+  
   
   
   
