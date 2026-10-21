@@ -1910,7 +1910,104 @@ function getSmartReply(msg) {
 
         
 <script>
-    // 1. 📅 CALENDAR & OFFER LOGIC
+    // ==========================================
+    // 1. 📳 HAPTIC FEEDBACK (VIBRATION)
+    // ==========================================
+    function triggerHaptic(type = 'light') {
+        if (navigator.vibrate) {
+            if (type === 'light') navigator.vibrate(40);
+            if (type === 'heavy') navigator.vibrate([100, 50, 100]);
+        }
+    }
+
+    // ==========================================
+    // 2. 🧭 PROFESSIONAL APP NAVIGATION & REFRESH LOGIC
+    // ==========================================
+    
+    // Page load / Refresh hone par wahi tab kholne ka logic
+    document.addEventListener("DOMContentLoaded", function() {
+        // LocalStorage se pichla tab dhoondo, warna 'home' default
+        let savedTab = localStorage.getItem('hallwala_active_tab') || 'screen-home';
+        
+        // Agar URL me direct koi hash hai (#bookings ya #account), to usko priority do
+        if(window.location.hash === '#bookings') savedTab = 'screen-bookings';
+        if(window.location.hash === '#account') savedTab = 'screen-account';
+        
+        // Initial state set karo (replaceState taki extra back button add na ho)
+        window.history.replaceState({ tab: savedTab }, "", window.location.hash || "#home");
+        showScreenUI(savedTab);
+    });
+
+    // Tab switch karne ka main function
+    function switchScreen(screenId) {
+        triggerHaptic('light');
+        
+        // Agar hum already usi screen par hain, to kuch mat karo
+        if (history.state && history.state.tab === screenId) return;
+        
+        let hash = "#home";
+        if(screenId === 'screen-bookings') hash = "#bookings";
+        if(screenId === 'screen-account') hash = "#account";
+        
+        // Naya tab history me add karo
+        window.history.pushState({ tab: screenId }, "", hash);
+        localStorage.setItem('hallwala_active_tab', screenId);
+        showScreenUI(screenId);
+    }
+
+    // Sirf UI badalne ka function (Bina history chhede)
+    function showScreenUI(screenId) {
+        let screens = document.querySelectorAll('.screen');
+        screens.forEach(s => s.style.display = 'none');
+        
+        let activeScreen = document.getElementById(screenId);
+        if(activeScreen) {
+            activeScreen.style.display = 'block';
+        }
+        window.scrollTo(0, 0);
+    }
+
+    // 🚀 MASTER BACK BUTTON HANDLER (Mobile Back Button)
+    window.addEventListener('popstate', function(event) {
+        // 1. Agar koi bhi Modal/Sub-page khula hai, to pehle usko band karo
+        let offerModal = document.getElementById('offer-setup-modal');
+        let vrModal = document.getElementById('vrModal');
+        let isAnyModalOpen = false;
+
+        if (offerModal && offerModal.style.display === 'flex') {
+            offerModal.style.display = 'none';
+            isAnyModalOpen = true;
+        }
+        if (vrModal && vrModal.style.display === 'flex') {
+            vrModal.style.display = 'none';
+            if(document.getElementById('vrFrame')) document.getElementById('vrFrame').src = "";
+            isAnyModalOpen = true;
+        }
+        
+        // NOTE: Agar Terms/Bank modal ho, to usko bhi yahan check karke hide kar sakte hain
+        // if(termsModal && termsModal.style.display === 'block') { termsModal.style.display = 'none'; isAnyModalOpen = true; }
+
+        // Agar modal band hua hai, to tab change mat karo, wahi ruko.
+        if (isAnyModalOpen) return;
+
+        // 2. Modal nahi tha, matlab Tab se back hua hai. To history.state check karo
+        let targetTab = 'screen-home'; // Default
+        if (event.state && event.state.tab) {
+            targetTab = event.state.tab;
+        } else if (window.location.hash === '#bookings') {
+            targetTab = 'screen-bookings';
+        } else if (window.location.hash === '#account') {
+            targetTab = 'screen-account';
+        }
+        
+        localStorage.setItem('hallwala_active_tab', targetTab);
+        showScreenUI(targetTab);
+    });
+
+
+    // ==========================================
+    // 3. 📅 CALENDAR & OFFER MODAL LOGIC
+    // ==========================================
     const bookedDaysList = [15, 20, 24];
 
     function initYearDropdown() {
@@ -1948,7 +2045,7 @@ function getSmartReply(msg) {
             const isBooked = bookedDaysList.includes(day);
 
             if (isBooked) {
-                daysGrid.innerHTML += '<div onclick="alert(\'❌ Yeh date (' + dateStr + ') pehle se Booked hai! Kripya koi Green date chunein.\')" style="background: #fee2e2; color: #ef4444; text-decoration: line-through; padding: 10px 0; text-align: center; border-radius: 10px; font-size: 14px; font-weight: 800; cursor: not-allowed; border: 1px solid #fca5a5;">' + day + '</div>';
+                daysGrid.innerHTML += '<div onclick="alert(\'❌ Yeh date (' + dateStr + ') pehle se Booked hai!\')" style="background: #fee2e2; color: #ef4444; text-decoration: line-through; padding: 10px 0; text-align: center; border-radius: 10px; font-size: 14px; font-weight: 800; cursor: not-allowed; border: 1px solid #fca5a5;">' + day + '</div>';
             } else {
                 daysGrid.innerHTML += '<div onclick="selectCustomDate(this, \'' + dateStr + '\')" class="available-date" style="background: #dcfce7; color: #166534; padding: 10px 0; text-align: center; border-radius: 10px; font-size: 14px; font-weight: 800; cursor: pointer; border: 1px solid #86efac; transition: 0.15s;">' + day + '</div>';
             }
@@ -1956,6 +2053,7 @@ function getSmartReply(msg) {
     }
 
     function selectCustomDate(element, dateStr) {
+        triggerHaptic('light');
         let allDates = document.querySelectorAll('.available-date');
         allDates.forEach(d => {
             d.style.background = '#dcfce7';
@@ -1970,51 +2068,42 @@ function getSmartReply(msg) {
         if (dateInput) dateInput.value = dateStr;
     }
 
-    // 🔥 MODAL & BACK BUTTON LOGIC 🔥
+    // Modal Kholne ka logic
     function openOfferSetup() {
+        triggerHaptic('light');
         let modal = document.getElementById('offer-setup-modal');
         if (modal) {
-            modal.style.zIndex = "999999";
-            
-            // URL में #makeoffer लगाएँ ताकि बैक बटन इसे पकड़ सके
-            if (window.location.hash !== '#makeoffer') {
-                window.history.pushState({ modal: true }, "", "#makeoffer");
-            }
-            
+            modal.style.zIndex = "999999"; // Top layer pe rakho
             modal.style.display = 'flex';
             
-            let monthSel = document.getElementById('cal-month-select');
-            let yearSel = document.getElementById('cal-year-select');
-            let amtInput = document.getElementById('initial-offer-amount');
-            let dateInput = document.getElementById('selected-custom-date');
+            // Sub-page (Modal) ke liye naya history push karo
+            window.history.pushState({ modal: 'offer' }, "", "#makeoffer");
             
-            if(monthSel) monthSel.value = "9"; 
-            if(yearSel) yearSel.value = "2026"; 
-            if(amtInput) amtInput.value = '';
-            if(dateInput) dateInput.value = '';
-            
+            document.getElementById('cal-month-select').value = "9"; 
+            document.getElementById('cal-year-select').value = "2026"; 
+            document.getElementById('initial-offer-amount').value = '';
+            document.getElementById('selected-custom-date').value = '';
             renderCalendar();
         }
     }
 
+    // X (Cross) daba kar modal band karne ka logic
     function closeOfferSetup() {
+        triggerHaptic('light');
         let modal = document.getElementById('offer-setup-modal');
         if (modal && modal.style.display === 'flex') {
-            // अगर ❌ दबाया है, तो बैक बटन का काम कोड खुद कर देगा
-            if (window.location.hash === '#makeoffer') {
-                window.history.back(); 
-            } else {
-                modal.style.display = 'none';
-            }
+            // Seedha history back karo. Popstate apne aap isko hide kar dega aur parent tab par le aayega.
+            window.history.back(); 
         }
     }
 
     function sendDirectToOwner() {
+        triggerHaptic('heavy');
         let dateVal = document.getElementById('selected-custom-date');
         let amountVal = document.getElementById('initial-offer-amount');
 
         if (!dateVal || !dateVal.value) {
-            alert("⚠️ Kripya pehle Calendar mein se koi Green (Available) Date chunein!");
+            alert("⚠️ Kripya pehle Calendar mein se koi Green Date chunein!");
             return;
         }
         if (!amountVal || !amountVal.value || amountVal.value <= 0) {
@@ -2023,48 +2112,26 @@ function getSmartReply(msg) {
         }
 
         closeOfferSetup();
-        alert("✅ Aapka ₹" + Number(amountVal.value).toLocaleString('en-IN') + " ka offer (" + dateVal.value + " ke liye) Hall Owner ko bhej diya gaya hai!");
+        setTimeout(() => {
+            alert("✅ Aapka ₹" + Number(amountVal.value).toLocaleString('en-IN') + " ka offer bhej diya gaya hai!");
+        }, 300);
     }
 
-    // 📱 BOTTOM NAVIGATION LOGIC 
-    function switchScreen(screenId) {
-        let screens = document.querySelectorAll('.screen');
-        screens.forEach(s => s.style.display = 'none');
-        
-        let activeScreen = document.getElementById(screenId);
-        if(activeScreen) {
-            activeScreen.style.display = 'block';
-        }
-        window.scrollTo(0, 0); 
-    }
 
-    // 🚀 MASTER POPSTATE (BACK BUTTON) LISTENER (ये हर बार काम करेगा)
-    window.addEventListener('popstate', function(event) {
-        let offerModal = document.getElementById('offer-setup-modal');
-        let vrModal = document.getElementById('vrModal');
-        
-        // अगर बैक बटन दबाया है और कैलेंडर खुला है, तो सिर्फ उसे बंद करो
-        if (offerModal && offerModal.style.display === 'flex') {
-            offerModal.style.display = 'none';
-        }
-        if (vrModal && vrModal.style.display === 'flex') {
-            vrModal.style.display = 'none';
-        }
-    });
-
-    // 3. 🥽 360° VR MODAL LOGIC
+    // ==========================================
+    // 4. 🥽 360° VR MODAL LOGIC
+    // ==========================================
     function openVR() {
-        if (navigator.vibrate) navigator.vibrate(30);
+        triggerHaptic('light');
         let modal = document.getElementById('vrModal');
         let vrFrame = document.getElementById('vrFrame');
         if(modal) {
-            if (window.location.hash !== '#vrmodal') {
-                window.history.pushState({ vr: true }, "", "#vrmodal");
-            }
+            window.history.pushState({ modal: 'vr' }, "", "#vrmodal");
             modal.style.display = 'flex';
         }
         let dummy360Url = "https://cdn.pannellum.org/2.5/pannellum.htm#panorama=https://pannellum.org/images/bma-1.jpg&autoLoad=true";
         if(vrFrame) vrFrame.src = dummy360Url;
+        
         setTimeout(() => {
             let loader = document.getElementById('vrLoader');
             if(loader) loader.style.display = 'none';
@@ -2072,31 +2139,25 @@ function getSmartReply(msg) {
     }
     
     function closeVR() {
-        if (navigator.vibrate) navigator.vibrate(30);
+        triggerHaptic('light');
         let modal = document.getElementById('vrModal');
-        let vrFrame = document.getElementById('vrFrame');
-        let loader = document.getElementById('vrLoader');
-        
         if(modal && modal.style.display === 'flex') {
-            if (window.location.hash === '#vrmodal') {
-                window.history.back();
-            } else {
-                modal.style.display = 'none';
-            }
+            window.history.back(); // Popstate isko handle karega
         }
-        if(vrFrame) vrFrame.src = "";
-        if(loader) loader.style.display = 'flex';
     }
 
-    // 4. ✨ AI TOGGLE LOGIC
+    // ==========================================
+    // 5. ✨ AI CHATBOT LOGIC
+    // ==========================================
     function toggleAI() {
+        triggerHaptic('light');
         let aiWindow = document.getElementById('aiChatWindow');
         if(aiWindow) {
             aiWindow.style.display = (aiWindow.style.display === 'none' || aiWindow.style.display === '') ? 'flex' : 'none';
         }
     }
 
-    // 5. 👆 CLICK OUTSIDE TO CLOSE MODAL
+    // Background (Black screen) par click karke Modal band karna
     window.addEventListener('mousedown', function(event) {
         let offerModal = document.getElementById('offer-setup-modal');
         if (event.target === offerModal) {
@@ -2105,6 +2166,7 @@ function getSmartReply(msg) {
     });
 </script>
   
+
   
   
   
