@@ -2146,16 +2146,104 @@ function getSmartReply(msg) {
         }
     }
 
-    // ==========================================
-    // 5. ✨ AI CHATBOT LOGIC
+        // ==========================================
+    // 5. ✨ AI CHATBOT LOGIC (PRO VERSION RESTORED)
     // ==========================================
     function toggleAI() {
-        triggerHaptic('light');
+        if (typeof triggerHaptic === 'function') triggerHaptic('light');
         let aiWindow = document.getElementById('aiChatWindow');
         if(aiWindow) {
-            aiWindow.style.display = (aiWindow.style.display === 'none' || aiWindow.style.display === '') ? 'flex' : 'none';
+            if(aiWindow.style.display === 'none' || aiWindow.style.display === '') {
+                aiWindow.style.zIndex = "9999999"; 
+                aiWindow.style.display = 'flex';
+                // मोबाइल बैक बटन से AI बंद करने के लिए History Push
+                window.history.pushState({ modal: 'ai' }, "", "#aichat");
+            } else {
+                aiWindow.style.display = 'none';
+                if (window.location.hash === '#aichat') {
+                    window.history.back(); 
+                }
+            }
         }
     }
+
+    function sendUserMsg(text = null) {
+        let inputEl = document.getElementById('aiInput');
+        let msg = text || (inputEl ? inputEl.value.trim() : '');
+        if (!msg) return;
+
+        if (typeof triggerHaptic === 'function') triggerHaptic('light');
+        
+        let chips = document.getElementById('quickChips');
+        if (chips) chips.style.display = 'none'; // मैसेज भेजते ही चिप्स हटा दो
+        if (!text && inputEl) inputEl.value = '';
+
+        appendBubble(msg, 'user-bubble');
+
+        let typingId = 'typing-' + Date.now();
+        setTimeout(() => {
+            appendBubble('<span class="typing-dots" style="font-size:12px; font-weight:bold; color:#64748b;">AI is typing...</span>', 'ai-bubble', typingId);
+        }, 400);
+
+        setTimeout(() => {
+            let typingEl = document.getElementById(typingId);
+            if (typingEl) typingEl.remove();
+            
+            let reply = getSmartReply(msg);
+            appendBubble(reply, 'ai-bubble');
+        }, 1500 + Math.random() * 1000);
+    }
+
+    function appendBubble(htmlContent, className, id = null) {
+        let chatArea = document.getElementById('aiChatArea');
+        if (!chatArea) return;
+        let div = document.createElement('div');
+        div.className = 'chat-bubble ' + className;
+        
+        // सुरक्षित CSS Styling
+        div.style.padding = "10px 14px";
+        div.style.margin = "6px 0";
+        div.style.borderRadius = "12px";
+        div.style.fontSize = "13px";
+        div.style.maxWidth = "85%";
+        div.style.lineHeight = "1.5";
+        
+        if(className.includes('user-bubble')) {
+            div.style.background = "linear-gradient(135deg, #3b82f6, #6366f1)";
+            div.style.alignSelf = "flex-end";
+            div.style.color = "#ffffff";
+            div.style.borderBottomRightRadius = "2px";
+        } else {
+            div.style.background = "#f1f5f9";
+            div.style.alignSelf = "flex-start";
+            div.style.color = "#0f172a";
+            div.style.borderBottomLeftRadius = "2px";
+            div.style.border = "1px solid #e2e8f0";
+        }
+        
+        div.innerHTML = htmlContent;
+        if (id) div.id = id;
+        chatArea.appendChild(div);
+        chatArea.scrollTop = chatArea.scrollHeight; // ऑटोमैटिक नीचे स्क्रॉल
+    }
+
+    function getSmartReply(msg) {
+        let m = msg.toLowerCase();
+        if (m.includes('party') || m.includes('banquet') || m.includes('wedding')) return "✨ Weddings aur Parties ke liye hamare paas Premium Banquets available hain!";
+        if (m.includes('lawn') || m.includes('garden')) return "🌳 Open space aur grand events ke liye hamare paas shaandar Open Lawns hain.";
+        if (m.includes('price') || m.includes('offer')) return "💰 <b>Make an Offer:</b> HallWala par Zero Brokerage hai! Aap direct vendor ko apna price bhej sakte hain.";
+        if (m.includes('contact') || m.includes('support') || m.includes('number')) return "📞 Customer Support ke liye aap hume <b>support@hallwala.in</b> par email kar sakte hain.";
+        return "🤔 Sorry, mujhe samajh nahi aaya. Par main ek Pro AI hoon! Aap mujhse Banquets, Open Lawns, ya Make an Offer ke baare mein pooch sakte hain.";
+    }
+
+    // 🚀 AI Chatbot को Mobile के Back Button से सुरक्षित बंद करने का लॉजिक
+    window.addEventListener('popstate', function(event) {
+        let aiWindow = document.getElementById('aiChatWindow');
+        if (aiWindow && aiWindow.style.display === 'flex') {
+            aiWindow.style.display = 'none';
+        }
+    });
+  
 
     // Background (Black screen) par click karke Modal band karna
     window.addEventListener('mousedown', function(event) {
